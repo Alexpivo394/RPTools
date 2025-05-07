@@ -1,0 +1,15 @@
+﻿<RevitAddIns>
+    <AddIn Type="Application">
+        <Name>RPToolsApp</Name>
+        <Assembly>RPToolsApp/RPToolsApp.dll</Assembly>
+        <AddInId>557B031F-53B8-4E71-B1FB-E6AA3A483A66</AddInId>
+        <FullClassName>RPToolsApp.Application</FullClassName>
+        <VendorId>AlexB</VendorId>
+        <VendorDescription></VendorDescription>
+        <VendorEmail>a.borisov@relyde-project.ru</VendorEmail>
+		<ManifestSettings>
+			<UseRevitContext>False</UseRevitContext>
+			<ContextName>RevitAddIn</ContextName>
+		</ManifestSettings>
+    </AddIn>
+</RevitAddIns>

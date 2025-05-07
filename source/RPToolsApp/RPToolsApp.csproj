@@ -1,0 +1,146 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <UseWPF>true</UseWPF>
+        <LangVersion>latest</LangVersion>
+        <PlatformTarget>x64</PlatformTarget>
+        <ImplicitUsings>true</ImplicitUsings>
+		<DeployRevitAddin>true</DeployRevitAddin>
+		<EnableDynamicLoading>true</EnableDynamicLoading>
+        <Configurations>Debug R20;Debug R21;Debug R22;Debug R23;Debug R24;Debug R25</Configurations>
+        <Configurations>$(Configurations);Release R20;Release R21;Release R22;Release R23;Release R24;Release R25</Configurations>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="$(Configuration.Contains('R20'))">
+        <RevitVersion>2020</RevitVersion>
+        <TargetFramework>net48</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(Configuration.Contains('R21'))">
+        <RevitVersion>2021</RevitVersion>
+        <TargetFramework>net48</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(Configuration.Contains('R22'))">
+        <RevitVersion>2022</RevitVersion>
+        <TargetFramework>net48</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(Configuration.Contains('R23'))">
+        <RevitVersion>2023</RevitVersion>
+        <TargetFramework>net48</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(Configuration.Contains('R24'))">
+        <RevitVersion>2024</RevitVersion>
+        <TargetFramework>net48</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition="$(Configuration.Contains('R25'))">
+        <RevitVersion>2025</RevitVersion>
+        <TargetFramework>net8.0-windows</TargetFramework>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <StartAction>Program</StartAction>
+        <StartProgram>C:\Program Files\Autodesk\Revit $(RevitVersion)\Revit.exe</StartProgram>
+        <StartArguments>/language ENG</StartArguments>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\Icons\1Tray16.png" />
+      <None Remove="Resources\Icons\1Tray32.png" />
+      <None Remove="Resources\Icons\2Tray16.png" />
+      <None Remove="Resources\Icons\2Tray32.png" />
+      <None Remove="Resources\Icons\3Tray16.png" />
+      <None Remove="Resources\Icons\3Tray32.png" />
+      <None Remove="Resources\Icons\4Tray16.png" />
+      <None Remove="Resources\Icons\4Tray32.png" />
+      <None Remove="Resources\Icons\cable1_16.png" />
+      <None Remove="Resources\Icons\cable1_32.png" />
+      <None Remove="Resources\Icons\cable2_16.png" />
+      <None Remove="Resources\Icons\cable2_32.png" />
+      <None Remove="Resources\Icons\cable3_16.png" />
+      <None Remove="Resources\Icons\cable3_32.png" />
+      <None Remove="Resources\Icons\cable4_16.png" />
+      <None Remove="Resources\Icons\cable4_32.png" />
+      <None Remove="Resources\Icons\Create16.png" />
+      <None Remove="Resources\Icons\Create32.png" />
+      <None Remove="Resources\Icons\create_16.png" />
+      <None Remove="Resources\Icons\create_32.png" />
+      <None Remove="Resources\Icons\Export16.png" />
+      <None Remove="Resources\Icons\Export32.png" />
+      <None Remove="Resources\Icons\export_16.png" />
+      <None Remove="Resources\Icons\export_32.png" />
+      <None Remove="Resources\Icons\Ruler16.png" />
+      <None Remove="Resources\Icons\Ruler32.png" />
+      <None Remove="Resources\Icons\ruler_16.png" />
+      <None Remove="Resources\Icons\ruler_32.png" />
+      <None Remove="Resources\Icons\Transplanter16.png" />
+      <None Remove="Resources\Icons\Transplanter32.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Nice3point.Revit.Build.Tasks" Version="2.*" />
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*" />
+        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.*" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CableTrays\CableTrays.csproj" />
+      <ProjectReference Include="..\CheckLOI\CheckLOI.csproj" />
+      <ProjectReference Include="..\Length\Length.csproj" />
+      <ProjectReference Include="..\ModelTransplanter\ModelTransplanter.csproj" />
+      <ProjectReference Include="..\WorkingSet\WorkingSet.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Resources\Icons\1Tray16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\1Tray32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\2Tray16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\2Tray32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\3Tray16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\3Tray32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\4Tray16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\4Tray32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Create16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Create32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Export16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Export32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Ruler16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Ruler32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Transplanter16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Transplanter32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+    </ItemGroup>
+
+</Project>
