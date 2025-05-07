@@ -42,7 +42,12 @@
         <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
-		<PackageReference Include="WPF-UI" Version="4.*" />
+    </ItemGroup>
+
+	
+    <ItemGroup>
+      <ProjectReference Include="..\..\Repo\Toad-Tools-UI\source\LookupEngine.UI.Abstractions\LookupEngine.UI.Abstractions.csproj" />
+      <ProjectReference Include="..\..\Repo\Toad-Tools-UI\source\LookupEngine.UI\LookupEngine.UI.csproj" />
     </ItemGroup>
 
 </Project>
