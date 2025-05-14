@@ -46,8 +46,8 @@
 
 	
     <ItemGroup>
-      <ProjectReference Include="..\..\Repo\Toad-Tools-UI\source\LookupEngine.UI.Abstractions\LookupEngine.UI.Abstractions.csproj" />
-      <ProjectReference Include="..\..\Repo\Toad-Tools-UI\source\LookupEngine.UI\LookupEngine.UI.csproj" />
+      <ProjectReference Include="..\..\..\Toad-Tools-UI\source\Toad-Tools-UI.Abstractions\Toad-Tools-UI.Abstractions.csproj" />
+      <ProjectReference Include="..\..\..\Toad-Tools-UI\source\Toad-Tools-UI\Toad-Tools-UI.csproj" />
     </ItemGroup>
 
 </Project>
