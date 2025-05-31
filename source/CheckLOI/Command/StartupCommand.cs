@@ -22,7 +22,7 @@ namespace CheckLOI.Command
             var categoryService = new CategoryService();
             categoryService.Initialize(doc);
             var vm = new CheckLOI.ViewModels.CheckLOIViewModel(commandData, categoryService);
-            var view = new CheckLOIView(vm);
+            var view = new CheckLoiView(vm);
             view.ShowDialog();
             return Result.Succeeded;
         }

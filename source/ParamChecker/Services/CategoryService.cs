@@ -1,11 +1,4 @@
-﻿using Autodesk.Revit.UI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CheckLOI.Services
+﻿namespace ParamChecker.Services
 {
     public class CategoryService
     {
@@ -21,7 +14,6 @@ namespace CheckLOI.Services
                 {
                     var builtInCategory = (BuiltInCategory)category.Id.IntegerValue;
                     _localizedCategories[builtInCategory] = category.Name;
-
                 }
             }
         }
@@ -30,7 +22,10 @@ namespace CheckLOI.Services
         {
             return _localizedCategories.TryGetValue(category, out var name) ? name : category.ToString();
         }
+
+        public IEnumerable<BuiltInCategory> GetAllCategories()
+        {
+            return _localizedCategories.Keys.ToList();
+        }
     }
-
-
 }

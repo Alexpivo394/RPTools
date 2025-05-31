@@ -1,0 +1,64 @@
+﻿<ui:FluentWindow
+    xmlns:ui="http://Toad-Tools.com/xaml"
+    x:Class="ParamChecker.Views.Windows.ParameterConfig"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:ParamChecker.ViewModels"
+    mc:Ignorable="d"
+    Title="ParamChecker"
+    WindowStartupLocation="CenterScreen"
+    Height="400"
+    Width="300"
+    MinHeight="300"
+    MinWidth="300"
+    ExtendsContentIntoTitleBar="True">
+
+    <Grid>
+        <StackPanel>
+            <!-- Title Bar -->
+            <ui:TitleBar Title="ParamChecker" Icon="BoxMiltipleSearch24" />
+            
+            <!-- Parameter List -->
+            <Border Margin="0,25,0,0" CornerRadius="5" Padding="10" Background="{DynamicResource ControlFillColorDefaultBrush}">
+                <StackPanel>
+                    <TextBlock Text="Параметры для экспорта" FontWeight="Bold" Margin="0,0,0,10"/>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="300">
+                        <ItemsControl ItemsSource="{Binding Parameters}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <ui:TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    PlaceholderText="Введите имя параметра"
+                                                    Width="180"/>
+                                        <ui:Button Icon="Delete24"
+                                                   Command="{Binding DataContext.RemoveParameterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                   CommandParameter="{Binding}"
+                                                   Appearance="Secondary"
+                                                   Margin="5,0,0,0"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    
+                    <ui:Button Content="Добавить параметр"
+                               Icon="AddCircle24"
+                               Command="{Binding AddParameterCommand}"
+                               Appearance="Secondary"
+                               Margin="0,10,0,0"
+                               HorizontalAlignment="Left"/>
+                </StackPanel>
+            </Border>
+            
+            <!-- Apply button -->
+            <ui:Button Content="Применить"
+                       Icon="Checkmark24"
+                       Command="{Binding ApplyParameterCommand}"
+                       Appearance="Primary"
+                       Margin="10,10,0,0"
+                       HorizontalAlignment="Left"/>
+        </StackPanel>
+    </Grid>
+</ui:FluentWindow>

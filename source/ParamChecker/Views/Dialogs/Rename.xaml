@@ -1,0 +1,30 @@
+﻿<ui:FluentWindow
+    xmlns:ui="http://Toad-Tools.com/xaml"
+    x:Class="ParamChecker.Views.Dialogs.Rename"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:converters="clr-namespace:ParamChecker.Views.Converters"
+    mc:Ignorable="d"
+    Title="ParamChecker"
+    WindowStartupLocation="CenterScreen"
+    Height="250"
+    Width="300"
+    MinHeight="250"
+    MinWidth="300"
+    ExtendsContentIntoTitleBar="True">
+
+    <Grid>
+        <StackPanel Margin="20">
+            <ui:TitleBar Title="Rename" Icon="Rename24" />
+            <ui:TextBlock Text="Переименовать"/>
+            <ui:TextBox Text="{Binding NewTitle, UpdateSourceTrigger=PropertyChanged}" 
+                        Margin="0 10 0 10"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">    
+                <ui:Button Content="Ок" Width="80" Margin="0 0 10 0" Command="{Binding ConfirmCommand}" Appearance="Primary" />
+                <ui:Button Content="Отмена" Width="80" Command="{Binding CancelCommand}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</ui:FluentWindow>

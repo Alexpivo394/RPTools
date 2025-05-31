@@ -1,0 +1,68 @@
+﻿<Page x:Class="ParamChecker.Views.Pages.ExportProfiles"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ui="http://Toad-Tools.com/xaml"
+      mc:Ignorable="d"
+      Background="{DynamicResource ControlBackgroundBrush}">
+
+    <Grid Margin="4,0,5,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/> <!-- Первая секция -->
+            <RowDefinition Height="*" /> <!-- Вторая секция -->
+        </Grid.RowDefinitions>
+
+        <!-- 🔺 Первая панель -->
+        <Border Grid.Row="0" Margin="1" CornerRadius="5" Padding="10"
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource SystemAccentColorBrush}" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Модели для экспорта" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MinHeight="150">
+                    <StackPanel x:Name="ModelsContainer"/>
+                </ScrollViewer>
+
+                <ui:Button Grid.Row="2"
+                           Content="Добавить"
+                           Icon="{ui:SymbolIcon AddCircle24}"
+                           Command="{Binding AddModelCommand}"
+                           Appearance="Secondary"
+                           Margin="0,10,10,0"/>
+            </Grid>
+        </Border>
+
+        <!-- 🔻 Вторая панель -->
+        <Border Grid.Row="1" Margin="1" CornerRadius="5" Padding="10"
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource SystemAccentColorBrush}" BorderThickness="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Настройки правил экспорта" FontWeight="Bold" Margin="0,0,0,10"/>
+
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MinHeight="150">
+                    <StackPanel x:Name="RulesContainer"/>
+                </ScrollViewer>
+
+                <ui:Button Grid.Row="2"
+                           Content="Добавить"
+                           Icon="{ui:SymbolIcon AddCircle24}"
+                           Command="{Binding AddRuleCommand}"
+                           Appearance="Secondary"
+                           Margin="0,10,10,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Page>
