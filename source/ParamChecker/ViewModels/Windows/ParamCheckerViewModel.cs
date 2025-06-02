@@ -5,6 +5,7 @@ using ParamChecker.ViewModels.PagesViewModels;
 using ParamChecker.Views.Dialogs;
 using ParamChecker.Views.Pages;
 using ParamChecker.Views.Windows;
+using Wpf.Ui.Appearance;
 
 namespace ParamChecker.ViewModels.Windows;
 
@@ -54,5 +55,6 @@ namespace ParamChecker.ViewModels.Windows;
                 Title =  dialog.Title;
             }
         }
+        
         
     }

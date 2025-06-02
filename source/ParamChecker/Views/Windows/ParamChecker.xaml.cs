@@ -20,7 +20,9 @@ namespace ParamChecker.Views.Windows
         public ParamChecker(ParamCheckerViewModel viewModel)
         {
             InitializeComponent();
+            ThemeWatcherService.Initialize();
             ThemeWatcherService.Watch(this);
+            ThemeWatcherService.ApplyTheme(ApplicationTheme.Light);
             
             _viewModel = viewModel;
             DataContext = _viewModel;

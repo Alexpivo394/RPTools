@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows;
 using RPToolsUI.Services;
 using Wpf.Ui.Appearance;
 
@@ -16,8 +12,11 @@ namespace ParamChecker.ViewModels.PagesViewModels
         partial void OnIsDarkThemeChanged(bool value)
         {
             var newTheme = value ? ApplicationTheme.Dark : ApplicationTheme.Light;
-            ApplicationThemeManager.Apply(newTheme);
+            ThemeWatcherService.ApplyTheme(newTheme);
         }
+
+
+
     }
 }
      
