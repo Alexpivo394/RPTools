@@ -41,7 +41,6 @@
             </Border>
             
             <ComboBox Margin="10"
-                      Height="20"
                       ItemsSource="{Binding ItemsCatOrPar}"
                       SelectedItem="{Binding SelectedItemCatOrPar, Mode=TwoWay}"/>
             
@@ -115,7 +114,6 @@
                     </StackPanel>
                     
                     <ComboBox Margin="10,0,10,0"
-                              Height="20"
                               ItemsSource="{Binding ItemsParOrPar}"
                               SelectedItem="{Binding SelectedItemParOrPar, Mode=TwoWay}"/>
                 </StackPanel>

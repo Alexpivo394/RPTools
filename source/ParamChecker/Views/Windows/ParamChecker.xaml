@@ -46,7 +46,6 @@
                         <StackPanel Orientation="Horizontal" Height="40">
                             <ui:SymbolIcon Symbol="Settings48" VerticalAlignment="Center" Margin="5,0,5,0"/>
                             <TextBlock Text="Настройки"
-                                       Foreground="{DynamicResource ForegroundBrush}"
                                        VerticalAlignment="Center"/>
                         </StackPanel>
                             </Border>

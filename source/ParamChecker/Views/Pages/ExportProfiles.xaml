@@ -27,7 +27,47 @@
                 <TextBlock Text="Модели для экспорта" FontWeight="Bold" Margin="0,0,0,10"/>
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MinHeight="150">
-                    <StackPanel x:Name="ModelsContainer"/>
+                    <ui:ListView 
+                        ItemsSource="{Binding Models}">
+                        <ui:ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ui:TextBox 
+                                        Grid.Column="0" 
+                                        Text="{Binding ServerPath}"
+                                        PlaceholderText="Путь к модели Revit"/>
+
+                                    <ui:TextBox 
+                                        Grid.Column="1" 
+                                        Text="{Binding ViewName}"
+                                        PlaceholderText="Имя вида"
+                                        Margin="10,0,0,0"/>
+
+                                    <ui:TextBox 
+                                        Grid.Column="2" 
+                                        Text="{Binding WorksetKeyword}"
+                                        PlaceholderText="Ключевое слово РН"
+                                        Margin="10,0,0,0"/>
+
+                                    <ui:Button 
+                                        Grid.Column="3" 
+                                        Icon="{ui:SymbolIcon Symbol=Delete24}"
+                                        Command="{Binding DataContext.RemoveModelCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}"
+                                        Appearance="Transparent"
+                                        VerticalAlignment="Stretch"
+                                        Margin="10,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ui:ListView.ItemTemplate>
+                    </ui:ListView>
                 </ScrollViewer>
 
                 <ui:Button Grid.Row="2"
@@ -53,7 +93,60 @@
                 <TextBlock Text="Настройки правил экспорта" FontWeight="Bold" Margin="0,0,0,10"/>
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MinHeight="150">
-                    <StackPanel x:Name="RulesContainer"/>
+                    <ui:ListView 
+                        ItemsSource="{Binding Rules}">
+                        <ui:ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <ui:TextBox 
+                                        Grid.Column="0" 
+                                        Text="{Binding FilterConfigJson}"
+                                        PlaceholderText="Фильтр"/>
+                                                
+                                    <ui:Button 
+                                        Grid.Column="1" 
+                                        Icon="{ui:SymbolIcon MoreHorizontal24}"
+                                        Command="{Binding DataContext.OpenFilterConfigCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}"
+                                        Appearance="Secondary"
+                                        VerticalAlignment="Stretch"
+                                        Margin="0,0,0,0"/>
+
+                                    <ui:TextBox 
+                                        Grid.Column="2" 
+                                        Text="{Binding ParameterConfigJson}"
+                                        PlaceholderText="Параметры для проверки"
+                                        Margin="10,0,0,0"/>
+                                                
+                                    <ui:Button 
+                                        Grid.Column="3" 
+                                        Icon="{ui:SymbolIcon MoreHorizontal24}"
+                                        Command="{Binding DataContext.OpenParameterConfigCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}"
+                                        Appearance="Secondary"
+                                        VerticalAlignment="Stretch"
+                                        Margin="0,0,0,0"/>
+
+                                    <ui:Button 
+                                        Grid.Column="4" 
+                                        Icon="{ui:SymbolIcon Symbol=Delete24}"
+                                        Command="{Binding DataContext.RemoveRuleCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}"
+                                        Appearance="Transparent"
+                                        VerticalAlignment="Stretch"
+                                        Margin="10,0,0,0"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ui:ListView.ItemTemplate>
+                    </ui:ListView>
                 </ScrollViewer>
 
                 <ui:Button Grid.Row="2"

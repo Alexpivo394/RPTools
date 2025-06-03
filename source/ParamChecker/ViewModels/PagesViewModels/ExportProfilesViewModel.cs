@@ -9,12 +9,8 @@ namespace ParamChecker.ViewModels.PagesViewModels
 {
     public partial class ExportProfilesViewModel : ObservableObject
     {
+        [ObservableProperty]
         private string _profileName;
-        public string ProfileName
-        {
-            get => _profileName;
-            set => SetProperty(ref _profileName, value);
-        }
         
         [ObservableProperty]
         private ObservableCollection<ExportModel> _models = new();
