@@ -127,7 +127,7 @@ namespace ModelTransplanter.ViewModels
                    !IsBusy;
         }
 
-        private async void TransferElements(object parameter)
+        private void TransferElements(object parameter)
         {
             IsBusy = true;
             ProgressValue = 0;

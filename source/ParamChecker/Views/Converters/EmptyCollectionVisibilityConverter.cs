@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#nullable enable
+using System.Collections;
 using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;

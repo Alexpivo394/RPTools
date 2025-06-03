@@ -1,13 +1,14 @@
-﻿using System.ComponentModel;
+﻿#nullable enable
+using System.ComponentModel;
 
 namespace ParamChecker.Models.Filters;
 
-public class CategoryFilterItem : INotifyPropertyChanged
+public sealed class CategoryFilterItem : INotifyPropertyChanged
 {
-    private string _catName;
+    private string? _catName;
     private bool _catIsSelected;
 
-    public string CatName
+    public string? CatName
     {
         get => _catName;
         set => SetField(ref _catName, value);
@@ -23,12 +24,12 @@ public class CategoryFilterItem : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    protected virtual void OnPropertyChanged(string propertyName)
+    private void OnPropertyChanged(string propertyName)
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    protected bool SetField<T>(ref T field, T value, string propertyName = "")
+    private bool SetField<T>(ref T field, T value, string propertyName = "")
     {
         if (EqualityComparer<T>.Default.Equals(field, value)) return false;
         field = value;
