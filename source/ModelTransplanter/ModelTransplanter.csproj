@@ -41,11 +41,11 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*" />
+        <PackageReference Include="WPF-UI" Version="4.0.2" />
+        <PackageReference Include="WPF-UI.Abstractions" Version="4.0.2" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\Toad-Tools-UI\source\Toad-Tools-UI.Abstractions\Toad-Tools-UI.Abstractions.csproj" />
-      <ProjectReference Include="..\..\..\Toad-Tools-UI\source\Toad-Tools-UI\Toad-Tools-UI.csproj" />
       <ProjectReference Include="..\RPToolsUI\RPToolsUI.csproj" />
     </ItemGroup>
 
