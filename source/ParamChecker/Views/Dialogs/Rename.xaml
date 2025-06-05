@@ -9,22 +9,34 @@
     mc:Ignorable="d"
     Title="ParamChecker"
     WindowStartupLocation="CenterScreen"
-    Height="250"
+    Height="200"
     Width="300"
-    MinHeight="250"
+    MinHeight="200"
     MinWidth="300"
     ExtendsContentIntoTitleBar="True">
 
     <Grid>
-        <StackPanel Margin="20">
-            <ui:TitleBar Title="Rename" Icon="Rename24" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <ui:TitleBar Grid.Row="0" Title="Rename" Icon="Rename24" />
+        <StackPanel Margin="5" Grid.Row="1">
             <ui:TextBlock Text="Переименовать"/>
             <ui:TextBox Text="{Binding NewTitle, UpdateSourceTrigger=PropertyChanged}" 
-                        Margin="0 10 0 10"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">    
-                <ui:Button Content="Ок" Width="80" Margin="0 0 10 0" Command="{Binding ConfirmCommand}" Appearance="Primary" />
-                <ui:Button Content="Отмена" Width="80" Command="{Binding CancelCommand}" />
-            </StackPanel>
+                        Margin="10"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">    
+            <ui:Button Content="Ок"
+                       Margin="0 0 10 0"
+                       Command="{Binding ConfirmCommand}"
+                       Appearance="Primary"
+                       Icon="{ui:SymbolIcon Checkmark24}"/>
+            <ui:Button Content="Отмена"
+                       Command="{Binding CancelCommand}"
+                       Icon="{ui:SymbolIcon Dismiss24}"/>
         </StackPanel>
     </Grid>
 </ui:FluentWindow>

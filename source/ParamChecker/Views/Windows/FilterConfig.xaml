@@ -5,23 +5,95 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:vm="clr-namespace:ParamChecker.ViewModels.Conditions"
+    xmlns:conditions="clr-namespace:ParamChecker.ViewModels.Conditions"
     xmlns:converters="clr-namespace:ParamChecker.Views.Converters"
     mc:Ignorable="d"
     Title="ParamChecker"
     WindowStartupLocation="CenterScreen"
-    Height="600"
-    Width="400"
-    MinHeight="600"
-    MinWidth="400"
+    Height="800"
+    Width="600"
+    MinHeight="800"
+    MinWidth="600"
     ExtendsContentIntoTitleBar="True">
+    <Window.Resources>
+        <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+        <!-- Шаблон простого условия -->
+        <DataTemplate x:Key="SimpleConditionTemplate" DataType="{x:Type vm:SimpleConditionViewModel}">
+            <Grid Margin="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Text="{Binding ParameterName}" Margin="0,0,0,0"/>
+                <ComboBox Grid.Column="1"
+                          Margin="5,0,5,0"
+                          ItemsSource="{Binding ItemsLogic}"
+                          SelectedItem="{Binding SelectedItemLogic, Mode=TwoWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox Grid.Column="2" Text="{Binding Value}" Margin="5,0,0,0"/>
+                <ui:Button Grid.Column="3" Icon="{ui:SymbolIcon Delete24}"
+                           Command="{Binding RemoveCommand}"
+                           Appearance="Transparent"
+                           Margin="5,0,0,0"/>
+            </Grid>
+        </DataTemplate>
+
+        <!-- Шаблон группы -->
+        <DataTemplate x:Key="GroupConditionTemplate" DataType="{x:Type conditions:GroupConditionViewModel}">
+            <Border Margin="2" Background="{DynamicResource ControlElevationBorderBrush}" Padding="2" BorderThickness="4,0,0,0" BorderBrush="{DynamicResource SystemAccentColorTertiaryBrush}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                <ItemsControl Grid.Column="0" ItemsSource="{Binding Children}">
+                    <ItemsControl.ItemTemplateSelector>
+                        <vm:ConditionTemplateSelector
+                            SimpleTemplate="{StaticResource SimpleConditionTemplate}"/>
+                    </ItemsControl.ItemTemplateSelector>
+                </ItemsControl>
+                <StackPanel Grid.Column="1" Orientation="Vertical">
+                    <ui:Button Icon="{ui:SymbolIcon Delete24}"
+                               Command="{Binding RemoveCommand}"
+                               Appearance="Secondary"
+                               Margin="5,0,0,0"/>
+                    <ui:Button Icon="{ui:SymbolIcon AddCircle24}"
+                               Command="{Binding AddCommand}"
+                               Appearance="Secondary"
+                               Margin="5,0,0,0"/>
+                </StackPanel>
+            </Grid>
+            </Border>
+        </DataTemplate>
+
+        <!-- Главный селектор -->
+        <vm:ConditionTemplateSelector x:Key="ConditionTemplateSelector"
+                                         SimpleTemplate="{StaticResource SimpleConditionTemplate}"
+                                         GroupTemplate="{StaticResource GroupConditionTemplate}" />
+    </Window.Resources>
 
     <Grid>
-        <StackPanel>
-            <!-- Title Bar -->
-            <ui:TitleBar Title="ParamChecker" Icon="BoxMiltipleSearch24" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Bar -->
+            <ui:TitleBar Grid.Row="0" Title="ParamChecker" Icon="BoxMiltipleSearch24" />
             
             <!-- Category panel -->
-            <Border Margin="1" CornerRadius="5" Padding="10" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource SystemAccentColorBrush}" BorderThickness="1">
+            <Border Grid.Row="1" Margin="3" CornerRadius="5" Padding="10" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource SystemAccentColorBrush}" BorderThickness="1">
                 <StackPanel>
                     <TextBlock Text="Фильтр по категориям" FontWeight="Bold" Margin="0,0,0,10"/>
                     <ui:TextBox Text="{Binding CategoryFilter, UpdateSourceTrigger=PropertyChanged}"
@@ -40,65 +112,23 @@
                 </StackPanel>
             </Border>
             
-            <ComboBox Margin="10"
+            <ComboBox Grid.Row="2" Margin="10"
                       ItemsSource="{Binding ItemsCatOrPar}"
-                      SelectedItem="{Binding SelectedItemCatOrPar, Mode=TwoWay}"/>
+                      SelectedItem="{Binding SelectedItemCatOrPar, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             
             <!-- Parameters panels -->
-            <Border Margin="1" CornerRadius="5" Padding="10" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource SystemAccentColorBrush}" BorderThickness="1">
+            <Border Grid.Row="3" Margin="3" CornerRadius="5" Padding="10" Background="{DynamicResource ControlFillColorDefaultBrush}" BorderBrush="{DynamicResource SystemAccentColorBrush}" BorderThickness="1">
                 <StackPanel>
                     <TextBlock Text="Фильтр по параметрам" FontWeight="Bold" Margin="0,0,0,10"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="200">
-                        <ItemsControl ItemsSource="{Binding FilterConditions}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <Border BorderBrush="{DynamicResource SystemAccentColorBrush}" 
-                                            BorderThickness="1" 
-                                            CornerRadius="5" 
-                                            Margin="0,5" 
-                                            Padding="5">
-                                        <StackPanel>
-                                            <ItemsControl ItemsSource="{Binding Conditions}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal" Margin="0,5">
-                                                            <ui:TextBox Text="{Binding ParameterName}" 
-                                                                       PlaceholderText="Имя параметра" 
-                                                                       Width="150"/>
-                                                            <ui:TextBox Text="{Binding ParameterValue}" 
-                                                                       PlaceholderText="Значение параметра" 
-                                                                       Margin="10,0,10,0" 
-                                                                       Width="150"/>
-                                                            <ui:Button Icon="{ui:SymbolIcon Delete24}" 
-                                                                       Command="{Binding RemoveConditionCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                                       CommandParameter="{Binding}"
-                                                                       Appearance="Secondary"/>
-                                                        </StackPanel>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                            
-                                            <ui:Button Content="Добавить условие"
-                                                       Command="{Binding AddSimpleConditionCommand}"
-                                                       Margin="0,5,0,0">
-                                                <ui:Button.Visibility>
-                                                    <Binding Path="Type" ConverterParameter="Group">
-                                                        <Binding.Converter>
-                                                            <converters:ConditionTypeToVisibilityConverter/>
-                                                        </Binding.Converter>
-                                                    </Binding>
-                                                </ui:Button.Visibility>
-                                            </ui:Button>
-                                        </StackPanel>
-                                    </Border>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <StackPanel x:Name="FiltersContainer"/>
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="170">
+                        <ItemsControl ItemsSource="{Binding FilterConditions}"
+                                      ItemTemplateSelector="{StaticResource ConditionTemplateSelector}"/>
                     </ScrollViewer>
                     
                     <StackPanel Orientation="Horizontal" Margin="10">
@@ -115,16 +145,22 @@
                     
                     <ComboBox Margin="10,0,10,0"
                               ItemsSource="{Binding ItemsParOrPar}"
-                              SelectedItem="{Binding SelectedItemParOrPar, Mode=TwoWay}"/>
+                              SelectedItem="{Binding SelectedItemParOrPar, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
                 </StackPanel>
             </Border>
             
             <!-- Apply button region -->
-            <ui:Button Content="Применить"
+            <ui:Button Grid.Row="4" Content="Применить"
                        Icon="{ui:SymbolIcon Checkmark24}"
                        Command="{Binding ApllyFiltersCommand}"
                        Appearance="Primary"
-                       Margin="10"/>
-        </StackPanel>
+                       Margin="10"
+                       HorizontalAlignment="Right"/>
     </Grid>
 </ui:FluentWindow>

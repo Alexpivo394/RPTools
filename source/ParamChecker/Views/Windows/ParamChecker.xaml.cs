@@ -15,14 +15,14 @@ namespace ParamChecker.Views.Windows
     {
         private readonly ParamCheckerViewModel _viewModel;
         
-        public SettingsViewModel SettingsVM { get; } = new SettingsViewModel();
+        public SettingsViewModel SettingsVm { get; } = new SettingsViewModel();
 
         public ParamChecker(ParamCheckerViewModel viewModel)
         {
             InitializeComponent();
             ThemeWatcherService.Initialize();
             ThemeWatcherService.Watch(this);
-            ThemeWatcherService.ApplyTheme(ApplicationTheme.Light);
+            ThemeWatcherService.ApplyTheme(ApplicationTheme.Dark);
             
             _viewModel = viewModel;
             DataContext = _viewModel;
@@ -44,7 +44,7 @@ namespace ParamChecker.Views.Windows
         
         private void OnSettingsClicked(object sender, MouseButtonEventArgs e)
         {
-            var page = new Settings(SettingsVM);
+            var page = new Settings(SettingsVm);
 
             MainFrame.Navigate(page);
         }

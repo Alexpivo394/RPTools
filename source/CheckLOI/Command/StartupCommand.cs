@@ -21,7 +21,7 @@ namespace CheckLOI.Command
             var doc = commandData.Application.ActiveUIDocument.Document;
             var categoryService = new CategoryService();
             categoryService.Initialize(doc);
-            var vm = new CheckLOI.ViewModels.CheckLOIViewModel(commandData, categoryService);
+            var vm = new CheckLOI.ViewModels.CheckLoiViewModel(commandData, categoryService);
             var view = new CheckLoiView(vm);
             view.ShowDialog();
             return Result.Succeeded;

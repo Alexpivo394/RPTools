@@ -2,11 +2,6 @@
 using Autodesk.Revit.UI;
 using ParamChecker.Services;
 using ParamChecker.ViewModels.Windows;
-using ParamChecker.Views.Windows;
-using RPToolsUI.Services;
-using Wpf.Ui;
-using Wpf.Ui.Abstractions;
-using Wpf.Ui.Appearance;
 
 namespace ParamChecker.Commands;
 
@@ -19,7 +14,7 @@ public class StartupCommand : IExternalCommand
         var doc = commandData.Application.ActiveUIDocument.Document;
         var categoryService = new CategoryService();
         categoryService.Initialize(doc);
-        var vm = new ParamCheckerViewModel();
+        var vm = new ParamCheckerViewModel(categoryService);
         var view = new Views.Windows.ParamChecker(vm);
         view.ShowDialog();
         return Result.Succeeded;

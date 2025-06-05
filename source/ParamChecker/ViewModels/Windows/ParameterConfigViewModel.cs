@@ -10,8 +10,7 @@ namespace ParamChecker.ViewModels.Windows
 
         public ParameterConfigViewModel()
         {
-            // Добавляем один параметр по умолчанию
-            Parameters.Add(new ParameterItem());
+
         }
 
         [RelayCommand]

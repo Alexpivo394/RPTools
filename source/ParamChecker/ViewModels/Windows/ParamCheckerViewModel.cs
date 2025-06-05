@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using ParamChecker.Services;
 using ParamChecker.ViewModels.PagesViewModels;
 using ParamChecker.Views.Dialogs;
 using ParamChecker.Views.Pages;
@@ -22,10 +23,17 @@ namespace ParamChecker.ViewModels.Windows;
         [ObservableProperty]
         private bool _isChecked;
         
+        private readonly CategoryService _categoryService;
+
+        public ParamCheckerViewModel(CategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
+        
         [RelayCommand]
         private void AddCustomNavItem()
         {
-            var vm = new ExportProfilesViewModel();
+            var vm = new ExportProfilesViewModel(_categoryService);
             vm.ProfileName = $"Профиль {CustomNavItems.Count + 1}";
 
             var page = new ExportProfiles
@@ -34,7 +42,7 @@ namespace ParamChecker.ViewModels.Windows;
             };
 
             var item = new CustomNavItem(vm.ProfileName, page, vm, RemoveNavItem);
-            item.OnNavigate = NavigateAction; // 👈 вот тут магия
+            item.OnNavigate = NavigateAction;
             CustomNavItems.Add(item);
         }
         

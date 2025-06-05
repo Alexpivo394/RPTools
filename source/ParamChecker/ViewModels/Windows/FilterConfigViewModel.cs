@@ -1,7 +1,8 @@
 ﻿using ParamChecker.Models.Filters;
 using ParamChecker.Services;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
+using ParamChecker.ViewModels.Conditions;
+
 namespace ParamChecker.ViewModels.Windows
 {
     public partial class FilterConfigViewModel : ObservableObject
@@ -16,43 +17,37 @@ namespace ParamChecker.ViewModels.Windows
 
         [ObservableProperty]
         private ObservableCollection<CategoryFilterItem> _filteredCategories = new();
-
-        [ObservableProperty]
-        private ObservableCollection<FilterCondition> _filterConditions = new();
-
+        
         [ObservableProperty]
         private CategoryParameterLogic _selectedItemCatOrPar;
 
         [ObservableProperty]
-        private FilterLogic _selectedItemParOrPar;
+        private FilterInGroupLogic _selectedItemParOrPar;
+        
+        [ObservableProperty]
+        private ObservableCollection<ConditionViewModelBase> filterConditions = new();
 
+        
         public IEnumerable<CategoryParameterLogic> ItemsCatOrPar => 
             Enum.GetValues(typeof(CategoryParameterLogic)).Cast<CategoryParameterLogic>();
 
-        public IEnumerable<FilterLogic> ItemsParOrPar => 
-            Enum.GetValues(typeof(FilterLogic)).Cast<FilterLogic>();
-
-        public ICommand AddSimpleConditionCommand { get; }
-        public ICommand AddGroupConditionCommand { get; }
-        public ICommand ApllyFiltersCommand { get; }
+        public IEnumerable<FilterInGroupLogic> ItemsParOrPar => 
+            Enum.GetValues(typeof(FilterInGroupLogic)).Cast<FilterInGroupLogic>();
+        
 
         public FilterConfigViewModel(CategoryService categoryService)
         {
             _categoryService = categoryService;
-
-            AddSimpleConditionCommand = new RelayCommand(AddSimpleCondition);
-            AddGroupConditionCommand = new RelayCommand(AddGroupCondition);
-            ApllyFiltersCommand = new RelayCommand(ApplyFilters);
-
+            
             SelectedItemCatOrPar = CategoryParameterLogic.CategoriesAndParameters;
-            SelectedItemParOrPar = FilterLogic.And;
+            SelectedItemParOrPar = FilterInGroupLogic.And;
 
             PropertyChanged += OnPropertyChanged;
+            
         }
 
-        public void Initialize(Document doc)
+        public void Initialize()
         {
-            _categoryService.Initialize(doc);
             LoadCategories();
         }
 
@@ -94,77 +89,29 @@ namespace ParamChecker.ViewModels.Windows
             FilteredCategories = new ObservableCollection<CategoryFilterItem>(filtered);
         }
 
-        private void AddSimpleCondition()
-        {
-            var condition = new FilterCondition
-            {
-                Type = FilterConditionType.Simple
-            };
-            condition.Conditions.Add(new ParameterCondition());
-            FilterConditions.Add(condition);
-        }
-
-        private void AddGroupCondition()
-        {
-            var condition = new FilterCondition
-            {
-                Type = FilterConditionType.Group
-            };
-            condition.Conditions.Add(new ParameterCondition());
-            FilterConditions.Add(condition);
-        }
-        
-        [RelayCommand]
-        private void RemoveCondition(ParameterCondition condition)
-        {
-            foreach (var filterCondition in FilterConditions)
-            {
-                if (filterCondition.Conditions.Contains(condition))
-                {
-                    filterCondition.Conditions.Remove(condition);
-                    break;
-                }
-            }
-        }
-
-        private void ApplyFilters()
-        {
-            var result = new FilterConfigResult
-            {
-                SelectedCategories = Categories
-                    .Where(c => c.CatIsSelected)
-                    .Select(c => c.BuiltInCategory)
-                    .ToList(),
-                Conditions = FilterConditions.ToList(),
-                CategoryParameterLogic = SelectedItemCatOrPar,
-                ParametersLogic = SelectedItemParOrPar
-            };
-
-            // Здесь нужно вернуть результат в вызывающее окно
-            // Например, через событие или callback
-        }
-        
         public string GetResultJson()
         {
-            var result = new FilterConfigResult
+            throw new NotImplementedException();
+        }
+
+        [RelayCommand]
+        private void AddSimpleCondition()
+        {
+            var simple = new SimpleConditionViewModel
             {
-                // заполните данные
+                RemoveSimpleRequested = (vm) => FilterConditions.Remove(vm)
             };
-            return result.ToJson();
+            FilterConditions.Add(simple);
         }
 
-        // Методы для удаления условий будут вызываться из самих условий
-        public void RemoveCondition(FilterCondition condition)
+        [RelayCommand]
+        private void AddGroupCondition()
         {
-            FilterConditions.Remove(condition);
-        }
-
-        public void AddConditionToGroup(FilterCondition groupCondition)
-        {
-            if (groupCondition.Type == FilterConditionType.Group)
+            var group = new GroupConditionViewModel
             {
-                groupCondition.Conditions.Add(new ParameterCondition());
-            }
+                RemoveGroupRequested = (vm) => FilterConditions.Remove(vm)
+            };
+            FilterConditions.Add(group);
         }
     }
 }

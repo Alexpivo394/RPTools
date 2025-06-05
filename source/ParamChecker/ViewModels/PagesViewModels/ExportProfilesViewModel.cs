@@ -17,7 +17,14 @@ namespace ParamChecker.ViewModels.PagesViewModels
 
         [ObservableProperty]
         private ObservableCollection<ExportRule> _rules = new();
+        
+        private readonly CategoryService _categoryService;
 
+        public ExportProfilesViewModel(CategoryService categoryService)
+        {
+            _categoryService = categoryService;
+        }
+        
         [RelayCommand]
         private void AddModel()
         {
@@ -45,8 +52,8 @@ namespace ParamChecker.ViewModels.PagesViewModels
         [RelayCommand]
         private void OpenFilterConfig(ExportRule rule)
         {
-            var categoryService = new CategoryService();
-            var filterConfigViewModel = new FilterConfigViewModel(categoryService);
+            var filterConfigViewModel = new FilterConfigViewModel(_categoryService);
+            filterConfigViewModel.Initialize();
             var filterWindow = new FilterConfig(filterConfigViewModel);
             if (filterWindow.ShowDialog() == true && filterWindow.DataContext is FilterConfigViewModel vm)
             {

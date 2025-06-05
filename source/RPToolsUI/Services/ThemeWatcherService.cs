@@ -7,7 +7,7 @@ namespace RPToolsUI.Services;
 
 public class ThemeWatcherService
 {
-    private static readonly List<FrameworkElement> _observedElements = new List<FrameworkElement>();
+    private static readonly List<FrameworkElement> ObservedElements = new List<FrameworkElement>();
     public static void Initialize()
     {
         UiApplication.Current.Resources = new ResourceDictionary
@@ -25,7 +25,7 @@ public class ThemeWatcherService
 
     private static void OnApplicationThemeManagerChanged(ApplicationTheme currentapplicationtheme, System.Windows.Media.Color systemaccent)
     {
-        foreach (var frameworkElement in _observedElements)
+        foreach (var frameworkElement in ObservedElements)
         {
             ApplicationThemeManager.Apply(frameworkElement);
 
@@ -57,7 +57,7 @@ public class ThemeWatcherService
     private static void OnWatchedElementLoaded(object sender, RoutedEventArgs e)
     {
         var element = (FrameworkElement)sender;
-        _observedElements.Add(element);
+        ObservedElements.Add(element);
 
         if (element.Resources.MergedDictionaries[0].Source.OriginalString != UiApplication.Current.Resources.MergedDictionaries[0].Source.OriginalString)
         {
@@ -68,11 +68,11 @@ public class ThemeWatcherService
     private static void OnWatchedElementUnloaded(object sender, RoutedEventArgs e)
     {
         var element = (FrameworkElement)sender;
-        _observedElements.Remove(element);
+        ObservedElements.Remove(element);
     }
     private static void UpdateBackground(ApplicationTheme theme)
     {
-        foreach (var window in _observedElements.Select(Window.GetWindow).Distinct())
+        foreach (var window in ObservedElements.Select(Window.GetWindow).Distinct())
         {
             WindowBackgroundManager.UpdateBackground(window, theme, WindowBackdropType.Mica);
         }

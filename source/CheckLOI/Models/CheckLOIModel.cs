@@ -13,7 +13,7 @@ using System.Windows;
 
 namespace CheckLOI.Models
 {
-    public class CheckLOIModel
+    public class CheckLoiModel
     {
         public async Task<ProcessingResult> ProcessModelAsync(
             ExternalCommandData commandData,

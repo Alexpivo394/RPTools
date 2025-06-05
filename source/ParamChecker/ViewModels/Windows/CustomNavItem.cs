@@ -10,7 +10,7 @@ namespace ParamChecker.ViewModels.Windows;
 public partial class CustomNavItem : ObservableObject
 {
     [ObservableProperty]
-    private string title;
+    private string _title;
     public Page Page { get; }
     public object ViewModel { get; }
     

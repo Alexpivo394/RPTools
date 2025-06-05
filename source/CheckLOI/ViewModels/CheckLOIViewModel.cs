@@ -14,10 +14,10 @@ using RPToolsUI.Services;
 
 namespace CheckLOI.ViewModels
 {
-    public sealed partial class CheckLOIViewModel : BaseViewModel
+    public sealed partial class CheckLoiViewModel : BaseViewModel
     {
         private readonly ExternalCommandData _commandData;
-        private readonly CheckLOIModel _model;
+        private readonly CheckLoiModel _model;
         private readonly CategoryService _categoryService;
         private int _tabCounter = 1;
         private bool _darkTheme;
@@ -32,11 +32,11 @@ namespace CheckLOI.ViewModels
             }
         }
 
-        public CheckLOIViewModel(ExternalCommandData commandData, CategoryService categoryService)
+        public CheckLoiViewModel(ExternalCommandData commandData, CategoryService categoryService)
         {
             _commandData = commandData;
             _categoryService = categoryService;
-            _model = new CheckLOIModel();            
+            _model = new CheckLoiModel();            
 
             // Инициализация команд
             AddTabCommand = new RelayCommand(AddTab);

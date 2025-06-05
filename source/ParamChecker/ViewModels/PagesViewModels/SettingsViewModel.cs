@@ -7,7 +7,7 @@ namespace ParamChecker.ViewModels.PagesViewModels
     public sealed partial class SettingsViewModel : ObservableObject
     {
         [ObservableProperty]
-        private bool _isDarkTheme;
+        private bool _isDarkTheme = true;
         
         [ObservableProperty]
         private bool _updateGeneralReport;
@@ -24,6 +24,7 @@ namespace ParamChecker.ViewModels.PagesViewModels
             ThemeWatcherService.ApplyTheme(newTheme);
         }
         
+        
         [RelayCommand]
         private void SelectLogPath(object parameter)
         {
@@ -31,7 +32,7 @@ namespace ParamChecker.ViewModels.PagesViewModels
             {
                 Filter = "Текстовые файлы (*.txt)|*.txt",
                 DefaultExt = ".txt",
-                FileName = "TransferElementsLog.txt"
+                FileName = "ParamCheckerLog.txt"
             };
 
             if (saveFileDialog.ShowDialog() == true)

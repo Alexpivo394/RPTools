@@ -78,10 +78,10 @@ public class StartupCommand : IExternalCommand
             ogs2.SetCutLineColor(drugoycvet);
 
             var blin = new Color(255, 255, 0);
-            var ogsBLIN = new OverrideGraphicSettings();
-            ogsBLIN.SetProjectionLineColor(blin);
-            ogsBLIN.SetCutForegroundPatternColor(blin);
-            ogsBLIN.SetCutLineColor(blin);
+            var ogsBlin = new OverrideGraphicSettings();
+            ogsBlin.SetProjectionLineColor(blin);
+            ogsBlin.SetCutForegroundPatternColor(blin);
+            ogsBlin.SetCutLineColor(blin);
 
             if (doc.GetElement(lotok.GetTypeId()).LookupParameter("ADSK_Наименование (по типу)").AsString() ==
                 "Лоток перфорированный")
@@ -93,7 +93,7 @@ public class StartupCommand : IExternalCommand
 
             if (doc.GetElement(lotok.GetTypeId()).LookupParameter("ADSK_Наименование (по типу)").AsString() ==
                 "Лоток проволочный")
-                doc.ActiveView.SetElementOverrides(lotok.Id, ogsBLIN);
+                doc.ActiveView.SetElementOverrides(lotok.Id, ogsBlin);
 
             t0.Commit();
         }

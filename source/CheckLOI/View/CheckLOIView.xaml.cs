@@ -7,7 +7,7 @@ namespace CheckLOI.View
 {
     public partial class CheckLoiView : FluentWindow
     {
-        public CheckLoiView(CheckLOIViewModel viewModel)
+        public CheckLoiView(CheckLoiViewModel viewModel)
         {
             InitializeComponent();
             DataContext = viewModel;

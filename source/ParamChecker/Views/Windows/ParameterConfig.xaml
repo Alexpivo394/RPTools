@@ -9,42 +9,50 @@
     mc:Ignorable="d"
     Title="ParamChecker"
     WindowStartupLocation="CenterScreen"
-    Height="400"
-    Width="300"
-    MinHeight="300"
-    MinWidth="300"
+    Height="800"
+    Width="600"
+    MinHeight="800"
+    MinWidth="600"
     ExtendsContentIntoTitleBar="True">
 
     <Grid>
-        <StackPanel>
-            <!-- Title Bar -->
-            <ui:TitleBar Title="ParamChecker" Icon="BoxMiltipleSearch24" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <!-- Title Bar -->
+            <ui:TitleBar Grid.Row="0" Title="ParamChecker" Icon="BoxMiltipleSearch24" />
             
             <!-- Parameter List -->
-            <Border Margin="0,25,0,0" CornerRadius="5" Padding="10" Background="{DynamicResource ControlFillColorDefaultBrush}">
-                <StackPanel>
+            <Border Grid.Row="1" Margin="0,0,0,0" CornerRadius="5" Padding="10" Background="{DynamicResource ControlFillColorDefaultBrush}">
+                <StackPanel Orientation="Vertical">
                     <TextBlock Text="Параметры для экспорта" FontWeight="Bold" Margin="0,0,0,10"/>
-                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="300">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="550">
                         <ItemsControl ItemsSource="{Binding Parameters}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                                        <ui:TextBox Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                    PlaceholderText="Введите имя параметра"
-                                                    Width="180"/>
-                                        <ui:Button Icon="Delete24"
+                                    <Grid Margin="5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>    
+                                        </Grid.ColumnDefinitions>
+                                        <ui:TextBox Grid.Column="0" Text="{Binding Value, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                    PlaceholderText="Введите имя параметра"/>
+                                        <ui:Button Grid.Column="1" Icon="{ui:SymbolIcon Delete24}"
                                                    Command="{Binding DataContext.RemoveParameterCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                    CommandParameter="{Binding}"
                                                    Appearance="Secondary"
-                                                   Margin="5,0,0,0"/>
-                                    </StackPanel>
+                                                   Margin="5,0,0,0"
+                                                   HorizontalAlignment="Stretch"/>
+                                    </Grid>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </ScrollViewer>
                     
                     <ui:Button Content="Добавить параметр"
-                               Icon="AddCircle24"
+                               Icon="{ui:SymbolIcon AddCircle24}"
                                Command="{Binding AddParameterCommand}"
                                Appearance="Secondary"
                                Margin="0,10,0,0"
@@ -53,12 +61,11 @@
             </Border>
             
             <!-- Apply button -->
-            <ui:Button Content="Применить"
-                       Icon="Checkmark24"
+            <ui:Button Grid.Row="2" Content="Применить"
+                       Icon="{ui:SymbolIcon Checkmark24}"
                        Command="{Binding ApplyParameterCommand}"
                        Appearance="Primary"
-                       Margin="10,10,0,0"
-                       HorizontalAlignment="Left"/>
-        </StackPanel>
+                       Margin="10"
+                       HorizontalAlignment="Right"/>
     </Grid>
 </ui:FluentWindow>
