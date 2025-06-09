@@ -12,6 +12,11 @@ namespace ParamChecker.Views.Windows
         public FilterConfig(FilterConfigViewModel viewModel)
         {
             InitializeComponent();
+            viewModel.OnApplyRequested = json =>
+            {
+                DialogResult = true;
+                Close(); // Закрываем окно
+            };
             DataContext = viewModel;
             ThemeWatcherService.Watch(this);
         }

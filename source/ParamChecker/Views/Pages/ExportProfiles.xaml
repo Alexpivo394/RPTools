@@ -109,7 +109,10 @@
                                     <ui:TextBox 
                                         Grid.Column="0" 
                                         Text="{Binding FilterConfigJson}"
-                                        PlaceholderText="Фильтр"/>
+                                        PlaceholderText="Фильтр"
+                                        MaxHeight="100"
+                                        VerticalScrollBarVisibility="Auto"
+                                        HorizontalScrollBarVisibility="Auto"/>
                                                 
                                     <ui:Button 
                                         Grid.Column="1" 
@@ -124,7 +127,10 @@
                                         Grid.Column="2" 
                                         Text="{Binding ParameterConfigJson}"
                                         PlaceholderText="Параметры для проверки"
-                                        Margin="10,0,0,0"/>
+                                        Margin="10,0,0,0"
+                                        MaxHeight="100"
+                                        VerticalScrollBarVisibility="Auto"
+                                        HorizontalScrollBarVisibility="Auto"/>
                                                 
                                     <ui:Button 
                                         Grid.Column="3" 

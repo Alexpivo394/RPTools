@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using ParamChecker.Models.ExportProfiles;
 using ParamChecker.ViewModels.Windows;
 using ParamChecker.Views.Windows;
 using Newtonsoft.Json;
+using ParamChecker.Models.Filters;
 using ParamChecker.Services;
 
 namespace ParamChecker.ViewModels.PagesViewModels
@@ -49,17 +51,42 @@ namespace ParamChecker.ViewModels.PagesViewModels
             Rules.Remove(rule);
         }
 
-        [RelayCommand]
-        private void OpenFilterConfig(ExportRule rule)
+[RelayCommand]
+private void OpenFilterConfig(ExportRule rule)
+{
+    var filterConfigViewModel = new FilterConfigViewModel(_categoryService);
+    filterConfigViewModel.Initialize(); // загружаем категории
+
+    if (!string.IsNullOrWhiteSpace(rule.FilterConfigJson))
+    {
+        try
         {
-            var filterConfigViewModel = new FilterConfigViewModel(_categoryService);
-            filterConfigViewModel.Initialize();
-            var filterWindow = new FilterConfig(filterConfigViewModel);
-            if (filterWindow.ShowDialog() == true && filterWindow.DataContext is FilterConfigViewModel vm)
+            var config = JsonConvert.DeserializeObject<FilterConfigModel>(
+                rule.FilterConfigJson
+            );
+
+            if (config is not null)
             {
-                rule.FilterConfigJson = vm.GetResultJson();
+                filterConfigViewModel.LoadFromModel(config);
             }
         }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Ошибка при загрузке фильтра: {ex.Message}");
+        }
+    }
+
+    var filterWindow = new FilterConfig(filterConfigViewModel);
+
+    filterConfigViewModel.OnApplyRequested = json =>
+    {
+        rule.FilterConfigJson = json;
+        filterWindow.Close();
+    };
+
+    filterWindow.ShowDialog();
+}
+
 
         [RelayCommand]
         private void OpenParameterConfig(ExportRule rule)

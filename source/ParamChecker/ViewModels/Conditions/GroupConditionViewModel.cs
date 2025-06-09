@@ -6,7 +6,7 @@ namespace ParamChecker.ViewModels.Conditions;
 public partial class GroupConditionViewModel : ConditionViewModelBase
 {
     [ObservableProperty]
-    private FilterInGroupLogic groupLogic;
+    private FilterParameterLogic groupLogic;
 
     [ObservableProperty]
     private ObservableCollection<ConditionViewModelBase> children = new();

@@ -158,7 +158,7 @@
             <!-- Apply button region -->
             <ui:Button Grid.Row="4" Content="Применить"
                        Icon="{ui:SymbolIcon Checkmark24}"
-                       Command="{Binding ApllyFiltersCommand}"
+                       Command="{Binding ApplyCommand}"
                        Appearance="Primary"
                        Margin="10"
                        HorizontalAlignment="Right"/>

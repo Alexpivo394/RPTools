@@ -2,7 +2,7 @@
 
 namespace ParamChecker.Models.Filters;
 
-public enum FilterInGroupLogic
+public enum FilterParameterLogic
 {
     [Description("И")]
     And,

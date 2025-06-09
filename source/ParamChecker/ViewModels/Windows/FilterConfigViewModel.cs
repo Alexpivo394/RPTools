@@ -1,7 +1,9 @@
-﻿using ParamChecker.Models.Filters;
+﻿#nullable enable
+using ParamChecker.Models.Filters;
 using ParamChecker.Services;
 using System.Collections.ObjectModel;
 using ParamChecker.ViewModels.Conditions;
+using Newtonsoft.Json;
 
 namespace ParamChecker.ViewModels.Windows
 {
@@ -22,17 +24,22 @@ namespace ParamChecker.ViewModels.Windows
         private CategoryParameterLogic _selectedItemCatOrPar;
 
         [ObservableProperty]
-        private FilterInGroupLogic _selectedItemParOrPar;
+        private FilterParameterLogic _selectedItemParOrPar;
         
         [ObservableProperty]
         private ObservableCollection<ConditionViewModelBase> filterConditions = new();
+        
+        [ObservableProperty]
+        private FilterConfigModel configModel = new();
+        
+        public Action<string>? OnApplyRequested { get; set; }
 
         
         public IEnumerable<CategoryParameterLogic> ItemsCatOrPar => 
             Enum.GetValues(typeof(CategoryParameterLogic)).Cast<CategoryParameterLogic>();
 
-        public IEnumerable<FilterInGroupLogic> ItemsParOrPar => 
-            Enum.GetValues(typeof(FilterInGroupLogic)).Cast<FilterInGroupLogic>();
+        public IEnumerable<FilterParameterLogic> ItemsParOrPar => 
+            Enum.GetValues(typeof(FilterParameterLogic)).Cast<FilterParameterLogic>();
         
 
         public FilterConfigViewModel(CategoryService categoryService)
@@ -40,7 +47,7 @@ namespace ParamChecker.ViewModels.Windows
             _categoryService = categoryService;
             
             SelectedItemCatOrPar = CategoryParameterLogic.CategoriesAndParameters;
-            SelectedItemParOrPar = FilterInGroupLogic.And;
+            SelectedItemParOrPar = FilterParameterLogic.And;
 
             PropertyChanged += OnPropertyChanged;
             
@@ -83,7 +90,7 @@ namespace ParamChecker.ViewModels.Windows
             }
 
             var filtered = Categories
-                .Where(c => c.CatName.Contains(CategoryFilter, StringComparison.OrdinalIgnoreCase))
+                .Where(c => c.CatName != null && c.CatName.Contains(CategoryFilter, StringComparison.OrdinalIgnoreCase))
                 .ToList();
 
             FilteredCategories = new ObservableCollection<CategoryFilterItem>(filtered);
@@ -91,8 +98,51 @@ namespace ParamChecker.ViewModels.Windows
 
         public string GetResultJson()
         {
-            throw new NotImplementedException();
+            var model = new FilterConfigModel
+            {
+                SelectedCategories = Categories
+                    .Where(c => c.CatIsSelected)
+                    .Select(c => c.BuiltInCategory)
+                    .ToList(),
+                CategoryParameterLogic = SelectedItemCatOrPar,
+                ParameterLogic = SelectedItemParOrPar,
+                Conditions = FilterConditions.Select(ToConditionModel).ToList()
+            };
+
+            var settings = new JsonSerializerSettings
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+                Formatting = Formatting.Indented
+            };
+
+            return JsonConvert.SerializeObject(model, settings);
         }
+
+        private ConditionModelBase ToConditionModel(ConditionViewModelBase vm)
+        {
+            switch (vm)
+            {
+                case SimpleConditionViewModel simple:
+                    return new SimpleConditionModel
+                    {
+                        Type = "Simple",
+                        ParameterName = simple.ParameterName,
+                        Value = simple.Value,
+                        SelectedLogic = simple.SelectedItemLogic
+                    };
+
+                case GroupConditionViewModel group:
+                    return new GroupConditionModel
+                    {
+                        Type = "Group",
+                        Children = group.Children.Select(ToConditionModel).ToList()
+                    };
+
+                default:
+                    throw new NotSupportedException($"Unknown condition VM: {vm.GetType().Name}");
+            }
+        }
+
 
         [RelayCommand]
         private void AddSimpleCondition()
@@ -113,5 +163,67 @@ namespace ParamChecker.ViewModels.Windows
             };
             FilterConditions.Add(group);
         }
+        
+        [RelayCommand]
+        private void Apply()
+        {
+            var json = GetResultJson();
+            OnApplyRequested?.Invoke(json);
+        }
+        
+        public void LoadFromModel(FilterConfigModel model)
+        {
+            // 🧠 Восстановить выбранные категории
+            foreach (var cat in Categories)
+                cat.CatIsSelected = model.SelectedCategories.Contains(cat.BuiltInCategory);
+
+            // 🧠 Восстановить логику фильтрации
+            SelectedItemCatOrPar = model.CategoryParameterLogic;
+            SelectedItemParOrPar = model.ParameterLogic;
+
+            // 🧠 Восстановить условия
+            FilterConditions.Clear();
+            foreach (var condition in model.Conditions)
+            {
+                var vm = FromConditionModel(condition);
+                if (vm != null)
+                    FilterConditions.Add(vm);
+            }
+        }
+
+// 👇 Распаковывает обратно из Model в ViewModel
+        private ConditionViewModelBase? FromConditionModel(ConditionModelBase model)
+        {
+            switch (model)
+            {
+                case SimpleConditionModel simple:
+                    return new SimpleConditionViewModel
+                    {
+                        ParameterName = simple.ParameterName,
+                        Value = simple.Value,
+                        SelectedItemLogic = simple.SelectedLogic,
+                        RemoveSimpleRequested = vm => FilterConditions.Remove(vm)
+                    };
+
+                case GroupConditionModel group:
+                    var groupVM = new GroupConditionViewModel
+                    {
+                        RemoveGroupRequested = vm => FilterConditions.Remove(vm)
+                    };
+
+                    foreach (var child in group.Children)
+                    {
+                        var childVM = FromConditionModel(child);
+                        if (childVM != null)
+                            groupVM.Children.Add(childVM);
+                    }
+
+                    return groupVM;
+
+                default:
+                    return null;
+            }
+        }
+
     }
 }
