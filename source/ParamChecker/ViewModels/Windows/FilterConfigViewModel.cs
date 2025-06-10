@@ -15,10 +15,10 @@ namespace ParamChecker.ViewModels.Windows
         private string _categoryFilter = "";
 
         [ObservableProperty]
-        private ObservableCollection<CategoryFilterItem> _categories = new();
+        private ObservableCollection<CategoryFilterItem> _categories = [];
 
         [ObservableProperty]
-        private ObservableCollection<CategoryFilterItem> _filteredCategories = new();
+        private ObservableCollection<CategoryFilterItem> _filteredCategories = [];
         
         [ObservableProperty]
         private CategoryParameterLogic _selectedItemCatOrPar;
@@ -27,7 +27,7 @@ namespace ParamChecker.ViewModels.Windows
         private FilterParameterLogic _selectedItemParOrPar;
         
         [ObservableProperty]
-        private ObservableCollection<ConditionViewModelBase> filterConditions = new();
+        private ObservableCollection<ConditionViewModelBase> filterConditions = [];
         
         [ObservableProperty]
         private FilterConfigModel configModel = new();
@@ -42,7 +42,7 @@ namespace ParamChecker.ViewModels.Windows
             Enum.GetValues(typeof(FilterParameterLogic)).Cast<FilterParameterLogic>();
         
 
-        public FilterConfigViewModel(CategoryService categoryService)
+        public FilterConfigViewModel(Configuration.Configuration cfg, CategoryService categoryService)
         {
             _categoryService = categoryService;
             
@@ -52,7 +52,7 @@ namespace ParamChecker.ViewModels.Windows
             PropertyChanged += OnPropertyChanged;
             
         }
-
+        
         public void Initialize()
         {
             LoadCategories();
