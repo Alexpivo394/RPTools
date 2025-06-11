@@ -7,8 +7,8 @@ using Newtonsoft.Json;
 using ParamChecker.Models.Filters;
 using ParamChecker.Services;
 
-namespace ParamChecker.ViewModels.PagesViewModels
-{
+namespace ParamChecker.ViewModels.PagesViewModels;
+
     public partial class ExportProfilesViewModel : ObservableObject
     {
         [ObservableProperty]
@@ -56,6 +56,7 @@ private void OpenFilterConfig(ExportRule rule)
 {
     var filterConfigViewModel = new FilterConfigViewModel(_categoryService);
     filterConfigViewModel.Initialize(); // загружаем категории
+
 
     if (!string.IsNullOrWhiteSpace(rule.FilterConfigJson))
     {
@@ -108,4 +109,4 @@ private void OpenFilterConfig(ExportRule rule)
             };
         }
     }
-}
+
