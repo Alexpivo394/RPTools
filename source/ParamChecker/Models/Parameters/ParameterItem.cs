@@ -4,8 +4,7 @@ namespace ParamChecker.Models.Parameters;
 
 public partial class ParameterItem : ObservableObject
 {
-    [ObservableProperty]
-    private string _value = string.Empty;
+    [ObservableProperty] private string _value = string.Empty;
 }
 
 public class ParameterConfigResult

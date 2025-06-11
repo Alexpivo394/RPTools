@@ -1,4 +1,6 @@
-﻿namespace ParamChecker.Models.Filters;
+﻿using Newtonsoft.Json.Linq;
+
+namespace ParamChecker.Models.Filters;
 
 public class FilterConfigModel
 {
@@ -8,7 +10,7 @@ public class FilterConfigModel
     public List<ConditionModelBase> Conditions { get; set; } = new();
 }
 
-public abstract class ConditionModelBase
+public class ConditionModelBase
 {
     public string Type { get; set; } = "";
 }
@@ -23,4 +25,12 @@ public class SimpleConditionModel : ConditionModelBase
 public class GroupConditionModel : ConditionModelBase
 {
     public List<ConditionModelBase> Children { get; set; } = new();
+}
+
+public class FilterConfigRaw
+{
+    public List<BuiltInCategory> SelectedCategories { get; set; }
+    public CategoryParameterLogic CategoryParameterLogic { get; set; }
+    public FilterParameterLogic ParameterLogic { get; set; }
+    public JArray Conditions { get; set; }
 }

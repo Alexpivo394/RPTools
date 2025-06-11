@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:converters="clr-namespace:ParamChecker.Views.Converters"
     mc:Ignorable="d"
     Title="ParamChecker"
     WindowStartupLocation="CenterScreen"
@@ -17,26 +16,26 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <ui:TitleBar Grid.Row="0" Title="Rename" Icon="Rename24" />
         <StackPanel Margin="5" Grid.Row="1">
-            <ui:TextBlock Text="Переименовать"/>
-            <ui:TextBox Text="{Binding NewTitle, UpdateSourceTrigger=PropertyChanged}" 
-                        Margin="10"/>
+            <ui:TextBlock Text="Переименовать" />
+            <ui:TextBox Text="{Binding NewTitle, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="10" />
         </StackPanel>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">    
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
             <ui:Button Content="Ок"
                        Margin="0 0 10 0"
                        Command="{Binding ConfirmCommand}"
                        Appearance="Primary"
-                       Icon="{ui:SymbolIcon Checkmark24}"/>
+                       Icon="{ui:SymbolIcon Checkmark24}" />
             <ui:Button Content="Отмена"
                        Command="{Binding CancelCommand}"
-                       Icon="{ui:SymbolIcon Dismiss24}"/>
+                       Icon="{ui:SymbolIcon Dismiss24}" />
         </StackPanel>
     </Grid>
 </ui:FluentWindow>

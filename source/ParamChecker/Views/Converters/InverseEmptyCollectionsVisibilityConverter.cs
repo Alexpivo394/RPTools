@@ -4,33 +4,30 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using Visibility = System.Windows.Visibility;
 
-namespace ParamChecker.Views.Converters
+namespace ParamChecker.Views.Converters;
+
+public sealed class InverseEmptyCollectionsVisibilityConverter : MarkupExtension, IMultiValueConverter
 {
-    public sealed class InverseEmptyCollectionsVisibilityConverter : MarkupExtension, IMultiValueConverter
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            foreach (var value in values)
+        foreach (var value in values)
+            switch (value)
             {
-                switch (value)
-                {
-                    case ICollection { Count: > 0 }:
-                    case > 0:
-                        return Visibility.Visible;
-                }
+                case ICollection { Count: > 0 }:
+                case > 0:
+                    return Visibility.Visible;
             }
 
-            return Visibility.Collapsed;
-        }
+        return Visibility.Collapsed;
+    }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotSupportedException();
+    }
 
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
-        }
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return this;
     }
 }

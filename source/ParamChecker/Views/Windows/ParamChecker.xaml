@@ -13,42 +13,44 @@
     WindowBackdropType="Mica"
     WindowCornerPreference="Round"
     WindowStartupLocation="CenterScreen">
-     
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>  <!-- Title -->
-            <RowDefinition Height="*"/>     <!-- Main -->
-            <RowDefinition Height="Auto"/>  <!-- Bottom toolbar -->
+            <RowDefinition Height="Auto" />  <!-- Title -->
+            <RowDefinition Height="*" />     <!-- Main -->
+            <RowDefinition Height="Auto" />  <!-- Bottom toolbar -->
         </Grid.RowDefinitions>
 
         <!-- 🔝 TitleBar -->
         <ui:TitleBar x:Name="TitleBar" Title="ParamChecker">
             <ui:TitleBar.Icon>
-                <ui:SymbolIcon Symbol="Box24"/>
-             </ui:TitleBar.Icon>
+                <ui:SymbolIcon Symbol="Box24" />
+            </ui:TitleBar.Icon>
         </ui:TitleBar>
 
         <!-- 📦 Main content -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="260"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="260" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <!-- Sidebar -->
-            <Border CornerRadius="8" Margin="5,1,0,1" Background="{DynamicResource ControlBackgroundBrush}" Padding="0" BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColorBrush}">
+            <Border CornerRadius="8" Margin="5,1,0,1" Background="{DynamicResource ControlBackgroundBrush}" Padding="0"
+                    BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColorBrush}">
                 <DockPanel LastChildFill="True" VerticalAlignment="Stretch">
 
                     <!-- 🔻 Нижняя закреплённая панель -->
                     <StackPanel DockPanel.Dock="Bottom" Margin="8">
-                        <Separator Margin="0,10,0,10"/>
-                        <Border CornerRadius="8" MouseDown="OnSettingsClicked" BorderBrush="{DynamicResource SystemAccentColorTertiaryBrush}" BorderThickness="1">
-                        <StackPanel Orientation="Horizontal" Height="40">
-                            <ui:SymbolIcon Symbol="Settings48" VerticalAlignment="Center" Margin="5,0,5,0"/>
-                            <TextBlock Text="Настройки"
-                                       VerticalAlignment="Center"/>
-                        </StackPanel>
-                            </Border>
+                        <Separator Margin="0,10,0,10" />
+                        <Border CornerRadius="8" MouseDown="OnSettingsClicked"
+                                BorderBrush="{DynamicResource SystemAccentColorTertiaryBrush}" BorderThickness="1">
+                            <StackPanel Orientation="Horizontal" Height="40">
+                                <ui:SymbolIcon Symbol="Settings48" VerticalAlignment="Center" Margin="5,0,5,0" />
+                                <TextBlock Text="Настройки"
+                                           VerticalAlignment="Center" />
+                            </StackPanel>
+                        </Border>
                     </StackPanel>
 
                     <!-- 🔼 Верхняя динамика -->
@@ -56,7 +58,10 @@
                         <ItemsControl ItemsSource="{Binding CustomNavItems}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border MouseDown="OnProfileClicked" Margin="8,4" Background="{DynamicResource ControlBackgroundBrush}" CornerRadius="8" Padding="4" BorderThickness="1" BorderBrush="{DynamicResource SystemAccentColorTertiaryBrush}">
+                                    <Border MouseDown="OnProfileClicked" Margin="8,4"
+                                            Background="{DynamicResource ControlBackgroundBrush}" CornerRadius="8"
+                                            Padding="4" BorderThickness="1"
+                                            BorderBrush="{DynamicResource SystemAccentColorTertiaryBrush}">
                                         <Grid>
                                             <Grid.ContextMenu>
                                                 <ContextMenu>
@@ -64,27 +69,31 @@
                                                     <MenuItem Header="Удалить" Command="{Binding RemoveCommand}" />
                                                 </ContextMenu>
                                             </Grid.ContextMenu>
-                                            
-                                                <Grid>
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="Auto"/>
-                                                        <ColumnDefinition Width="*"/>
-                                                    </Grid.ColumnDefinitions>
-                                                    <CheckBox IsChecked="{Binding IsChecked}" VerticalAlignment="Center" Margin="0,0,6,0"/>
-                                                    <TextBlock Grid.Column="1" Text="{Binding Title}" VerticalAlignment="Center"
-                                                               Foreground="{DynamicResource ForegroundBrush}" />
-                                                </Grid>
+
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <CheckBox IsChecked="{Binding IsChecked}" VerticalAlignment="Center"
+                                                          Margin="0,0,6,0" />
+                                                <TextBlock Grid.Column="1" Text="{Binding Title}"
+                                                           VerticalAlignment="Center"
+                                                           Foreground="{DynamicResource ForegroundBrush}" />
+                                            </Grid>
                                         </Grid>
                                     </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
-                        <ui:Button Icon="{ui:SymbolIcon AddCircle24}" Content="Добавить" Command="{Binding AddCustomNavItemCommand}" Margin="8"/>
+                        <ui:Button Icon="{ui:SymbolIcon AddCircle24}" Content="Добавить"
+                                   Command="{Binding AddCustomNavItemCommand}" Margin="8" />
                     </StackPanel>
                 </DockPanel>
             </Border>
             <!-- Content -->
-            <Frame x:Name="MainFrame" Grid.Column="1" Background="{DynamicResource ControlBackgroundBrush}" NavigationUIVisibility="Hidden"/>
+            <Frame x:Name="MainFrame" Grid.Column="1" Background="{DynamicResource ControlBackgroundBrush}"
+                   NavigationUIVisibility="Hidden" />
         </Grid>
 
         <!-- ⬇️ Bottom Toolbar -->
@@ -102,7 +111,7 @@
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"
                            Margin="0,0,12,0"
-                           Appearance="Primary"/>
+                           Appearance="Primary" />
             </DockPanel>
         </Border>
     </Grid>

@@ -5,24 +5,18 @@ namespace ParamChecker.ViewModels.Conditions;
 
 public partial class GroupConditionViewModel : ConditionViewModelBase
 {
-    [ObservableProperty]
-    private FilterParameterLogic groupLogic;
+    [ObservableProperty] private ObservableCollection<ConditionViewModelBase> children = new();
 
-    [ObservableProperty]
-    private ObservableCollection<ConditionViewModelBase> children = new();
+    [ObservableProperty] private FilterParameterLogic groupLogic;
 
     public Action<GroupConditionViewModel> RemoveGroupRequested { get; set; }
-    public GroupConditionViewModel()
-    {
-
-    }
 
     [RelayCommand]
     private void Add()
     {
         var simple = new SimpleConditionViewModel
         {
-            RemoveSimpleRequested = (vm) => Children.Remove(vm)
+            RemoveSimpleRequested = vm => Children.Remove(vm)
         };
         Children.Add(simple);
     }
@@ -32,5 +26,4 @@ public partial class GroupConditionViewModel : ConditionViewModelBase
     {
         RemoveGroupRequested?.Invoke(this);
     }
-    
 }

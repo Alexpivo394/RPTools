@@ -24,24 +24,23 @@ using System.Windows.Data;
 using System.Windows.Markup;
 using Visibility = System.Windows.Visibility;
 
-namespace ParamChecker.Views.Converters
+namespace ParamChecker.Views.Converters;
+
+public sealed class StringVisibilityConverter : MarkupExtension, IValueConverter
 {
-    public sealed class StringVisibilityConverter : MarkupExtension, IValueConverter
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            if (value is not string text) return Visibility.Collapsed;
-            return string.IsNullOrEmpty(text) ? Visibility.Collapsed : Visibility.Visible;
-        }
+        if (value is not string text) return Visibility.Collapsed;
+        return string.IsNullOrEmpty(text) ? Visibility.Collapsed : Visibility.Visible;
+    }
 
-        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-        {
-            throw new NotSupportedException();
-        }
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+    {
+        throw new NotSupportedException();
+    }
 
-        public override object ProvideValue(IServiceProvider serviceProvider)
-        {
-            return this;
-        }
+    public override object ProvideValue(IServiceProvider serviceProvider)
+    {
+        return this;
     }
 }

@@ -2,15 +2,14 @@
 
 public partial class RenameViewModel : ObservableObject
 {
-    public Action<bool> CloseAction { get; set; }
-
-    [ObservableProperty]
-    private string _newTitle;
+    [ObservableProperty] private string _newTitle;
 
     public RenameViewModel(string currentTitle)
     {
         NewTitle = currentTitle;
     }
+
+    public Action<bool> CloseAction { get; set; }
 
     [RelayCommand]
     private void Confirm()

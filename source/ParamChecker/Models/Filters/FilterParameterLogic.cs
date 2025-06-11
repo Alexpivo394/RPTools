@@ -4,9 +4,7 @@ namespace ParamChecker.Models.Filters;
 
 public enum FilterParameterLogic
 {
-    [Description("И")]
-    And,
+    [Description("И")] And,
 
-    [Description("ИЛИ")]
-    Or
+    [Description("ИЛИ")] Or
 }

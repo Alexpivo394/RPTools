@@ -1,31 +1,28 @@
-﻿namespace ParamChecker.Services
+﻿namespace ParamChecker.Services;
+
+public class CategoryService
 {
-    public class CategoryService
+    private readonly Dictionary<BuiltInCategory, string> _localizedCategories = new();
+
+    public void Initialize(Document doc)
     {
-        private readonly Dictionary<BuiltInCategory, string> _localizedCategories = new();
+        _localizedCategories.Clear();
 
-        public void Initialize(Document doc)
-        {
-            _localizedCategories.Clear();
-
-            foreach (Category category in doc.Settings.Categories)
+        foreach (Category category in doc.Settings.Categories)
+            if (Enum.IsDefined(typeof(BuiltInCategory), category.Id.IntegerValue))
             {
-                if (Enum.IsDefined(typeof(BuiltInCategory), category.Id.IntegerValue))
-                {
-                    var builtInCategory = (BuiltInCategory)category.Id.IntegerValue;
-                    _localizedCategories[builtInCategory] = category.Name;
-                }
+                var builtInCategory = (BuiltInCategory)category.Id.IntegerValue;
+                _localizedCategories[builtInCategory] = category.Name;
             }
-        }
+    }
 
-        public string GetCategoryName(BuiltInCategory category)
-        {
-            return _localizedCategories.TryGetValue(category, out var name) ? name : category.ToString();
-        }
+    public string GetCategoryName(BuiltInCategory category)
+    {
+        return _localizedCategories.TryGetValue(category, out var name) ? name : category.ToString();
+    }
 
-        public IEnumerable<BuiltInCategory> GetAllCategories()
-        {
-            return _localizedCategories.Keys.ToList();
-        }
+    public IEnumerable<BuiltInCategory> GetAllCategories()
+    {
+        return _localizedCategories.Keys.ToList();
     }
 }

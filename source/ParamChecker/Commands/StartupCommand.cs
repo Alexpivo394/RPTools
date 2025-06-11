@@ -10,7 +10,6 @@ public class StartupCommand : IExternalCommand
 {
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
-
         var doc = commandData.Application.ActiveUIDocument.Document;
         var categoryService = new CategoryService();
         categoryService.Initialize(doc);

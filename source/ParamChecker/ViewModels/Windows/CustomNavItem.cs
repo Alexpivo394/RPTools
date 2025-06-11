@@ -1,29 +1,16 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using ParamChecker.Messaging;
-using ParamChecker.ViewModels.Windows;
 using ParamChecker.Views.Dialogs;
 
 namespace ParamChecker.ViewModels.Windows;
 
 public partial class CustomNavItem : ObservableObject
 {
-    [ObservableProperty]
-    private string _title;
-    public Page Page { get; }
-    public object ViewModel { get; }
-    
-    public object ViewModelInstance { get; }
-    
     private readonly Action<CustomNavItem> _removeCallback;
+
+    [ObservableProperty] private string _title;
+
     public Action<Page> OnNavigate;
 
-    public IRelayCommand RemoveCommand { get; }
-    public IRelayCommand RenameCommand { get; }
-    public IRelayCommand SelectCommand { get; }
-    
-    public bool IsChecked { get; set; }
     public CustomNavItem(string title, Page page, object viewModel, Action<CustomNavItem> removeCallback)
     {
         Title = title;
@@ -36,14 +23,19 @@ public partial class CustomNavItem : ObservableObject
         {
             var dialog = new Rename(Title);
             var result = dialog.ShowDialog();
-            if (result == true)
-            {
-                Title =  dialog.Result;
-            }
+            if (result == true) Title = dialog.Result;
         });
-        SelectCommand = new RelayCommand(() =>
-        {
-            OnNavigate?.Invoke(Page);
-        });
+        SelectCommand = new RelayCommand(() => { OnNavigate?.Invoke(Page); });
     }
+
+    public Page Page { get; }
+    public object ViewModel { get; }
+
+    public object ViewModelInstance { get; }
+
+    public IRelayCommand RemoveCommand { get; }
+    public IRelayCommand RenameCommand { get; }
+    public IRelayCommand SelectCommand { get; }
+
+    public bool IsChecked { get; set; }
 }

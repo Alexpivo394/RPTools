@@ -3,12 +3,9 @@ namespace ParamChecker.Models.Filters;
 
 public sealed partial class CategoryFilterItem : ObservableObject
 {
-    [ObservableProperty]
-    private string? _catName;
-    
-    [ObservableProperty]
-    private bool _catIsSelected;
-    
+    [ObservableProperty] private bool _catIsSelected;
+
+    [ObservableProperty] private string? _catName;
+
     public BuiltInCategory BuiltInCategory { get; set; }
-    
 }
