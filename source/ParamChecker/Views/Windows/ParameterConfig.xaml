@@ -64,7 +64,7 @@
         <!-- Apply button -->
         <ui:Button Grid.Row="2" Content="Применить"
                    Icon="{ui:SymbolIcon Checkmark24}"
-                   Command="{Binding ApplyParameterCommand}"
+                   Command="{Binding ApplyCommand}"
                    Appearance="Primary"
                    Margin="10"
                    HorizontalAlignment="Right" />

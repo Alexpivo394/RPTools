@@ -50,8 +50,7 @@ public partial class ExportProfilesViewModel : ObservableObject
     private void OpenFilterConfig(ExportRule rule)
     {
         var filterConfigViewModel = new FilterConfigViewModel(_categoryService);
-        filterConfigViewModel.Initialize(); // загружаем категории
-
+        filterConfigViewModel.Initialize();
 
         if (!string.IsNullOrWhiteSpace(rule.FilterConfigJson))
             try
@@ -81,8 +80,25 @@ public partial class ExportProfilesViewModel : ObservableObject
     {
         var paramViewModel = new ParameterConfigViewModel();
         var paramWindow = new ParameterConfig(paramViewModel);
-        if (paramWindow.ShowDialog() == true && paramWindow.DataContext is ParameterConfigViewModel vm)
-            rule.ParameterConfigJson = vm.GetResultJson();
+        
+        if (!string.IsNullOrWhiteSpace(rule.ParameterConfigJson))
+            try
+            {
+                var param = rule.ParameterConfigJson;
+                paramViewModel.LoadFromJson(param);
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при загрузке параметров: {ex.Message}");
+            }
+        
+        paramViewModel.OnApplyRequested = json =>
+        {
+            rule.ParameterConfigJson = json;
+            paramWindow.Close();
+        };
+        paramWindow.ShowDialog();
     }
 
     public ExportProfile GetProfile()
@@ -93,4 +109,13 @@ public partial class ExportProfilesViewModel : ObservableObject
             Rules = Rules.ToList()
         };
     }
+    
+    public void LoadFromProfile(ExportProfile profile)
+    {
+        ProfileName = profile.ProfileName;
+        Models = new ObservableCollection<ExportModel>(profile.Models ?? []);
+        Rules = new ObservableCollection<ExportRule>(profile.Rules ?? []);
+    }
+
+
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 
 namespace ParamChecker.Models.Parameters;
 
@@ -9,7 +10,7 @@ public partial class ParameterItem : ObservableObject
 
 public class ParameterConfigResult
 {
-    public List<string> Parameters { get; set; } = new();
+    public ObservableCollection<ParameterItem> Parameters { get; set; } = new();
 
     public string ToJson()
     {

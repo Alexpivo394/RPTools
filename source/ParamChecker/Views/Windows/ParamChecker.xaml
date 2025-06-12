@@ -103,8 +103,8 @@
                 VerticalAlignment="Bottom">
             <DockPanel Margin="12,0">
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
-                    <ui:Button Content="Импорт" Margin="0,0,12,0" />
-                    <ui:Button Content="Экспорт" />
+                    <ui:Button Content="Импорт" Command="{Binding ImportProfilesCommand}" Margin="0,0,12,0" />
+                    <ui:Button Content="Экспорт" Command="{Binding ExportProfilesCommand}"/>
                 </StackPanel>
                 <ui:Button Content="🚀 Запуск"
                            DockPanel.Dock="Right"

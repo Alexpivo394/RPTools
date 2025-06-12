@@ -8,8 +8,7 @@ public enum CategoryParameterLogic
 
     [Description("Только параметры")] ParametersOnly,
 
-    [Description("Категории ИЛИ Параметры")]
-    CategoriesOrParameters,
+    [Description("Категории ИЛИ Параметры")] CategoriesOrParameters,
 
     [Description("Категории И Параметры")] CategoriesAndParameters
 }

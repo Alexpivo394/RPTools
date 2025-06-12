@@ -38,13 +38,9 @@ public class Configuration
         if (!File.Exists(pathCfg))
         {
             CreateEmptyJsonFile(dirCfg, configName);
-            FilterConfigModel = new FilterConfigModel();
-            SaveConfig();
         }
     }
-
-
-    public FilterConfigModel FilterConfigModel { get; set; }
+    
 
     private static void CreateDir(string dllPath, string directoryName)
     {
@@ -63,49 +59,32 @@ public class Configuration
         if (!File.Exists(filePath)) File.WriteAllText(filePath, "{}");
     }
 
-    public static T LoadConfig<T>(string filePath) where T : class
+    public AppSettings? LoadSettings()
     {
         try
         {
-            if (!File.Exists(filePath)) throw new FileNotFoundException("Файл конфигурации не найден", filePath);
+            if (!File.Exists(_configFilePath)) return new AppSettings(); // default
 
-            var json = File.ReadAllText(filePath);
-            var config = JsonConvert.DeserializeObject<T>(json);
-
-            return config;
-        }
-        catch (FileNotFoundException ex)
-        {
-            TaskDialog.Show("File Not Found", ex.Message);
-            return null;
-        }
-        catch (JsonException ex)
-        {
-            TaskDialog.Show("JSON Error", $"An error occurred while deserializing the JSON: {ex.Message}");
-            return null;
+            var json = File.ReadAllText(_configFilePath);
+            return JsonConvert.DeserializeObject<AppSettings>(json);
         }
         catch (Exception ex)
         {
-            TaskDialog.Show("Error", $"An unexpected error occurred: {ex.Message}");
+            TaskDialog.Show("Error", $"Ошибка при загрузке настроек: {ex.Message}");
             return null;
         }
     }
 
-    public void SaveConfig()
+    public void SaveSettings(AppSettings settings)
     {
         try
         {
-            var json = JsonConvert.SerializeObject(this, Formatting.Indented);
+            var json = JsonConvert.SerializeObject(settings, Formatting.Indented);
             File.WriteAllText(_configFilePath, json);
         }
         catch (Exception ex)
         {
-            TaskDialog.Show("Error", $"Ошибка с сохранние конфигурации: {ex.Message}");
+            TaskDialog.Show("Error", $"Ошибка при сохранении настроек: {ex.Message}");
         }
-    }
-
-    public string GetPath()
-    {
-        return _configFilePath;
     }
 }

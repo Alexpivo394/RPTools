@@ -1,4 +1,6 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json;
+using ParamChecker.Configuration;
 using RPToolsUI.Services;
 using Wpf.Ui.Appearance;
 
@@ -50,4 +52,27 @@ public sealed partial class SettingsViewModel : ObservableObject
 
         if (openFileDialog.ShowDialog() == true) ReportFilePath = openFileDialog.FileName;
     }
+    
+    public void LoadFromSettings(AppSettings settings)
+    {
+        IsDarkTheme = settings.IsDarkTheme;
+        LogFilePath = settings.LogFilePath;
+        ReportFilePath = settings.ReportFilePath;
+        UpdateGeneralReport = settings.UpdateGeneralReport;
+    }
+
+    public AppSettings ToSettings()
+    {
+        return new AppSettings
+        {
+            IsDarkTheme = IsDarkTheme,
+            LogFilePath = LogFilePath,
+            ReportFilePath = ReportFilePath,
+            UpdateGeneralReport = UpdateGeneralReport
+        };
+    }
+
+
+
+
 }

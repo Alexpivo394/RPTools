@@ -263,31 +263,4 @@ public partial class FilterConfigViewModel : ObservableObject
 
         return config;
     }
-
-    private static List<ConditionModelBase> ParseConditionsArray(JArray array)
-    {
-        var result = new List<ConditionModelBase>();
-
-        foreach (var item in array)
-        {
-            var type = item["Type"]?.ToString();
-
-            if (type == "Simple")
-            {
-                SimpleConditionModel? simple;
-                simple = item.ToObject<SimpleConditionModel>();
-                result.Add(simple);
-            }
-            else if (type == "Group")
-            {
-                var group = new GroupConditionModel
-                {
-                    Type = "Group", Children = ParseConditionsArray((JArray)item["Children"]!)
-                };
-                result.Add(group);
-            }
-        }
-
-        return result;
-    }
 }

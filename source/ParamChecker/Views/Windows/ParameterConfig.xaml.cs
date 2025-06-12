@@ -12,6 +12,12 @@ public partial class ParameterConfig : FluentWindow
     public ParameterConfig(ParameterConfigViewModel viewModel)
     {
         InitializeComponent();
+        viewModel.OnApplyRequested = json =>
+        {
+            DialogResult = true;
+            Close(); // Закрываем окно
+        };
+        
         DataContext = viewModel;
         ThemeWatcherService.Watch(this);
     }
