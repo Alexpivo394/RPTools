@@ -37,8 +37,6 @@ public partial class FilterConfigViewModel : ObservableObject
         PropertyChanged += OnPropertyChanged;
     }
 
-    internal Configuration.Configuration Cfg { get; set; }
-
     public Action<string>? OnApplyRequested { get; set; }
 
     public IEnumerable<CategoryParameterLogic> ItemsCatOrPar =>

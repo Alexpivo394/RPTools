@@ -100,14 +100,25 @@
                                 <Grid Margin="0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-
+                                    
                                     <ui:TextBox
                                         Grid.Column="0"
+                                        Text="{Binding Title}"
+                                        PlaceholderText="Название"
+                                        MaxHeight="100"
+                                        VerticalScrollBarVisibility="Auto"
+                                        HorizontalScrollBarVisibility="Auto"
+                                        AcceptsReturn="True"
+                                        Margin="0,0,5,0"/>
+
+                                    <ui:TextBox
+                                        Grid.Column="1"
                                         Text="{Binding FilterConfigJson}"
                                         PlaceholderText="Фильтр"
                                         MaxHeight="100"
@@ -116,7 +127,7 @@
                                         AcceptsReturn="True" />
 
                                     <ui:Button
-                                        Grid.Column="1"
+                                        Grid.Column="2"
                                         Icon="{ui:SymbolIcon MoreHorizontal24}"
                                         Command="{Binding DataContext.OpenFilterConfigCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                         CommandParameter="{Binding}"
@@ -125,7 +136,7 @@
                                         Margin="0,0,0,0" />
 
                                     <ui:TextBox
-                                        Grid.Column="2"
+                                        Grid.Column="3"
                                         Text="{Binding ParameterConfigJson}"
                                         PlaceholderText="Параметры для проверки"
                                         Margin="10,0,0,0"
@@ -134,7 +145,7 @@
                                         HorizontalScrollBarVisibility="Auto" />
 
                                     <ui:Button
-                                        Grid.Column="3"
+                                        Grid.Column="4"
                                         Icon="{ui:SymbolIcon MoreHorizontal24}"
                                         Command="{Binding DataContext.OpenParameterConfigCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                         CommandParameter="{Binding}"
@@ -143,7 +154,7 @@
                                         Margin="0,0,0,0" />
 
                                     <ui:Button
-                                        Grid.Column="4"
+                                        Grid.Column="5"
                                         Icon="{ui:SymbolIcon Symbol=Delete24}"
                                         Command="{Binding DataContext.RemoveRuleCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                         CommandParameter="{Binding}"

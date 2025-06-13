@@ -15,15 +15,19 @@ namespace ParamChecker.Views.Windows;
 public sealed partial class ParamChecker : FluentWindow
 {
     private readonly ParamCheckerViewModel _viewModel;
+    private SettingsViewModel _settingsVm;
 
-    public ParamChecker(ParamCheckerViewModel viewModel)
+    public Configuration.Configuration Configuration { get; } = new();
+
+    public ParamChecker(ParamCheckerViewModel viewModel, SettingsViewModel settingsVm)
     {
+        _settingsVm = settingsVm;
         ThemeWatcherService.Initialize();
         ThemeWatcherService.Watch(this);
         ThemeWatcherService.ApplyTheme(ApplicationTheme.Dark);
         var settings = Configuration.LoadSettings();
         if (settings != null)
-            SettingsVm.LoadFromSettings(settings);
+            settingsVm.LoadFromSettings(settings);
         InitializeComponent();
         _viewModel = viewModel;
         DataContext = _viewModel;
@@ -31,10 +35,6 @@ public sealed partial class ParamChecker : FluentWindow
         _viewModel.NavigateAction = NavigateToPage;
         Closing += ParamChecker_Closing;
     }
-
-    public SettingsViewModel SettingsVm { get; } = new();
-    
-    public Configuration.Configuration Configuration { get; } = new();
 
     private void NavigateToPage(Page page)
     {
@@ -49,14 +49,14 @@ public sealed partial class ParamChecker : FluentWindow
     private void OnSettingsClicked(object sender, MouseButtonEventArgs e)
     {
 
-        var page = new Settings(SettingsVm);
+        var page = new Settings(_settingsVm);
 
         MainFrame.Navigate(page);
     }
 
     private void ParamChecker_Closing(object sender, CancelEventArgs e)
     {
-        var settings = SettingsVm.ToSettings();
+        var settings = _settingsVm.ToSettings();
         Configuration.SaveSettings(settings);
     }
 }

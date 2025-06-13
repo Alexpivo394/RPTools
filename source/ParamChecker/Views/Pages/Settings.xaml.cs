@@ -9,6 +9,7 @@ namespace ParamChecker.Views.Pages;
 /// </summary>
 public partial class Settings : Page
 {
+    public SettingsViewModel ViewModel { get; set; }
     public Settings(SettingsViewModel viewModel)
     {
         ViewModel = viewModel;
@@ -17,5 +18,5 @@ public partial class Settings : Page
         ThemeWatcherService.Watch(this);
     }
 
-    public SettingsViewModel ViewModel { get; }
+    
 }

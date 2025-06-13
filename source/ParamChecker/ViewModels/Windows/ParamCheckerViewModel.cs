@@ -8,21 +8,26 @@ using ParamChecker.Services;
 using ParamChecker.ViewModels.PagesViewModels;
 using ParamChecker.Views.Dialogs;
 using ParamChecker.Views.Pages;
+using ParamChecker.Models;
 
 namespace ParamChecker.ViewModels.Windows;
 
 public sealed partial class ParamCheckerViewModel : ObservableObject
 {
     private readonly CategoryService _categoryService;
+    private readonly ExportService _exportService;
+    private readonly Logger _logger;
+    private readonly SettingsViewModel _settingsViewModel;
 
-    [ObservableProperty] private bool _isChecked;
-
-
+    [ObservableProperty] private bool _isChecked = false;
     [ObservableProperty] private string _title;
 
-    public ParamCheckerViewModel(CategoryService categoryService)
+    public ParamCheckerViewModel(CategoryService categoryService,  ExportService exportService,  SettingsViewModel settingsViewModel, Logger logger)
     {
+        _logger = logger;
+        _settingsViewModel = settingsViewModel;
         _categoryService = categoryService;
+        _exportService = exportService;
     }
 
     public ObservableCollection<CustomNavItem> CustomNavItems { get; set; } = new();
@@ -40,7 +45,7 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
             DataContext = vm
         };
 
-        var item = new CustomNavItem(vm.ProfileName, page, vm, RemoveNavItem);
+        var item = new CustomNavItem(IsChecked, vm.ProfileName, page, vm, RemoveNavItem);
         item.OnNavigate = NavigateAction;
         CustomNavItems.Add(item);
     }
@@ -118,7 +123,7 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
                     DataContext = vm
                 };
 
-                var item = new CustomNavItem(vm.ProfileName, page, vm, RemoveNavItem)
+                var item = new CustomNavItem(vm.IsChecked, vm.ProfileName, page, vm, RemoveNavItem)
                 {
                     OnNavigate = NavigateAction
                 };
@@ -129,6 +134,28 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
         catch (Exception ex)
         {
             MessageBox.Show($"Ошибка при импорте: {ex.Message}");
+        }
+    }
+
+    [RelayCommand]
+    private void StartExport()
+    {
+        _logger.StartLog(_settingsViewModel.LogFilePath);
+        foreach (var item in CustomNavItems)
+        {
+            if (item.ViewModelInstance is not ExportProfilesViewModel vm) continue;
+            
+            var profile =  vm.GetProfile();
+            if (profile == null) continue;
+            if (profile.IsChecked == true)
+            {
+                _logger.Log($"Обрабатываем профиль {profile.ProfileName}");
+                _exportService.ExportProfile(profile);
+            }
+            else
+            {
+                _logger.Log($"Профиль {profile.ProfileName} не выбран для экспорта");
+            }
         }
     }
 

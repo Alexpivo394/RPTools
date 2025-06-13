@@ -8,11 +8,13 @@ public partial class CustomNavItem : ObservableObject
     private readonly Action<CustomNavItem> _removeCallback;
 
     [ObservableProperty] private string _title;
+    [ObservableProperty] private bool _isChecked;
 
     public Action<Page> OnNavigate;
 
-    public CustomNavItem(string title, Page page, object viewModel, Action<CustomNavItem> removeCallback)
+    public CustomNavItem(bool isChecked, string title, Page page, object viewModel, Action<CustomNavItem> removeCallback)
     {
+        IsChecked = isChecked;
         Title = title;
         Page = page;
         ViewModelInstance = viewModel;
@@ -37,5 +39,4 @@ public partial class CustomNavItem : ObservableObject
     public IRelayCommand RenameCommand { get; }
     public IRelayCommand SelectCommand { get; }
 
-    public bool IsChecked { get; set; }
 }

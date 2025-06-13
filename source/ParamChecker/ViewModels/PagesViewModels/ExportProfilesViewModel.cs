@@ -14,6 +14,8 @@ public partial class ExportProfilesViewModel : ObservableObject
     [ObservableProperty] private ObservableCollection<ExportModel> _models = new();
 
     [ObservableProperty] private string _profileName;
+    
+    [ObservableProperty] private bool _isChecked;
 
     [ObservableProperty] private ObservableCollection<ExportRule> _rules = new();
 
@@ -105,6 +107,8 @@ public partial class ExportProfilesViewModel : ObservableObject
     {
         return new ExportProfile
         {
+            IsChecked = IsChecked,
+            ProfileName = ProfileName,
             Models = Models.ToList(),
             Rules = Rules.ToList()
         };
@@ -112,6 +116,7 @@ public partial class ExportProfilesViewModel : ObservableObject
     
     public void LoadFromProfile(ExportProfile profile)
     {
+        IsChecked = profile.IsChecked;
         ProfileName = profile.ProfileName;
         Models = new ObservableCollection<ExportModel>(profile.Models ?? []);
         Rules = new ObservableCollection<ExportRule>(profile.Rules ?? []);

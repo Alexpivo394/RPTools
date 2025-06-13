@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿#nullable enable
+using System.Collections.ObjectModel;
 using ParamChecker.Models.Parameters;
 
 namespace ParamChecker.ViewModels.Windows;

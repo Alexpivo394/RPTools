@@ -26,7 +26,7 @@
         <StackPanel Orientation="Horizontal" Margin="0,12,0,0" VerticalAlignment="Center">
             <TextBlock Text="Обновить сводный отчет:" VerticalAlignment="Center" Margin="0,0,10,0" />
             <ui:ToggleSwitch
-                IsChecked="{Binding ViewModel.UpdateGeneralReport, Mode=TwoWay}"
+                IsChecked="{Binding UpdateGeneralReport, Mode=TwoWay}"
                 OffContent="Не обновлять"
                 OnContent="Обновить" />
         </StackPanel>

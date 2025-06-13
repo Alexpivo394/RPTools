@@ -1,4 +1,4 @@
-﻿<ui:FluentWindow
+﻿ <ui:FluentWindow
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     x:Class="ParamChecker.Views.Windows.ParameterConfig"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -65,7 +65,7 @@
         <ui:Button Grid.Row="2" Content="Применить"
                    Icon="{ui:SymbolIcon Checkmark24}"
                    Command="{Binding ApplyCommand}"
-                   Appearance="Primary"
+                   Appearance="Primary" 
                    Margin="10"
                    HorizontalAlignment="Right" />
     </Grid>
