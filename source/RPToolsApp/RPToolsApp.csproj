@@ -89,6 +89,7 @@
       <ProjectReference Include="..\CheckLOI\CheckLOI.csproj" />
       <ProjectReference Include="..\Length\Length.csproj" />
       <ProjectReference Include="..\ModelTransplanter\ModelTransplanter.csproj" />
+      <ProjectReference Include="..\ParamChecker\ParamChecker.csproj" />
       <ProjectReference Include="..\WorkingSet\WorkingSet.csproj" />
     </ItemGroup>
 

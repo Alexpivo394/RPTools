@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using ParamChecker.ViewModels.PagesViewModels;
 using ParamChecker.Views.Dialogs;
 
 namespace ParamChecker.ViewModels.Windows;
@@ -29,6 +30,15 @@ public partial class CustomNavItem : ObservableObject
         });
         SelectCommand = new RelayCommand(() => { OnNavigate?.Invoke(Page); });
     }
+    
+    partial void OnIsCheckedChanged(bool value)
+    {
+        if (ViewModelInstance is ExportProfilesViewModel vm)
+        {
+            vm.IsChecked = value;
+        }
+    }
+
 
     public Page Page { get; }
     public object ViewModel { get; }

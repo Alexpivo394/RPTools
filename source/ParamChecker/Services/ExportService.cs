@@ -36,12 +36,11 @@ public class ExportService
         {
             _logger.Log($"Начало экспорта профиля: {profile.ProfileName}");
             int greenCount = 0, redCount = 0, yellowCount = 0;
-            
             foreach (var model in profile.Models)
             {
                 _logger.Log($"Обработка модели: {model.ServerPath}");
                 var doc = OpenDocumentAsDetach(_commandData, model.ServerPath, model.WorksetKeyword);
-                
+
                 ExcelPackage.License.SetNonCommercialPersonal("RPTools");
                 using var excelDoc = new ExcelPackage();
                 foreach (var rule in profile.Rules)
@@ -90,11 +89,12 @@ public class ExportService
                             }
                             catch (Exception ex)
                             {
-                                _logger.LogError($"Ошибка при получении параметра {parameters[i]} для элемента {element.Id}", ex);
+                                _logger.LogError(
+                                    $"Ошибка при получении параметра {parameters[i]} для элемента {element.Id}", ex);
                                 Debug.WriteLine(ex.Message);
                             }
 
-                            var cell = worksheet.Cells[row, 4 + i];
+                            var cell = worksheet.Cells[row, 3 + i];
                             if (param == null)
                             {
                                 cell.Value = "N/A";
@@ -157,7 +157,8 @@ public class ExportService
                     redCount += redCountLocal;
                     yellowCount += yellowCountLocal;
                     greenCount += greenCountLocal;
-                    _logger.Log($"Правило {rule.Title} обработано: заполнено {greenCountLocal}, пустых {yellowCountLocal}, отсутствует {redCountLocal}");
+                    _logger.Log(
+                        $"Правило {rule.Title} обработано: заполнено {greenCountLocal}, пустых {yellowCountLocal}, отсутствует {redCountLocal}");
                 }
 
                 var totalworksheet = excelDoc.Workbook.Worksheets.Add("Итоги");
@@ -193,9 +194,9 @@ public class ExportService
                     {
                         networkFilePath = @"Y:\13-BIM (разработка)\07_Bim отдел\Проекты и модели.xlsx";
                     }
+
                     var fileInfo = new FileInfo(networkFilePath);
-                    
-                    ExcelPackage.License.SetNonCommercialPersonal("RPTools");
+
                     using (var package = new ExcelPackage(fileInfo))
                     {
                         if (package.Workbook.Worksheets.Count == 0)
@@ -211,7 +212,8 @@ public class ExportService
 
                         while (worksheet.Cells[row, 5].Value != null)
                         {
-                            if (worksheet.Cells[row, 5].Value.ToString() == ProcessDocTitle(doc?.Title ?? throw new InvalidOperationException()))
+                            if (worksheet.Cells[row, 5].Value.ToString() ==
+                                ProcessDocTitle(doc?.Title ?? throw new InvalidOperationException()))
                             {
                                 worksheet.Cells[row, 13].Value = totalCount;
                                 worksheet.Cells[row, 14].Value = greenCount;
@@ -235,14 +237,16 @@ public class ExportService
                             _logger.Log("Модель не найдена в общем отчете");
                         }
                     }
-                    
+
                 }
+
                 doc.Close(false);
-                MessageBox.Show( $"Файл сохранён: {filePath}", "Экспорт завершён");
                 _logger.Log($"Экспорт завершен для модели: {model.ServerPath}");
             }
+
             _logger.Log("Экспорт профиля завершен успешно");
-        }
+        
+    }
         catch (Exception ex)
         {
             _logger.LogError("Критическая ошибка при экспорте профиля", ex);
@@ -356,20 +360,25 @@ public class ExportService
             if (view == null) throw new Exception($"Вид с именем '{viewName}' не найден.");
 
             // 🧱 Начинаем с отбора по категориям
-            IEnumerable<Element> elements = new FilteredElementCollector(doc, view.Id).WhereElementIsNotElementType()
+            IEnumerable<Element> elements = new FilteredElementCollector(doc, view.Id)
+                .WhereElementIsNotElementType()
                 .Where(e =>
                 {
-                    bool categoryMatch = config.SelectedCategories.Contains((BuiltInCategory)e.Category.Id.IntegerValue);
+                    var category = e.Category;
+                    bool categoryMatch = category != null
+                                         && (config.SelectedCategories?.Contains((BuiltInCategory)category.Id.IntegerValue) ?? false);
 
                     return config.CategoryParameterLogic switch
                     {
                         CategoryParameterLogic.CategoriesOnly => categoryMatch,
-                        CategoryParameterLogic.CategoriesAndParameters => categoryMatch, // параметр проверим потом
-                        CategoryParameterLogic.CategoriesOrParameters => categoryMatch, // параметр проверим потом
-                        CategoryParameterLogic.ParametersOnly => true, // фильтрация дальше
+                        CategoryParameterLogic.CategoriesAndParameters => categoryMatch,
+                        CategoryParameterLogic.CategoriesOrParameters => categoryMatch,
+                        CategoryParameterLogic.ParametersOnly => true,
                         _ => true
                     };
                 });
+
+
 
             // 📋 Применяем параметрические условия
             var filtered = elements.Where(e =>

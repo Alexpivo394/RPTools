@@ -75,7 +75,7 @@
                                                     <ColumnDefinition Width="Auto" />
                                                     <ColumnDefinition Width="*" />
                                                 </Grid.ColumnDefinitions>
-                                                <CheckBox IsChecked="{Binding IsChecked}" VerticalAlignment="Center"
+                                                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" VerticalAlignment="Center"
                                                           Margin="0,0,6,0" />
                                                 <TextBlock Grid.Column="1" Text="{Binding Title}"
                                                            VerticalAlignment="Center"
@@ -107,6 +107,7 @@
                     <ui:Button Content="Экспорт" Command="{Binding ExportProfilesCommand}"/>
                 </StackPanel>
                 <ui:Button Content="🚀 Запуск"
+                           Command="{Binding StartExportCommand}"
                            DockPanel.Dock="Right"
                            HorizontalAlignment="Right"
                            VerticalAlignment="Center"

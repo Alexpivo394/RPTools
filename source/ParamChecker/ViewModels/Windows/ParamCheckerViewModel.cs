@@ -19,7 +19,7 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
     private readonly Logger _logger;
     private readonly SettingsViewModel _settingsViewModel;
 
-    [ObservableProperty] private bool _isChecked = false;
+    [ObservableProperty] private bool _isChecked;
     [ObservableProperty] private string _title;
 
     public ParamCheckerViewModel(CategoryService categoryService,  ExportService exportService,  SettingsViewModel settingsViewModel, Logger logger)
@@ -39,6 +39,7 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
     {
         var vm = new ExportProfilesViewModel(_categoryService);
         vm.ProfileName = $"Профиль {CustomNavItems.Count + 1}";
+        vm.IsChecked = IsChecked;
 
         var page = new ExportProfiles
         {
@@ -140,22 +141,37 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
     [RelayCommand]
     private void StartExport()
     {
-        _logger.StartLog(_settingsViewModel.LogFilePath);
-        foreach (var item in CustomNavItems)
+
+        if (!CustomNavItems.Any()) MessageBox.Show("Нет профилей для экспорта!", "Ошибка!");
+        else
         {
-            if (item.ViewModelInstance is not ExportProfilesViewModel vm) continue;
-            
-            var profile =  vm.GetProfile();
-            if (profile == null) continue;
-            if (profile.IsChecked == true)
+            _logger.StartLog(_settingsViewModel.LogFilePath);
+            foreach (var item in CustomNavItems)
             {
-                _logger.Log($"Обрабатываем профиль {profile.ProfileName}");
-                _exportService.ExportProfile(profile);
+                if (item.ViewModelInstance is not ExportProfilesViewModel vm) continue;
+
+                var profile = vm.GetProfile();
+                if (profile == null) continue;
+                if (profile.IsChecked == true)
+                {
+                    if (!profile.Models.Any()) MessageBox.Show($"Добавьте хотябы одну модель в профиль {profile.ProfileName}!", "Ошибка!");
+                    else
+                    {
+                        if (!profile.Rules.Any()) MessageBox.Show($"Добавьте хотябы одно правило в профиль {profile.ProfileName}!", "Ошибка!");
+                        else
+                        {
+                            _logger.Log($"Обрабатываем профиль {profile.ProfileName}");
+                            _exportService.ExportProfile(profile);
+                        }
+                    }
+                }
+                else
+                {
+                    _logger.Log($"Профиль {profile.ProfileName} не выбран для экспорта");
+                }
             }
-            else
-            {
-                _logger.Log($"Профиль {profile.ProfileName} не выбран для экспорта");
-            }
+
+            MessageBox.Show("Экспорт завершен!", "Успех!");
         }
     }
 
