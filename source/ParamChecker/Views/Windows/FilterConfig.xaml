@@ -27,7 +27,7 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Text="{Binding ParameterName}" Margin="0,0,0,0" />
+                <ui:TextBox Grid.Column="0" Text="{Binding ParameterName}" PlaceholderText="Имя параметра" Margin="0,0,0,0" />
                 <ComboBox Grid.Column="1"
                           Margin="5,0,5,0"
                           ItemsSource="{Binding ItemsLogic}"
@@ -38,7 +38,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBox Grid.Column="2" Text="{Binding Value}" Margin="5,0,0,0" />
+                <ui:TextBox Grid.Column="2" Text="{Binding Value}" PlaceholderText="Значение параметра" Margin="5,0,0,0" />
                 <ui:Button Grid.Column="3" Icon="{ui:SymbolIcon Delete24}"
                            Command="{Binding RemoveCommand}"
                            Appearance="Transparent"

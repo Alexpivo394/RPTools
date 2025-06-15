@@ -37,7 +37,7 @@ namespace RPToolsApp
 
             //Добавляем кнопки на панели
             //BIM
-            panelBim.AddPushButton<ParamChecker.Commands.StartupCommand>("Экспорт отчета\nLOI")
+            panelBim.AddPushButton<ParamChecker.Commands.StartupCommand>("ParamChecker")
                 .SetImage("/RPToolsApp;component/Resources/Icons/Export16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/Export32.png")
                 .SetToolTip("Выгружает из моделей на сервере\nотчет по заполнению параметров.");

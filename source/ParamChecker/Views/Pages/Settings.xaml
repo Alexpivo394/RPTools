@@ -64,11 +64,20 @@
             Text="О плагине ParamChecker" />
         <TextBlock Margin="0,12,0,0"
                    Text="Плагин позволяет выгрузить отчет по заполнению параметров из выбранных моделей по выбранным параметрам.&#10;Подробнее можно почитать в справке по кнопке ниже:" />
-        <ui:Button Content="Справка"
-                   Icon="{ui:SymbolIcon QuestionCircle24}"
-                   HorizontalAlignment="Left"
-                   VerticalAlignment="Center"
-                   Margin="0,10,0,0"
-                   Appearance="Secondary" />
+        <StackPanel Orientation="Horizontal">
+            <ui:Button Content="Справка"
+                       Command="{Binding OpenRefLinkCommand}"
+                       Icon="{ui:SymbolIcon QuestionCircle24}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="0,10,0,0"
+                       Appearance="Secondary" />
+            <ui:Button Content="Написать разработчику"
+                       Command="{Binding WriteDeveloperCommand}"
+                       Icon="{ui:SymbolIcon Pen24}"
+                       VerticalAlignment="Center"
+                       Margin="10,10,0,0"
+                       Appearance="Secondary" />
+        </StackPanel>
     </StackPanel>
 </Page>

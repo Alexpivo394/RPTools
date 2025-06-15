@@ -86,7 +86,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CableTrays\CableTrays.csproj" />
-      <ProjectReference Include="..\CheckLOI\CheckLOI.csproj" />
       <ProjectReference Include="..\Length\Length.csproj" />
       <ProjectReference Include="..\ModelTransplanter\ModelTransplanter.csproj" />
       <ProjectReference Include="..\ParamChecker\ParamChecker.csproj" />
