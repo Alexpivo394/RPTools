@@ -170,9 +170,7 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
                     _logger.Log($"Профиль {profile.ProfileName} не выбран для экспорта");
                 }
             }
-
             MessageBox.Show("Экспорт завершен!", "Успех!");
         }
     }
-
 }

@@ -96,8 +96,4 @@ public sealed partial class SettingsViewModel : ObservableObject
             UpdateGeneralReport = UpdateGeneralReport
         };
     }
-
-
-
-
 }

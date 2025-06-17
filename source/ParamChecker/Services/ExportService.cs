@@ -422,46 +422,55 @@ public class ExportService
 
 
     private bool EvaluateSimpleCondition(SimpleConditionModel cond, Element e)
+{
+    try
     {
-        try
+        // Пробуем найти параметр в самом элементе
+        var param = e.LookupParameter(cond.ParameterName);
+
+        // Если не нашли — пробуем найти в типе элемента
+        if (param == null && e.Document != null)
         {
-            var param = e.LookupParameter(cond.ParameterName);
-            string? val = param?.AsValueString() ?? param?.AsString();
-
-            // Для чисел пробуем парсить
-            bool parsedVal = double.TryParse(val, out double number);
-            bool parsedCond = double.TryParse(cond.Value, out double targetNumber);
-
-            switch (cond.SelectedLogic)
-            {
-                case FilterLogic.Equals:
-                    return string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
-                case FilterLogic.NotEquals:
-                    return !string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
-                case FilterLogic.Contains:
-                    return val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false;
-                case FilterLogic.NotContains:
-                    return !(val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false);
-                case FilterLogic.Exists:
-                    return param != null && (!string.IsNullOrWhiteSpace(val) || param.HasValue);
-                case FilterLogic.NotExists:
-                    return param == null || (string.IsNullOrWhiteSpace(val) && !param.HasValue);
-                case FilterLogic.GreaterThan:
-                    return parsedVal && parsedCond && number > targetNumber;
-                case FilterLogic.GreaterThanOrEquals:
-                    return parsedVal && parsedCond && number >= targetNumber;
-                case FilterLogic.LessThan:
-                    return parsedVal && parsedCond && number < targetNumber;
-                case FilterLogic.LessThanOrEquals:
-                    return parsedVal && parsedCond && number <= targetNumber;
-                default:
-                    return false;
-            }
+            var type = e.Document.GetElement(e.GetTypeId());
+            param = type?.LookupParameter(cond.ParameterName);
         }
-        catch (Exception ex)
+
+        string? val = param?.AsValueString() ?? param?.AsString();
+
+        bool parsedVal = double.TryParse(val, out double number);
+        bool parsedCond = double.TryParse(cond.Value, out double targetNumber);
+
+        switch (cond.SelectedLogic)
         {
-            _logger.LogError($"Ошибка при оценке условия для параметра {cond.ParameterName}", ex);
-            return false;
+            case FilterLogic.Equals:
+                return string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
+            case FilterLogic.NotEquals:
+                return !string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
+            case FilterLogic.Contains:
+                return val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false;
+            case FilterLogic.NotContains:
+                return !(val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false);
+            case FilterLogic.Exists:
+                return param != null && (!string.IsNullOrWhiteSpace(val) || param.HasValue);
+            case FilterLogic.NotExists:
+                return param == null || (string.IsNullOrWhiteSpace(val) && !param.HasValue);
+            case FilterLogic.GreaterThan:
+                return parsedVal && parsedCond && number > targetNumber;
+            case FilterLogic.GreaterThanOrEquals:
+                return parsedVal && parsedCond && number >= targetNumber;
+            case FilterLogic.LessThan:
+                return parsedVal && parsedCond && number < targetNumber;
+            case FilterLogic.LessThanOrEquals:
+                return parsedVal && parsedCond && number <= targetNumber;
+            default:
+                return false;
         }
     }
+    catch (Exception ex)
+    {
+        _logger.LogError($"Ошибка при оценке условия для параметра {cond.ParameterName}", ex);
+        return false;
+    }
+}
+
 }
