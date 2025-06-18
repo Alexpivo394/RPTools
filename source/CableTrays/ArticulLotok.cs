@@ -238,6 +238,15 @@ public class StartupCommand : IExternalCommand
                     if (width == shirina600) artikul = "LL5060";
                 }
 
+                if (height == shirina80)
+                {
+                    if (width == shirina200) artikul = "LL8020";
+                    if (width == shirina300) artikul = "LL8030";
+                    if (width == shirina400) artikul = "LL8040";
+                    if (width == shirina500) artikul = "LL8050";
+                    if (width == shirina600) artikul = "LL8060";
+                }
+
                 if (height == shirina100)
                 {
                     if (width == shirina100) artikul = "LL1010";
