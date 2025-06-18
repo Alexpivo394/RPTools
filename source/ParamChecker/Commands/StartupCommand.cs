@@ -22,4 +22,4 @@ public class StartupCommand : IExternalCommand
         view.ShowDialog();
         return Result.Succeeded;
     }
-}
+}                   

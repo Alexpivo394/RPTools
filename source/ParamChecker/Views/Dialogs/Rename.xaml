@@ -8,6 +8,8 @@
     mc:Ignorable="d"
     Title="ParamChecker"
     WindowStartupLocation="CenterScreen"
+    WindowBackdropType="Mica"
+    WindowCornerPreference="Round"
     Height="200"
     Width="300"
     MinHeight="200"

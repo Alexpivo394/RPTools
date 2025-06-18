@@ -7,8 +7,6 @@ namespace WorkingSet.Models;
 
 public class WorkingSetModel
 {
-    
-
     private readonly string _excelFilePath;
 
     public WorkingSetModel(string excelFilePath)

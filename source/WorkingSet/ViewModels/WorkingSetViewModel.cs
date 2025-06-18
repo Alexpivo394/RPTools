@@ -1,72 +1,50 @@
-﻿using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows;
 using Autodesk.Revit.UI;
+using Microsoft.Win32;
 using WorkingSet.Models;
 using Wpf.Ui.Appearance;
 using RPToolsUI.Services;
+using Settings = WorkingSet.Configuration.Settings;
 
 namespace WorkingSet.ViewModels;
 
-public class WorkingSetViewModel : BaseViewModel
+public partial class WorkingSetViewModel : ObservableObject
 {
-    private readonly WorkingSetModel _model;
+    private WorkingSetModel _model;
     private readonly ExternalCommandData _commandData;
-    private readonly CreateWorksetsHandler _createWorksetsHandler;
-    private readonly ExternalEvent _externalEvent;
+    CreateWorksetsHandler _createWorksetsHandler;
+    private ExternalEvent _externalEvent;
 
-    private string _selectedSection;
-    private List<string> _sections;
-    private bool _darkTheme;
-    public bool DarkTheme
+    [ObservableProperty] private string _selectedSection;
+    [ObservableProperty] private List<string> _sections;
+    [ObservableProperty] private bool _darkTheme = true;
+    [ObservableProperty] private string _excelFilePath;
+    
+    partial void OnDarkThemeChanged(bool value)
     {
-        get => _darkTheme;
-        set
-        {
-            var newTheme = value ? ApplicationTheme.Dark : ApplicationTheme.Light;
-            ThemeWatcherService.ApplyTheme(newTheme);
-            SetField(ref _darkTheme, value);
-        }
+        var newTheme = value ? ApplicationTheme.Dark : ApplicationTheme.Light;
+        ThemeWatcherService.ApplyTheme(newTheme);
+    }
+
+    partial void OnExcelFilePathChanged(string value)
+    {
+        _model = new WorkingSetModel(value);
+        _createWorksetsHandler = new CreateWorksetsHandler();
+        _externalEvent = ExternalEvent.Create(_createWorksetsHandler);
+
+        LoadSections();
     }
 
     public WorkingSetViewModel(ExternalCommandData commandData)
     {
         _commandData = commandData;
-        _model = new WorkingSetModel(@"Y:\13-BIM (разработка)\06_Плагины\Рабочие наборы.xlsx");
-        _createWorksetsHandler = new CreateWorksetsHandler();
-        _externalEvent = ExternalEvent.Create(_createWorksetsHandler);
-
-        LoadSections();
-        CreateWorksetsCommand = new RelayCommand(CreateWorksets);
     }
-
-    public List<string> Sections
-    {
-        get => _sections;
-        set
-        {
-            _sections = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string SelectedSection
-    {
-        get => _selectedSection;
-        set
-        {
-            _selectedSection = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public ICommand CreateWorksetsCommand { get; }
-
     private void LoadSections()
     {
         Sections = _model.GetSections();
     }
 
+    [RelayCommand]
     private void CreateWorksets()
     {
         if (string.IsNullOrEmpty(SelectedSection))
@@ -82,5 +60,37 @@ public class WorkingSetViewModel : BaseViewModel
         _externalEvent.Raise();
 
         MessageBox.Show("Рабочие наборы созданы успешно!");
+    }
+    
+    [RelayCommand]
+    private void SelectExcelFilePath(object parameter)
+    {
+        var openFileDialog = new OpenFileDialog
+        {
+            Filter = "Excel Files (*.xlsx; *.xls)|*.xlsx;*.xls|All files (*.*)|*.*",
+            Title = "Выберите Excel файл",
+            DefaultExt = ".xlsx",
+            CheckFileExists = true,
+            CheckPathExists = true,
+            Multiselect = false,
+            RestoreDirectory = true
+        };
+
+        if (openFileDialog.ShowDialog() == true) ExcelFilePath = openFileDialog.FileName;
+    }
+
+    public void LoadFromSettings(Settings settings)
+    {
+        DarkTheme = settings.DarkTheme;
+        ExcelFilePath = settings.ExcelFilePath;
+    }
+
+    public Settings ToSettings()
+    {
+        return new Settings
+        {
+            DarkTheme = DarkTheme,
+            ExcelFilePath = ExcelFilePath
+        };
     }
 }

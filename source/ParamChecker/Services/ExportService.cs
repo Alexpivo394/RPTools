@@ -353,9 +353,13 @@ public class ExportService
         try
         {
             // 🔎 Находим нужный вид
-            var view = new FilteredElementCollector(doc).OfClass(typeof(View3D))
+            var view = new FilteredElementCollector(doc)
+                .OfClass(typeof(View3D))
                 .Cast<View3D>()
-                .FirstOrDefault(v => v.Name.Equals(viewName, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefault(v =>
+                    !v.IsTemplate &&
+                    v.Name.Equals(viewName, StringComparison.OrdinalIgnoreCase));
+
 
             if (view == null) throw new Exception($"Вид с именем '{viewName}' не найден.");
 
