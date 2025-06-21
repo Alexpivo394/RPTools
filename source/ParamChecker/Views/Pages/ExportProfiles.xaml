@@ -94,7 +94,11 @@
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MinHeight="150">
                     <ui:ListView
-                        ItemsSource="{Binding Rules}">
+                        ItemsSource="{Binding Rules}"
+                        HorizontalContentAlignment="Stretch"
+                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollViewer}}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ui:ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0,0">
@@ -111,9 +115,10 @@
                                         Grid.Column="0"
                                         Text="{Binding Title}"
                                         PlaceholderText="Название"
-                                        MaxHeight="100"
+                                        MaxHeight="50"
                                         VerticalScrollBarVisibility="Auto"
-                                        HorizontalScrollBarVisibility="Auto"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        TextWrapping="Wrap"
                                         AcceptsReturn="True"
                                         Margin="0,0,5,0"/>
 
@@ -121,9 +126,10 @@
                                         Grid.Column="1"
                                         Text="{Binding FilterConfigJson}"
                                         PlaceholderText="Фильтр"
-                                        MaxHeight="100"
+                                        MaxHeight="50"
                                         VerticalScrollBarVisibility="Auto"
-                                        HorizontalScrollBarVisibility="Auto"
+                                        HorizontalScrollBarVisibility="Disabled"
+                                        TextWrapping="Wrap"
                                         AcceptsReturn="True" />
 
                                     <ui:Button
@@ -140,9 +146,10 @@
                                         Text="{Binding ParameterConfigJson}"
                                         PlaceholderText="Параметры для проверки"
                                         Margin="10,0,0,0"
-                                        MaxHeight="100"
+                                        MaxHeight="50"
                                         VerticalScrollBarVisibility="Auto"
-                                        HorizontalScrollBarVisibility="Auto" />
+                                        TextWrapping="Wrap"
+                                        HorizontalScrollBarVisibility="Disabled" />
 
                                     <ui:Button
                                         Grid.Column="4"

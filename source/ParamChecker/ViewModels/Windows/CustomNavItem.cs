@@ -39,6 +39,14 @@ public partial class CustomNavItem : ObservableObject
         }
     }
 
+    partial void OnTitleChanged(string value)
+    {
+        if (ViewModelInstance is ExportProfilesViewModel vm)
+        {
+            vm.ProfileName = value;
+        }
+    }
+
 
     public Page Page { get; }
     public object ViewModel { get; }

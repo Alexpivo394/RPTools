@@ -173,4 +173,4 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
             MessageBox.Show("Экспорт завершен!", "Успех!");
         }
     }
-}
+} 

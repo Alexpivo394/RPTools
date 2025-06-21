@@ -1,4 +1,4 @@
-﻿ <ui:FluentWindow
+﻿<ui:FluentWindow
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     x:Class="ParamChecker.Views.Windows.ParameterConfig"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -22,15 +22,19 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <!-- Title Bar -->
+
         <ui:TitleBar Grid.Row="0" Title="ParamChecker" Icon="BoxMiltipleSearch24" />
 
-        <!-- Parameter List -->
+
         <Border Grid.Row="1" Margin="0,0,0,0" CornerRadius="5" Padding="10"
                 Background="{DynamicResource ControlFillColorDefaultBrush}">
-            <StackPanel Orientation="Vertical">
-                <TextBlock Text="Параметры для экспорта" FontWeight="Bold" Margin="0,0,0,10" />
-                <ScrollViewer VerticalScrollBarVisibility="Auto" MaxHeight="550">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Параметры для экспорта" FontWeight="Bold" Margin="0,0,0,10" />
+                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Visible">
                     <ItemsControl ItemsSource="{Binding Parameters}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -53,17 +57,16 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </ScrollViewer>
-
-                <ui:Button Content="Добавить параметр"
-                           Icon="{ui:SymbolIcon AddCircle24}"
-                           Command="{Binding AddParameterCommand}"
-                           Appearance="Secondary"
-                           Margin="0,10,0,0"
-                           HorizontalAlignment="Left" />
-            </StackPanel>
+            </Grid>
         </Border>
-
-        <!-- Apply button -->
+        
+        <ui:Button Grid.Row="2" Content="Добавить параметр"
+                   Icon="{ui:SymbolIcon AddCircle24}"
+                   Command="{Binding AddParameterCommand}"
+                   Appearance="Secondary"
+                   Margin="10"
+                   HorizontalAlignment="Left" />
+        
         <ui:Button Grid.Row="2" Content="Применить"
                    Icon="{ui:SymbolIcon Checkmark24}"
                    Command="{Binding ApplyCommand}"

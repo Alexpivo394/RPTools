@@ -7,7 +7,6 @@ using ParamChecker.ViewModels.Windows;
 using RPToolsUI.Services;
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
-using MessageBox = System.Windows.MessageBox;
 using Settings = ParamChecker.Views.Pages.Settings;
 
 namespace ParamChecker.Views.Windows;
