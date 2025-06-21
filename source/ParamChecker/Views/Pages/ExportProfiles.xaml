@@ -28,7 +28,11 @@
 
                 <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MinHeight="150">
                     <ui:ListView
-                        ItemsSource="{Binding Models}">
+                        ItemsSource="{Binding Models}"
+                        HorizontalContentAlignment="Stretch"
+                        Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=ScrollViewer}}"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                        ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ui:ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0,0">
