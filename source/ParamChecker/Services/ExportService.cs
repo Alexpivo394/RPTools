@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Windows;
 using Autodesk.Revit.UI;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -108,7 +107,7 @@ public class ExportService
                             }
                             else if (param.StorageType == StorageType.Double)
                             {
-                                cell.Value = param.AsDouble().ToString(CultureInfo.InvariantCulture);
+                                cell.Value = ConvertDoubleValue(param);
                             }
                             else if (param.StorageType == StorageType.Integer)
                             {
@@ -157,6 +156,8 @@ public class ExportService
                     redCount += redCountLocal;
                     yellowCount += yellowCountLocal;
                     greenCount += greenCountLocal;
+                    
+                    worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
                     _logger.Log(
                         $"Правило {rule.Title} обработано: заполнено {greenCountLocal}, пустых {yellowCountLocal}, отсутствует {redCountLocal}");
                 }
@@ -172,6 +173,8 @@ public class ExportService
                 totalworksheet.Cells[4, 2].Value = greenCount;
                 totalworksheet.Cells[5, 1].Value = "Всего параметров";
                 totalworksheet.Cells[5, 2].Value = totalCount;
+                
+                totalworksheet.Cells[totalworksheet.Dimension.Address].AutoFitColumns();
 
                 var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
@@ -185,8 +188,8 @@ public class ExportService
                 if (_settingsViewModel is { UpdateGeneralReport: true })
                 {
                     _logger.Log("Обновление общего отчета");
-                    string networkFilePath = String.Empty;
-                    if (_settingsViewModel.ReportFilePath != String.Empty)
+                    string networkFilePath;
+                    if (_settingsViewModel != null && _settingsViewModel.ReportFilePath != String.Empty)
                     {
                         networkFilePath = _settingsViewModel.ReportFilePath;
                     }
@@ -213,7 +216,7 @@ public class ExportService
                         while (worksheet.Cells[row, 5].Value != null)
                         {
                             if (worksheet.Cells[row, 5].Value.ToString() ==
-                                ProcessDocTitle(doc?.Title ?? throw new InvalidOperationException()))
+                                ProcessDocTitle(doc.Title ?? throw new InvalidOperationException()))
                             {
                                 worksheet.Cells[row, 13].Value = totalCount;
                                 worksheet.Cells[row, 14].Value = greenCount;
@@ -381,6 +384,17 @@ public class ExportService
                         _ => true
                     };
                 });
+            
+            // 🔄 Добавляем ВСЕ помещения из документа, если категория OST_Rooms выбрана
+            if (config.SelectedCategories?.Contains(BuiltInCategory.OST_Rooms) == true)
+            {
+                var rooms = new FilteredElementCollector(doc)
+                    .OfCategory(BuiltInCategory.OST_Rooms)
+                    .WhereElementIsNotElementType()
+                    .ToList();
+
+                elements = elements.Concat(rooms).Distinct(); // Убираем дубликаты
+            }
 
 
 
@@ -476,5 +490,92 @@ public class ExportService
         return false;
     }
 }
+    
+#if REVIT2022_OR_GREATER
+    private string ConvertDoubleValue(Parameter param)
+    {
+        double val = param.AsDouble();
+        ForgeTypeId typeId = param.Definition.GetDataType();
+
+        if (typeId == SpecTypeId.Length)
+        {
+            return (val * 304.8).ToString("F2", CultureInfo.InvariantCulture) + " мм";
+        }
+        else if (typeId == SpecTypeId.Area)
+        {
+            return (val * 0.092903).ToString("F2", CultureInfo.InvariantCulture) + " м²";
+        }
+        else if (typeId == SpecTypeId.Volume)
+        {
+            return (val * 0.0283168).ToString("F3", CultureInfo.InvariantCulture) + " м³";
+        }
+        else if (typeId == SpecTypeId.Angle)
+        {
+            return (val * (180.0 / Math.PI)).ToString("F2", CultureInfo.InvariantCulture) + "°";
+        }
+        else if (typeId == SpecTypeId.Slope)
+        {
+            return (val * 100.0).ToString("F1", CultureInfo.InvariantCulture) + " %";
+        }
+        else if (typeId == SpecTypeId.PipingVelocity)
+        {
+            return (val * 0.3048).ToString("F2", CultureInfo.InvariantCulture) + " м/с";
+        }
+        else if (typeId == SpecTypeId.ElectricalPotential)
+        {
+            return val.ToString("F1", CultureInfo.InvariantCulture) + " В";
+        }
+        else if (typeId == SpecTypeId.Force)
+        {
+            return (val * 4.44822).ToString("F2", CultureInfo.InvariantCulture) + " Н";
+        }
+
+        // fallback: без перевода, просто число
+        return val.ToString("F2", CultureInfo.InvariantCulture);
+    }
+
+#else
+    private string ConvertDoubleValue(Parameter param)
+    {
+        double val = param.AsDouble();
+        ParameterType typeId = param.Definition.ParameterType;
+
+        if (typeId == ParameterType.Length)
+        {
+            return (val * 304.8).ToString("F2", CultureInfo.InvariantCulture) + " мм";
+        }
+        else if (typeId == ParameterType.Area)
+        {
+            return (val * 0.092903).ToString("F2", CultureInfo.InvariantCulture) + " м²";
+        }
+        else if (typeId == ParameterType.Volume)
+        {
+            return (val * 0.0283168).ToString("F3", CultureInfo.InvariantCulture) + " м³";
+        }
+        else if (typeId == ParameterType.Angle)
+        {
+            return (val * (180.0 / Math.PI)).ToString("F2", CultureInfo.InvariantCulture) + "°";
+        }
+        else if (typeId == ParameterType.Slope)
+        {
+            return (val * 100.0).ToString("F1", CultureInfo.InvariantCulture) + " %";
+        }
+        else if (typeId == ParameterType.PipingVelocity)
+        {
+            return (val * 0.3048).ToString("F2", CultureInfo.InvariantCulture) + " м/с";
+        }
+        else if (typeId == ParameterType.ElectricalPotential)
+        {
+            return val.ToString("F1", CultureInfo.InvariantCulture) + " В";
+        }
+        else if (typeId == ParameterType.Force)
+        {
+            return (val * 4.44822).ToString("F2", CultureInfo.InvariantCulture) + " Н";
+        }
+
+        // fallback: без перевода, просто число
+        return val.ToString("F2", CultureInfo.InvariantCulture);
+    }
+#endif
 
 }

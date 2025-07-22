@@ -4,14 +4,14 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ParamChecker.ViewModels.PagesViewModels;
 using ParamChecker.ViewModels.Windows;
-using RPToolsUI.Services;
+using RPToolsUI.Services;       
 using Wpf.Ui.Appearance;
 using Wpf.Ui.Controls;
 using Settings = ParamChecker.Views.Pages.Settings;
 
 namespace ParamChecker.Views.Windows;
 
-public sealed partial class ParamChecker : FluentWindow
+public sealed partial class ParamChecker : FluentWindow     
 {
     private readonly ParamCheckerViewModel _viewModel;
     private SettingsViewModel _settingsVm;
