@@ -393,7 +393,7 @@ public class ExportService
                     .WhereElementIsNotElementType()
                     .ToList();
 
-                elements = elements.Concat(rooms).Distinct(); // Убираем дубликаты
+                elements = elements.Concat(rooms).Distinct();
             }
 
 
@@ -499,39 +499,39 @@ public class ExportService
 
         if (typeId == SpecTypeId.Length)
         {
-            return (val * 304.8).ToString("F2", CultureInfo.InvariantCulture) + " мм";
+            return (val * 304.8).ToString("F0");
         }
         else if (typeId == SpecTypeId.Area)
         {
-            return (val * 0.092903).ToString("F2", CultureInfo.InvariantCulture) + " м²";
+            return (val * 0.092903).ToString("F2");
         }
         else if (typeId == SpecTypeId.Volume)
         {
-            return (val * 0.0283168).ToString("F3", CultureInfo.InvariantCulture) + " м³";
+            return (val * 0.0283168).ToString("F3");
         }
         else if (typeId == SpecTypeId.Angle)
         {
-            return (val * (180.0 / Math.PI)).ToString("F2", CultureInfo.InvariantCulture) + "°";
+            return (val * (180.0 / Math.PI)).ToString("F2");
         }
         else if (typeId == SpecTypeId.Slope)
         {
-            return (val * 100.0).ToString("F1", CultureInfo.InvariantCulture) + " %";
+            return (val * 100.0).ToString("F1");
         }
         else if (typeId == SpecTypeId.PipingVelocity)
         {
-            return (val * 0.3048).ToString("F2", CultureInfo.InvariantCulture) + " м/с";
+            return (val * 0.3048).ToString("F2");
         }
         else if (typeId == SpecTypeId.ElectricalPotential)
         {
-            return val.ToString("F1", CultureInfo.InvariantCulture) + " В";
+            return val.ToString("F1");
         }
         else if (typeId == SpecTypeId.Force)
         {
-            return (val * 4.44822).ToString("F2", CultureInfo.InvariantCulture) + " Н";
+            return (val * 4.44822).ToString("F2");
         }
 
         // fallback: без перевода, просто число
-        return val.ToString("F2", CultureInfo.InvariantCulture);
+        return val.ToString("F2");
     }
 
 #else
@@ -542,35 +542,35 @@ public class ExportService
 
         if (typeId == ParameterType.Length)
         {
-            return (val * 304.8).ToString("F2", CultureInfo.InvariantCulture) + " мм";
+            return (val * 304.8).ToString("F2");
         }
         else if (typeId == ParameterType.Area)
         {
-            return (val * 0.092903).ToString("F2", CultureInfo.InvariantCulture) + " м²";
+            return (val * 0.092903).ToString("F2");
         }
         else if (typeId == ParameterType.Volume)
         {
-            return (val * 0.0283168).ToString("F3", CultureInfo.InvariantCulture) + " м³";
+            return (val * 0.0283168).ToString("F3");
         }
         else if (typeId == ParameterType.Angle)
         {
-            return (val * (180.0 / Math.PI)).ToString("F2", CultureInfo.InvariantCulture) + "°";
+            return (val * (180.0 / Math.PI)).ToString("F2");
         }
         else if (typeId == ParameterType.Slope)
         {
-            return (val * 100.0).ToString("F1", CultureInfo.InvariantCulture) + " %";
+            return (val * 100.0).ToString("F1");
         }
         else if (typeId == ParameterType.PipingVelocity)
         {
-            return (val * 0.3048).ToString("F2", CultureInfo.InvariantCulture) + " м/с";
+            return (val * 0.3048).ToString("F2");
         }
         else if (typeId == ParameterType.ElectricalPotential)
         {
-            return val.ToString("F1", CultureInfo.InvariantCulture) + " В";
+            return val.ToString("F1");
         }
         else if (typeId == ParameterType.Force)
         {
-            return (val * 4.44822).ToString("F2", CultureInfo.InvariantCulture) + " Н";
+            return (val * 4.44822).ToString("F2");
         }
 
         // fallback: без перевода, просто число
