@@ -1,6 +1,5 @@
 ﻿#nullable enable
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using Autodesk.Revit.UI;
 using OfficeOpenXml;
@@ -20,7 +19,8 @@ public class ExportService
     private readonly SettingsViewModel? _settingsViewModel;
     private readonly Logger _logger;
 
-    public ExportService(ExternalCommandData? commandData, CategoryService categoryService,  SettingsViewModel? settingsViewModel,  Logger logger)
+    public ExportService(ExternalCommandData? commandData, CategoryService categoryService,
+        SettingsViewModel? settingsViewModel, Logger logger)
     {
         _logger = logger;
         _settingsViewModel = settingsViewModel;
@@ -101,18 +101,6 @@ public class ExportService
                                 cell.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.Red);
                                 redCountLocal++;
                             }
-                            else if (param.StorageType == StorageType.String)
-                            {
-                                cell.Value = param.AsString();
-                            }
-                            else if (param.StorageType == StorageType.Double)
-                            {
-                                cell.Value = ConvertDoubleValue(param);
-                            }
-                            else if (param.StorageType == StorageType.Integer)
-                            {
-                                cell.Value = param.AsInteger().ToString();
-                            }
                             else
                             {
                                 cell.Value = param.AsValueString();
@@ -156,7 +144,7 @@ public class ExportService
                     redCount += redCountLocal;
                     yellowCount += yellowCountLocal;
                     greenCount += greenCountLocal;
-                    
+
                     worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
                     _logger.Log(
                         $"Правило {rule.Title} обработано: заполнено {greenCountLocal}, пустых {yellowCountLocal}, отсутствует {redCountLocal}");
@@ -173,7 +161,7 @@ public class ExportService
                 totalworksheet.Cells[4, 2].Value = greenCount;
                 totalworksheet.Cells[5, 1].Value = "Всего параметров";
                 totalworksheet.Cells[5, 2].Value = totalCount;
-                
+
                 totalworksheet.Cells[totalworksheet.Dimension.Address].AutoFitColumns();
 
                 var desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
@@ -240,7 +228,6 @@ public class ExportService
                             _logger.Log("Модель не найдена в общем отчете");
                         }
                     }
-
                 }
 
                 doc.Close(false);
@@ -248,8 +235,7 @@ public class ExportService
             }
 
             _logger.Log("Экспорт профиля завершен успешно");
-        
-    }
+        }
         catch (Exception ex)
         {
             _logger.LogError("Критическая ошибка при экспорте профиля", ex);
@@ -373,7 +359,8 @@ public class ExportService
                 {
                     var category = e.Category;
                     bool categoryMatch = category != null
-                                         && (config.SelectedCategories?.Contains((BuiltInCategory)category.Id.IntegerValue) ?? false);
+                                         && (config.SelectedCategories?.Contains(
+                                             (BuiltInCategory)category.Id.IntegerValue) ?? false);
 
                     return config.CategoryParameterLogic switch
                     {
@@ -384,7 +371,7 @@ public class ExportService
                         _ => true
                     };
                 });
-            
+
             // 🔄 Добавляем ВСЕ помещения из документа, если категория OST_Rooms выбрана
             if (config.SelectedCategories?.Contains(BuiltInCategory.OST_Rooms) == true)
             {
@@ -395,7 +382,6 @@ public class ExportService
 
                 elements = elements.Concat(rooms).Distinct();
             }
-
 
 
             // 📋 Применяем параметрические условия
@@ -440,142 +426,54 @@ public class ExportService
 
 
     private bool EvaluateSimpleCondition(SimpleConditionModel cond, Element e)
-{
-    try
     {
-        // Пробуем найти параметр в самом элементе
-        var param = e.LookupParameter(cond.ParameterName);
-
-        // Если не нашли — пробуем найти в типе элемента
-        if (param == null && e.Document != null)
+        try
         {
-            var type = e.Document.GetElement(e.GetTypeId());
-            param = type?.LookupParameter(cond.ParameterName);
+            // Пробуем найти параметр в самом элементе
+            var param = e.LookupParameter(cond.ParameterName);
+
+            // Если не нашли — пробуем найти в типе элемента
+            if (param == null && e.Document != null)
+            {
+                var type = e.Document.GetElement(e.GetTypeId());
+                param = type?.LookupParameter(cond.ParameterName);
+            }
+
+            string? val = param?.AsValueString() ?? param?.AsString();
+
+            bool parsedVal = double.TryParse(val, out double number);
+            bool parsedCond = double.TryParse(cond.Value, out double targetNumber);
+
+            switch (cond.SelectedLogic)
+            {
+                case FilterLogic.Equals:
+                    return string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
+                case FilterLogic.NotEquals:
+                    return !string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
+                case FilterLogic.Contains:
+                    return val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false;
+                case FilterLogic.NotContains:
+                    return !(val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false);
+                case FilterLogic.Exists:
+                    return param != null && (!string.IsNullOrWhiteSpace(val) || param.HasValue);
+                case FilterLogic.NotExists:
+                    return param == null || (string.IsNullOrWhiteSpace(val) && !param.HasValue);
+                case FilterLogic.GreaterThan:
+                    return parsedVal && parsedCond && number > targetNumber;
+                case FilterLogic.GreaterThanOrEquals:
+                    return parsedVal && parsedCond && number >= targetNumber;
+                case FilterLogic.LessThan:
+                    return parsedVal && parsedCond && number < targetNumber;
+                case FilterLogic.LessThanOrEquals:
+                    return parsedVal && parsedCond && number <= targetNumber;
+                default:
+                    return false;
+            }
         }
-
-        string? val = param?.AsValueString() ?? param?.AsString();
-
-        bool parsedVal = double.TryParse(val, out double number);
-        bool parsedCond = double.TryParse(cond.Value, out double targetNumber);
-
-        switch (cond.SelectedLogic)
+        catch (Exception ex)
         {
-            case FilterLogic.Equals:
-                return string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
-            case FilterLogic.NotEquals:
-                return !string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
-            case FilterLogic.Contains:
-                return val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false;
-            case FilterLogic.NotContains:
-                return !(val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false);
-            case FilterLogic.Exists:
-                return param != null && (!string.IsNullOrWhiteSpace(val) || param.HasValue);
-            case FilterLogic.NotExists:
-                return param == null || (string.IsNullOrWhiteSpace(val) && !param.HasValue);
-            case FilterLogic.GreaterThan:
-                return parsedVal && parsedCond && number > targetNumber;
-            case FilterLogic.GreaterThanOrEquals:
-                return parsedVal && parsedCond && number >= targetNumber;
-            case FilterLogic.LessThan:
-                return parsedVal && parsedCond && number < targetNumber;
-            case FilterLogic.LessThanOrEquals:
-                return parsedVal && parsedCond && number <= targetNumber;
-            default:
-                return false;
+            _logger.LogError($"Ошибка при оценке условия для параметра {cond.ParameterName}", ex);
+            return false;
         }
     }
-    catch (Exception ex)
-    {
-        _logger.LogError($"Ошибка при оценке условия для параметра {cond.ParameterName}", ex);
-        return false;
-    }
-}
-    
-#if REVIT2022_OR_GREATER
-    private string ConvertDoubleValue(Parameter param)
-    {
-        double val = param.AsDouble();
-        ForgeTypeId typeId = param.Definition.GetDataType();
-
-        if (typeId == SpecTypeId.Length)
-        {
-            return (val * 304.8).ToString("F0");
-        }
-        else if (typeId == SpecTypeId.Area)
-        {
-            return (val * 0.092903).ToString("F2");
-        }
-        else if (typeId == SpecTypeId.Volume)
-        {
-            return (val * 0.0283168).ToString("F3");
-        }
-        else if (typeId == SpecTypeId.Angle)
-        {
-            return (val * (180.0 / Math.PI)).ToString("F2");
-        }
-        else if (typeId == SpecTypeId.Slope)
-        {
-            return (val * 100.0).ToString("F1");
-        }
-        else if (typeId == SpecTypeId.PipingVelocity)
-        {
-            return (val * 0.3048).ToString("F2");
-        }
-        else if (typeId == SpecTypeId.ElectricalPotential)
-        {
-            return val.ToString("F1");
-        }
-        else if (typeId == SpecTypeId.Force)
-        {
-            return (val * 4.44822).ToString("F2");
-        }
-
-        // fallback: без перевода, просто число
-        return val.ToString("F2");
-    }
-
-#else
-    private string ConvertDoubleValue(Parameter param)
-    {
-        double val = param.AsDouble();
-        ParameterType typeId = param.Definition.ParameterType;
-
-        if (typeId == ParameterType.Length)
-        {
-            return (val * 304.8).ToString("F2");
-        }
-        else if (typeId == ParameterType.Area)
-        {
-            return (val * 0.092903).ToString("F2");
-        }
-        else if (typeId == ParameterType.Volume)
-        {
-            return (val * 0.0283168).ToString("F3");
-        }
-        else if (typeId == ParameterType.Angle)
-        {
-            return (val * (180.0 / Math.PI)).ToString("F2");
-        }
-        else if (typeId == ParameterType.Slope)
-        {
-            return (val * 100.0).ToString("F1");
-        }
-        else if (typeId == ParameterType.PipingVelocity)
-        {
-            return (val * 0.3048).ToString("F2");
-        }
-        else if (typeId == ParameterType.ElectricalPotential)
-        {
-            return val.ToString("F1");
-        }
-        else if (typeId == ParameterType.Force)
-        {
-            return (val * 4.44822).ToString("F2");
-        }
-
-        // fallback: без перевода, просто число
-        return val.ToString("F2", CultureInfo.InvariantCulture);
-    }
-#endif
-
 }
