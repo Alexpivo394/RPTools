@@ -69,7 +69,12 @@ public class ExportService
                     foreach (var element in elements)
                     {
                         worksheet.Cells[row, 1].Value = element.Name;
+#if REVIT2024_OR_GREATER
+                        worksheet.Cells[row, 2].Value = element.Id.Value;
+#else
                         worksheet.Cells[row, 2].Value = element.Id.IntegerValue;
+#endif
+
 
                         for (var i = 0; i < parameters.Count; i++)
                         {
@@ -358,9 +363,16 @@ public class ExportService
                 .Where(e =>
                 {
                     var category = e.Category;
+#if REVIT2024_OR_GREATER
+                    bool categoryMatch = category != null &&
+                                         (config.SelectedCategories?.Contains((BuiltInCategory)category.Id.Value) ??
+                                          false);
+#else
                     bool categoryMatch = category != null
                                          && (config.SelectedCategories?.Contains(
                                              (BuiltInCategory)category.Id.IntegerValue) ?? false);
+#endif
+                    
 
                     return config.CategoryParameterLogic switch
                     {

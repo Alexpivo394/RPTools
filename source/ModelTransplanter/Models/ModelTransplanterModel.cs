@@ -225,8 +225,14 @@ namespace ModelTransplanter.Models
             return element is Grid ||
                    element is Level ||
                    element is ReferencePlane ||
-                   element.Category?.Id.IntegerValue == (int)BuiltInCategory.OST_Grids ||
-                   element.Category?.Id.IntegerValue == (int)BuiltInCategory.OST_Levels;
+#if REVIT2024_OR_GREATER
+                   element.Category?.Id.Value == (int)BuiltInCategory.OST_Grids ||
+                   element.Category?.Id.Value == (int)BuiltInCategory.OST_Levels;
+#else
+                    element.Category?.Id.IntegerValue == (int)BuiltInCategory.OST_Grids ||
+                    element.Category?.Id.IntegerValue == (int)BuiltInCategory.OST_Levels;
+
+#endif
         }
 
         private bool IsElementValidForTransfer(Element element)
