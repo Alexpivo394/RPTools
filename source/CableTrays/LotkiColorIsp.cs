@@ -75,7 +75,7 @@ public class StartupCommand : IExternalCommand
                 doc.ActiveView.SetElementOverrides(lotok.Id, ogs3);
 
             t0.Commit();
-        }
+        } 
 
 
         taskDialog.MainContent = "Покрашено!";

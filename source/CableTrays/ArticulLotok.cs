@@ -59,7 +59,7 @@ public class StartupCommand : IExternalCommand
         var shirina50 = "50";
         var shirina80 = "80";
         var shirina100 = "100";
-        var shirina150 = "150";
+        var shirina150 = "150"; 
         var shirina200 = "200";
         var shirina300 = "300";
         var shirina400 = "400";
