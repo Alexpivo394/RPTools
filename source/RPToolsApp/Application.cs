@@ -62,31 +62,9 @@ namespace RPToolsApp
             pullButton.AddPushButton<ArticulLotok.StartupCommand>("Артикулы и наименования");
             pullButton.AddPushButton<LotkiColor.StartupCommand>("Покрасить по перфорации");
             pullButton.AddPushButton<LotkiColorIsp.StartupCommand>("Покрасить по исполнению");
-            pullButton.AddPushButton<LotkiColorKrshka.StartupCommand>("Покрасить крышки");
+            // pullButton.AddPushButton<LotkiColorKrshka.StartupCommand>("Покрасить крышки");
             pullButton.AddPushButton<CreateCover.StartupCommand>("Разместить крышки");
             
-            // panelTray.AddPushButton<ArticulLotok.StartupCommand>("Артикулы и \nнаименования")
-            //     .SetImage("/RPToolsApp;component/Resources/Icons/1Tray16.png")
-            //     .SetLargeImage("/RPToolsApp;component/Resources/Icons/1Tray32.png")
-            //     .SetToolTip("Заполнение артикулов и наименования у выбранных лотков.");
-            //
-            // panelTray.AddPushButton<LotkiColor.StartupCommand>("Покрасить\nпо перфорации")
-            //     .SetImage("/RPToolsApp;component/Resources/Icons/2Tray16.png")
-            //     .SetLargeImage("/RPToolsApp;component/Resources/Icons/2Tray32.png")
-            //     .SetToolTip("Покрасит лотки, \nобычные - в фиолетовый, \nперфорированные - в зеленый.");
-            //
-            // panelTray.AddPushButton<LotkiColorIsp.StartupCommand>("Покрасить\nпо исполнению")
-            //     .SetImage("/RPToolsApp;component/Resources/Icons/3Tray16.png")
-            //     .SetLargeImage("/RPToolsApp;component/Resources/Icons/3Tray32.png")
-            //     .SetToolTip("Покрасит лотки, \n1 - по методу Сендзимира - в розовый\n2 - горячего цинкования - в синий \n3 - из нержавеющей стали - в зеленый");
-            //
-            // panelTray.AddPushButton<LotkiColorKrshka.StartupCommand>("Покрасить\nкрышки")
-            //     .SetImage("/RPToolsApp;component/Resources/Icons/4Tray16.png")
-            //     .SetLargeImage("/RPToolsApp;component/Resources/Icons/4Tray32.png")
-            //     .SetToolTip("Покрасит лотки, \nпо наличию крышки");
-            
-            
-
             //Общие
             panelGeneral.AddPushButton<Leght.StartupCommand>("Длина элементов\nмодели")
                 .SetImage("/RPToolsApp;component/Resources/Icons/Ruler16.png")

@@ -27,12 +27,15 @@ public class StartupCommand : IExternalCommand
             .ToList();
 
 
+
         foreach (var soed in allsoed) alllotkirealall.Add(soed);
-        var t0 = new Transaction(doc);
+
+        using (var t = new Transaction(doc, "Покраска"))
+        {
+            t.Start();
 
         foreach (var a in alllotkirealall)
         {
-            t0.Start("Modify color1");
             var color4 = new Color(0, 0, 0);
 
             var ogs4 = new OverrideGraphicSettings();
@@ -42,13 +45,11 @@ public class StartupCommand : IExternalCommand
             ogs4.SetCutLineColor(color4);
 
             doc.ActiveView.SetElementOverrides(a.Id, ogs4);
-
-            t0.Commit();
+            
         }
 
         foreach (var lotok in alllotkirealall)
         {
-            t0.Start("Modify color2");
             var color1 = new Color(255, 0, 0);
 
             var ogs1 = new OverrideGraphicSettings();
@@ -56,10 +57,15 @@ public class StartupCommand : IExternalCommand
             ogs1.SetCutForegroundPatternColor(color1);
             ogs1.SetCutLineColor(color1);
 
-            if (lotok.LookupParameter("ADSK_Крышка").AsInteger() == 1)
+            var paramName = "ADSK_Крышка";
+            var param = lotok.LookupParameter(paramName);
+            
+            if (param is not null && param.AsInteger() == 1)
                 doc.ActiveView.SetElementOverrides(lotok.Id, ogs1);
 
-            t0.Commit();
+        }
+        
+        t.Commit();
         }
 
         taskDialog.MainContent = "Покрашено!";

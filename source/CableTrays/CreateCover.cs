@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.DB.Structure;
@@ -201,12 +202,13 @@ public class StartupCommand : IExternalCommand
                         {
                             instance.LookupParameter("ADSK_Код изделия").Set(artikul);
                             instance.LookupParameter("ADSK_Наименование").Set(name);
+                            instance.LookupParameter(articulParamName).Set(ispol);
                         });
                         
                     }
                     catch (Exception e)
                     {
-
+                        Debug.WriteLine(e.Message);
                     }
                 }
 
@@ -218,6 +220,7 @@ public class StartupCommand : IExternalCommand
         }
         catch (Exception e)
         {
+            Debug.WriteLine(e.Message);
             return Result.Failed;
         }
     }
@@ -298,6 +301,7 @@ public class StartupCommand : IExternalCommand
         }
         catch (Exception ex)
         {
+            Debug.WriteLine(ex.Message);
             return null;
         }
     }
