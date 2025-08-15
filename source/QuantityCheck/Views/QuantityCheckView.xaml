@@ -1,0 +1,22 @@
+﻿<Window
+    x:Class="QuantityCheck.Views.QuantityCheckView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:viewModel="clr-namespace:QuantityCheck.ViewModels"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance viewModel:QuantityCheckViewModel}"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    Title="QuantityCheck"
+    Height="450"
+    Width="800">
+    <Grid>
+        <TextBlock
+            Text="QuantityCheck"
+            FontSize="60"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Center" />
+    </Grid>
+</Window>

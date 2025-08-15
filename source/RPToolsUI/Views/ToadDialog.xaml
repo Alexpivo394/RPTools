@@ -1,0 +1,49 @@
+<ui:FluentWindow x:Class="RPToolsUI.Views.ToadDialog"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 WindowStartupLocation="CenterOwner"
+                 ResizeMode="NoResize"
+                 SizeToContent="WidthAndHeight"
+                 Background="{DynamicResource ControlFillColorDefaultBrush}"
+                 Title="Диалог">
+
+    <Grid MinWidth="350">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Иконка -->
+        <ui:SymbolIcon x:Name="DialogIconControl"
+                          FontSize="32"
+                          Margin="0,0,15,0"
+                          VerticalAlignment="Top" />
+
+        <!-- Заголовок -->
+        <TextBlock x:Name="TitleBlock"
+                   Grid.Column="1"
+                   FontWeight="Bold"
+                   FontSize="18"
+                   Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+
+        <!-- Сообщение -->
+        <TextBlock x:Name="MessageBlock"
+                   Grid.Row="1" Grid.Column="1"
+                   TextWrapping="Wrap"
+                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                   FontSize="14" />
+
+        <!-- Кнопки -->
+        <StackPanel x:Name="ButtonsPanel"
+                    Grid.Row="2" Grid.ColumnSpan="2"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0,15,0,0" />
+    </Grid>
+    </ui:FluentWindow>
