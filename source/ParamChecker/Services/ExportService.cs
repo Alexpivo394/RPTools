@@ -154,7 +154,7 @@ public class ExportService
                     _logger.Log(
                         $"Правило {rule.Title} обработано: заполнено {greenCountLocal}, пустых {yellowCountLocal}, отсутствует {redCountLocal}");
                 }
-
+    
                 var totalworksheet = excelDoc.Workbook.Worksheets.Add("Итоги");
                 var totalCount = redCount + yellowCount + greenCount;
                 totalworksheet.Cells[1, 1].Value = "Итоги";
@@ -198,7 +198,7 @@ public class ExportService
                         if (package.Workbook.Worksheets.Count == 0)
                         {
                             _logger.Log("Общий отчет не содержит листов");
-                            return;
+                            return;  
                         }
 
                         var worksheet = package.Workbook.Worksheets.First();

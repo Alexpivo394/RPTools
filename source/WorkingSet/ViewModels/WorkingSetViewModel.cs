@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
+using RPToolsUI.Models;
 using WorkingSet.Models;
 using Wpf.Ui.Appearance;
 using RPToolsUI.Services;
@@ -52,14 +53,15 @@ public partial class WorkingSetViewModel : ObservableObject
             MessageBox.Show("Пожалуйста, выберите раздел.");
             return;
         }
-
+        
         var worksets = _model.GetWorksetsFromSection(SelectedSection);
-
+        
         _createWorksetsHandler.Worksets = worksets;
         _createWorksetsHandler.CommandData = _commandData;
         _externalEvent.Raise();
-
+        
         MessageBox.Show("Рабочие наборы созданы успешно!");
+        
     }
     
     [RelayCommand]

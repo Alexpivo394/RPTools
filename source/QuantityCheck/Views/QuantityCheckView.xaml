@@ -1,22 +1,60 @@
-﻿<Window
+﻿<ui:FluentWindow
     x:Class="QuantityCheck.Views.QuantityCheckView"
+    xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:viewModel="clr-namespace:QuantityCheck.ViewModels"
     mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance viewModel:QuantityCheckViewModel}"
-    ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
-    Title="QuantityCheck"
-    Height="450"
-    Width="800">
+    WindowBackdropType="Mica"
+    WindowCornerPreference="Round"
+    Title="WorkingSet"
+    Height="250"
+    Width="400"
+    MinHeight="250"
+    MinWidth="400"
+    ExtendsContentIntoTitleBar="True">
+
     <Grid>
-        <TextBlock
-            Text="QuantityCheck"
-            FontSize="60"
-            VerticalAlignment="Center"
-            HorizontalAlignment="Center" />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <ui:TitleBar Grid.Row="0" Title="Создание Рабочих наборов">
+            <ui:TitleBar.Icon>
+                <ui:SymbolIcon Symbol="AddCircle24" />
+            </ui:TitleBar.Icon>
+        </ui:TitleBar>
+
+        <ui:TextBlock Grid.Row="1" Text="Введите имя параметра для записи количества"
+                      HorizontalAlignment="Center" FontSize="14" />
+
+        <ui:TextBox Grid.Row="2" Text="{Binding ParameterName, Mode=TwoWay}"
+                    PlaceholderText="Имя параметра"
+                    IsReadOnly="False"
+                    Height="35"
+                    VerticalContentAlignment="Center"
+                    Margin="0,0,8,0" />
+
+        <ui:Button Grid.Row="3" Content="Заполнить"
+                   Command="{Binding WriteQuantityCommand}"
+                   Icon="{ui:SymbolIcon Symbol=Play24}"
+                   Appearance="Primary"
+                   Width="120" Height="30" HorizontalAlignment="Center" />
+
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="5,0,0,0">
+            <TextBlock Text="Тема:" VerticalAlignment="Center" Margin="0,0,10,0" />
+            <ui:ToggleSwitch
+                IsChecked="{Binding DataContext.DarkTheme, RelativeSource={RelativeSource AncestorType=ui:FluentWindow}, Mode=TwoWay}"
+                OffContent="Светлая"
+                OnContent="Темная" />
+        </StackPanel>
     </Grid>
-</Window>
+
+
+</ui:FluentWindow>

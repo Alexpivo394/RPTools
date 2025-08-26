@@ -2,48 +2,69 @@
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-                 WindowStartupLocation="CenterOwner"
-                 ResizeMode="NoResize"
-                 SizeToContent="WidthAndHeight"
-                 Background="{DynamicResource ControlFillColorDefaultBrush}"
-                 Title="Диалог">
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:m="clr-namespace:RPToolsUI.Models"
+                 mc:Ignorable="d"
+                 WindowStartupLocation="CenterScreen"
+                 WindowBackdropType="Mica"
+                 WindowCornerPreference="Round"
+                 ExtendsContentIntoTitleBar="True"
+                 Title="Диалог"
+                 MinHeight="100"
+                 MinWidth="250"
+                 Width="350"
+                 Height="150"
+                 SizeToContent="Manual">
 
-    <Grid MinWidth="350">
+    <Grid Margin="5,15,5,5"
+          MouseLeftButtonDown="RootGrid_OnMouseLeftButtonDown">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        
+        <!-- Icon -->
+        <ui:SymbolIcon Grid.Row="0" Symbol="{Binding Icon}"
+                       FontSize="32"
+                       Margin="0,0,15,0"
+                       VerticalAlignment="Top" />
 
-        <!-- Иконка -->
-        <ui:SymbolIcon x:Name="DialogIconControl"
-                          FontSize="32"
-                          Margin="0,0,15,0"
-                          VerticalAlignment="Top" />
-
-        <!-- Заголовок -->
-        <TextBlock x:Name="TitleBlock"
+        <!-- Title -->
+        <ui:TextBlock Grid.Row="0" Text="{Binding Title}"
                    Grid.Column="1"
                    FontWeight="Bold"
                    FontSize="18"
-                   Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                   Margin="0,0,0,10"/>
 
-        <!-- Сообщение -->
-        <TextBlock x:Name="MessageBlock"
-                   Grid.Row="1" Grid.Column="1"
-                   TextWrapping="Wrap"
-                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                   FontSize="14" />
+        <!-- Message -->
+        <ui:TextBlock Text="{Binding Message}"
+                      Grid.Row="1" Grid.Column="1"
+                      TextWrapping="Wrap"
+                      FontSize="14"/>
 
-        <!-- Кнопки -->
-        <StackPanel x:Name="ButtonsPanel"
-                    Grid.Row="2" Grid.ColumnSpan="2"
-                    Orientation="Horizontal"
-                    HorizontalAlignment="Right"
-                    Margin="0,15,0,0" />
+        <!-- Buttons -->
+        <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
+                      ItemsSource="{Binding Buttons}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type m:DialogButtonModel}">
+                    <ui:Button Content="{Binding Text}"
+                               Icon="{Binding Icon}"
+                               Width="90" Margin="5"
+                               Command="{Binding Command}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
-    </ui:FluentWindow>
+</ui:FluentWindow>
