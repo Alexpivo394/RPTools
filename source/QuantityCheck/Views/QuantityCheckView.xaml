@@ -10,51 +10,64 @@
     WindowBackdropType="Mica"
     WindowCornerPreference="Round"
     Title="WorkingSet"
-    Height="250"
-    Width="400"
+    Height="300"
+    Width="450"
     MinHeight="250"
     MinWidth="400"
     ExtendsContentIntoTitleBar="True">
+    
+    
 
-    <Grid>
+    <Grid Margin="0,0,0,20">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <ui:TitleBar Grid.Row="0" Title="Создание Рабочих наборов">
+        <!-- Заголовок -->
+        <ui:TitleBar Grid.Row="0"
+                     Title="Создание рабочих наборов"
+                     Margin="0,0,0,10">
             <ui:TitleBar.Icon>
-                <ui:SymbolIcon Symbol="AddCircle24" />
+                <ui:SymbolIcon Symbol="AddCircle24"/>
             </ui:TitleBar.Icon>
         </ui:TitleBar>
 
-        <ui:TextBlock Grid.Row="1" Text="Введите имя параметра для записи количества"
-                      HorizontalAlignment="Center" FontSize="14" />
+        <!-- Подсказка -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,20" HorizontalAlignment="Center">
+            <ui:TextBlock Text="Введите имя параметра для записи количества"
+                          FontSize="16"
+                          FontWeight="SemiBold"
+                          TextAlignment="Center"
+                          Margin="0,0,0,8"/>
+            <ui:TextBox Text="{Binding ParameterName, Mode=TwoWay}"
+                        PlaceholderText="Имя параметра"
+                        Width="250"
+                        Height="40"
+                        VerticalContentAlignment="Center"/>
+        </StackPanel>
 
-        <ui:TextBox Grid.Row="2" Text="{Binding ParameterName, Mode=TwoWay}"
-                    PlaceholderText="Имя параметра"
-                    IsReadOnly="False"
-                    Height="35"
-                    VerticalContentAlignment="Center"
-                    Margin="0,0,8,0" />
+        <!-- Кнопка действия -->
+        <StackPanel Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <ui:Button Content="Заполнить"
+                       Command="{Binding WriteQuantityCommand}"
+                       Icon="{ui:SymbolIcon Symbol=Play24}"
+                       Appearance="Primary"
+                       Width="160"
+                       Height="40"
+                       Margin="0,0,0,20"/>
+        </StackPanel>
 
-        <ui:Button Grid.Row="3" Content="Заполнить"
-                   Command="{Binding WriteQuantityCommand}"
-                   Icon="{ui:SymbolIcon Symbol=Play24}"
-                   Appearance="Primary"
-                   Width="120" Height="30" HorizontalAlignment="Center" />
-
-        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="5,0,0,0">
-            <TextBlock Text="Тема:" VerticalAlignment="Center" Margin="0,0,10,0" />
+        <!-- Переключатель темы -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,0">
+            <ui:TextBlock Text="Тема:" VerticalAlignment="Center" Margin="0,0,10,0"/>
             <ui:ToggleSwitch
                 IsChecked="{Binding DataContext.DarkTheme, RelativeSource={RelativeSource AncestorType=ui:FluentWindow}, Mode=TwoWay}"
                 OffContent="Светлая"
-                OnContent="Темная" />
+                OnContent="Тёмная"/>
         </StackPanel>
+
     </Grid>
-
-
 </ui:FluentWindow>
