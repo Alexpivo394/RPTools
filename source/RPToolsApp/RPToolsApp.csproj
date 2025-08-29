@@ -45,12 +45,6 @@
     <ItemGroup>
       <None Remove="Resources\Icons\1Tray16.png" />
       <None Remove="Resources\Icons\1Tray32.png" />
-      <None Remove="Resources\Icons\2Tray16.png" />
-      <None Remove="Resources\Icons\2Tray32.png" />
-      <None Remove="Resources\Icons\3Tray16.png" />
-      <None Remove="Resources\Icons\3Tray32.png" />
-      <None Remove="Resources\Icons\4Tray16.png" />
-      <None Remove="Resources\Icons\4Tray32.png" />
       <None Remove="Resources\Icons\cable1_16.png" />
       <None Remove="Resources\Icons\cable1_32.png" />
       <None Remove="Resources\Icons\cable2_16.png" />
@@ -89,6 +83,7 @@
       <ProjectReference Include="..\Length\Length.csproj" />
       <ProjectReference Include="..\ModelTransplanter\ModelTransplanter.csproj" />
       <ProjectReference Include="..\ParamChecker\ParamChecker.csproj" />
+      <ProjectReference Include="..\QuantityCheck\QuantityCheck.csproj" />
       <ProjectReference Include="..\WorkingSet\WorkingSet.csproj" />
     </ItemGroup>
 
@@ -97,24 +92,6 @@
         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </Resource>
       <Resource Include="Resources\Icons\1Tray32.png">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\Icons\2Tray16.png">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\Icons\2Tray32.png">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\Icons\3Tray16.png">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\Icons\3Tray32.png">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\Icons\4Tray16.png">
-        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      </Resource>
-      <Resource Include="Resources\Icons\4Tray32.png">
         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </Resource>
       <Resource Include="Resources\Icons\Create16.png">
@@ -141,6 +118,10 @@
       <Resource Include="Resources\Icons\Transplanter32.png">
         <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       </Resource>
+      <None Remove="Resources\Icons\QuantityCheck16.png" />
+      <Resource Include="Resources\Icons\QuantityCheck16.png" />
+      <None Remove="Resources\Icons\QuantityCheck32.png" />
+      <Resource Include="Resources\Icons\QuantityCheck32.png" />
     </ItemGroup>
 
 </Project>

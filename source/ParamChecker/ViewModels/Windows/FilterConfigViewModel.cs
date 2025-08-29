@@ -64,7 +64,7 @@ public partial class FilterConfigViewModel : ObservableObject
         UpdateFilteredCategories();
     }
 
-    private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
+    private void OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(CategoryFilter)) UpdateFilteredCategories();
     }

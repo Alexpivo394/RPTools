@@ -1,6 +1,7 @@
 ﻿using Nice3point.Revit.Toolkit.External;
 using System.Windows.Media;
 using JetBrains.Annotations;
+using Nice3point.Revit.Extensions;
 
 namespace RPToolsApp
 {
@@ -47,6 +48,11 @@ namespace RPToolsApp
                 .SetImage("/RPToolsApp;component/Resources/Icons/Create16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/Create32.png")
                 .SetToolTip("Создает в модели рабочие наборы\nдля выбранного раздела.");
+            
+            panelBim.AddPushButton<QuantityCheck.Commands.StartupCommand>("Записать количество")
+                .SetImage("/RPToolsApp;component/Resources/Icons/QuantityCheck16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/QuantityCheck32.png")
+                .SetToolTip("Заполняет параметр количества\nв элементах модели.");
 
             panelBim.AddPushButton<ModelTransplanter.Commands.StartupCommand>("Копирование элементов")
                 .SetImage("/RPToolsApp;component/Resources/Icons/Transplanter16.png")

@@ -12,9 +12,9 @@ public class Configuration
     private const string DirectoryName = "ParamCheckerSettings";
 
     private static readonly string DllPath = Assembly.GetExecutingAssembly().Location;
-    private static readonly string DllDirectory = Path.GetDirectoryName(DllPath);
+    private static readonly string? DllDirectory = Path.GetDirectoryName(DllPath);
 
-    private readonly string _configFilePath = Path.Combine(DllDirectory, DirectoryName, "config.json");
+    private readonly string _configFilePath = Path.Combine(DllDirectory ?? string.Empty, DirectoryName, "config.json");
 
 
     public Configuration()
@@ -30,15 +30,18 @@ public class Configuration
         var dllDir = Path.GetDirectoryName(dllPath);
 
         // path to cfg`s directory
-        var pathCfg = Path.Combine(dllDir, directoryName, configName);
-
-        // path to cfg`s
-
-        var dirCfg = Path.Combine(dllDir, directoryName);
-
-        if (!File.Exists(pathCfg))
+        if (dllDir != null)
         {
-            CreateEmptyJsonFile(dirCfg, configName);
+            var pathCfg = Path.Combine(dllDir, directoryName, configName);
+
+            // path to cfg`s
+
+            var dirCfg = Path.Combine(dllDir, directoryName);
+
+            if (!File.Exists(pathCfg))
+            {
+                CreateEmptyJsonFile(dirCfg, configName);
+            }
         }
     }
     
@@ -46,10 +49,13 @@ public class Configuration
     private static void CreateDir(string dllPath, string directoryName)
     {
         var dllDirectory = Path.GetDirectoryName(dllPath);
-        var configDirectoryPath = Path.Combine(dllDirectory, directoryName);
-        if (!Directory.Exists(configDirectoryPath))
+        if (dllDirectory != null)
         {
-            var x = Directory.CreateDirectory(configDirectoryPath);
+            var configDirectoryPath = Path.Combine(dllDirectory, directoryName);
+            if (!Directory.Exists(configDirectoryPath))
+            {
+                var x = Directory.CreateDirectory(configDirectoryPath);
+            }
         }
     }
 
