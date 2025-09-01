@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 using RPToolsUI.Models;
 using RPToolsUI.Services;
@@ -38,10 +39,15 @@ public partial class SSPlanViewModel(Document doc, UIDocument uidoc, View view) 
             .OfType<FamilyInstance>()
             .Where(fi =>
             {
-                var systems = fi.MEPModel?.GetElectricalSystems();
-                return systems != null && systems.Any();
-
+#if REVIT2021_OR_GREATER
+        var systems = fi.MEPModel?.GetElectricalSystems();
+        return systems != null && systems.Any();
+#else
+                var systems = fi.MEPModel?.AssignedElectricalSystems;
+                return systems != null && systems.Cast<ElectricalSystem>().Any();
+#endif
             });
+
 
         foreach (var fi in panels)
             Panels.Add(new PanelItem(fi));
