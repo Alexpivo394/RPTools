@@ -83,7 +83,7 @@ namespace RPToolsApp
             //Сети связи
             panelSS.AddPushButton<SSPlan.Commands.StartupCommand>("Структурная\nсхема")
                 .SetImage("/RPToolsApp;component/Resources/Icons/SSPlan16.png")
-                .SetLargeImage("/RPToolsApp;component/Resources/Icons/SSPlan.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/SSPlan32.png")
                 .SetToolTip("Создать структурную схему.");
         }        
 

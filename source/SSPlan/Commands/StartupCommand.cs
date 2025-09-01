@@ -23,7 +23,7 @@ public class StartupCommand : IExternalCommand
         {
             string? error = ToadDialogService.Show(
                 "Ошибка",
-                "Активный аид не является чертежным видом",
+                "Активный вид не является чертежным видом",
                 DialogButtons.OK,
                 DialogIcon.Error
             );
