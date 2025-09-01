@@ -1,7 +1,5 @@
 ﻿using Nice3point.Revit.Toolkit.External;
 using System.Windows.Media;
-using JetBrains.Annotations;
-using Nice3point.Revit.Extensions;
 
 namespace RPToolsApp
 {
@@ -35,6 +33,11 @@ namespace RPToolsApp
             var panelBackgroundBrushSoftTerracotta =
                 new SolidColorBrush(System.Windows.Media.Color.FromRgb(204, 153, 102));
             panelGeneral.SetTitleBarBackground(panelBackgroundBrushSoftTerracotta);
+            
+            var panelSS = Application.CreatePanel("Сети связи", "RPTools");
+            var panelBackgroundBrushPlum =
+                new SolidColorBrush(System.Windows.Media.Color.FromRgb(128, 102, 160)); // Plum Purple
+            panelSS.SetTitleBarBackground(panelBackgroundBrushPlum);
             ;
 
             //Добавляем кнопки на панели
@@ -76,6 +79,12 @@ namespace RPToolsApp
                 .SetImage("/RPToolsApp;component/Resources/Icons/Ruler16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/Ruler32.png")
                 .SetToolTip("Посчитать суммарную длину выбранных элементов.");
+            
+            //Сети связи
+            panelSS.AddPushButton<SSPlan.Commands.StartupCommand>("Структурная\nсхема")
+                .SetImage("/RPToolsApp;component/Resources/Icons/SSPlan16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/SSPlan.png")
+                .SetToolTip("Создать структурную схему.");
         }        
 
     }

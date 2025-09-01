@@ -84,6 +84,7 @@
       <ProjectReference Include="..\ModelTransplanter\ModelTransplanter.csproj" />
       <ProjectReference Include="..\ParamChecker\ParamChecker.csproj" />
       <ProjectReference Include="..\QuantityCheck\QuantityCheck.csproj" />
+      <ProjectReference Include="..\SSPlan\SSPlan.csproj" />
       <ProjectReference Include="..\WorkingSet\WorkingSet.csproj" />
     </ItemGroup>
 
@@ -122,6 +123,10 @@
       <Resource Include="Resources\Icons\QuantityCheck16.png" />
       <None Remove="Resources\Icons\QuantityCheck32.png" />
       <Resource Include="Resources\Icons\QuantityCheck32.png" />
+      <None Remove="Resources\Icons\SSPlan16.png" />
+      <Resource Include="Resources\Icons\SSPlan16.png" />
+      <None Remove="Resources\Icons\SSPlan32.png" />
+      <Resource Include="Resources\Icons\SSPlan32.png" />
     </ItemGroup>
 
 </Project>
