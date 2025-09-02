@@ -1,8 +1,11 @@
 using System.Diagnostics;
+using System.IO;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.DB.Structure;
 using Autodesk.Revit.UI;
+using RPToolsUI.Models;
+using RPToolsUI.Services;
 
 namespace CreateCover;
 
@@ -35,7 +38,12 @@ public class StartupCommand : IExternalCommand
             if (coverSymbol == null)
             {
                 var errMsg = $"Не удалось найти или загрузить семейство {CoverFamilyName}";
-                TaskDialog.Show("ЧОТА НЕ ТАК(((", "С загрузкой семейства какая-то шляпа");
+                var dial1 = ToadDialogService.Show(
+                    "ЧОТА НЕ ТАК(((",
+                    "С загрузкой семейства какая-то шляпа",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
                 return Result.Failed;
             }
             
@@ -215,7 +223,12 @@ public class StartupCommand : IExternalCommand
                 trGr.Commit();
             }
 
-            TaskDialog.Show("Готово", "Крышки созданы");
+            var dial = ToadDialogService.Show(
+                "Успех!",
+                "Крышки созданы.",
+                DialogButtons.OK,
+                DialogIcon.Info
+            );
             return Result.Succeeded;
         }
         catch (Exception e)
@@ -250,7 +263,12 @@ public class StartupCommand : IExternalCommand
             // 2. Проверяем путь
             if (!File.Exists(familyPath))
             {
-                TaskDialog.Show("Файл не найден", $"Файл семейства не найден по пути:\n{familyPath}");
+                var dial = ToadDialogService.Show(
+                    "Ошибка!",
+                    $"Файл семейства не найден по пути:\n{familyPath}",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
                 return null;
             }
 
@@ -264,7 +282,12 @@ public class StartupCommand : IExternalCommand
 
                 if (!doc.LoadFamily(familyPath, out family))
                 {
-                    TaskDialog.Show("Ошибка загрузки", $"Не удалось загрузить семейство {familyPath}");
+                    var dial = ToadDialogService.Show(
+                        "Ошибка!",
+                        $"Не удалось загрузить семейство {familyPath}",
+                        DialogButtons.OK,
+                        DialogIcon.Error
+                    );
                     return null;
                 }
 
@@ -279,7 +302,12 @@ public class StartupCommand : IExternalCommand
 
             if (symbols.Count == 0)
             {
-                TaskDialog.Show("Ошибка", $"В семействе '{familyName}' нет типов!");
+                var dial = ToadDialogService.Show(
+                    "Ошибка!",
+                    $"В семействе '{familyName}' нет типов!",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
                 return null;
             }
 

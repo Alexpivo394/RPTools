@@ -100,7 +100,7 @@ public partial class SSPlanViewModel(Document doc, UIDocument uidoc, View view) 
                 
             if (result == Result.Succeeded)
             {
-                string? done = ToadDialogService.Show(
+                string done = ToadDialogService.Show(
                     "Готово",
                     "Схема успешно создана",
                     DialogButtons.OK,
@@ -110,7 +110,7 @@ public partial class SSPlanViewModel(Document doc, UIDocument uidoc, View view) 
         }
         catch (Exception ex)
         {
-            string? error = ToadDialogService.Show(
+            string error = ToadDialogService.Show(
                 "Ошибка",
                 $"Произошла ошибка: {ex.Message}",
                 DialogButtons.OK,

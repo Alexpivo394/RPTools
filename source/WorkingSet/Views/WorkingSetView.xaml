@@ -10,32 +10,36 @@
     WindowBackdropType="Mica"
     WindowCornerPreference="Round"
     Title="WorkingSet"
-    Height="250"
+    Height="300"
     Width="400"
-    MinHeight="250"
+    MinHeight="300"
     MinWidth="400"
     ExtendsContentIntoTitleBar="True">
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-
+        
         <ui:TitleBar Grid.Row="0" Title="Создание Рабочих наборов">
             <ui:TitleBar.Icon>
                 <ui:SymbolIcon Symbol="AddCircle24"/>
             </ui:TitleBar.Icon>            
         </ui:TitleBar>
+        
+    <Grid Grid.Row="1" Margin="10,0,10,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
 
-        <ui:TextBlock Grid.Row="1" Text="Выберите файл с рабочими наборами" 
-                      HorizontalAlignment="Center" FontSize="14"/>
-        <Grid Grid.Row="2">
+        <ui:TextBlock Grid.Row="0" Text="Выберите файл с рабочими наборами" 
+                      HorizontalAlignment="Center" FontSize="14" Margin="0,0,0,5"/>
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -46,26 +50,26 @@
                         IsReadOnly="False"
                         Height="35"
                         VerticalContentAlignment="Center"
-                        Margin="0,0,8,0" />
+                        Margin="0,0,5,0" />
             <ui:Button Grid.Column="1" Icon="{ui:SymbolIcon MoreHorizontal24}"
                        Width="40"
                        Height="35"
                        Command="{Binding SelectExcelFilePathCommand}" />
         </Grid>
       
-        <ui:TextBlock Grid.Row="3" Text="Выберите раздел проекта" 
-               HorizontalAlignment="Center" FontSize="14" Margin="0,5,0,0"/>
+        <ui:TextBlock Grid.Row="2" Text="Выберите раздел проекта" 
+               HorizontalAlignment="Center" FontSize="14" Margin="0,10,0,5"/>
 
-        <ComboBox Grid.Row="4" ItemsSource="{Binding Sections, Mode=TwoWay}" 
-             SelectedItem="{Binding SelectedSection, Mode=TwoWay}" Width="350"/>
+        <ComboBox Grid.Row="3" ItemsSource="{Binding Sections, Mode=TwoWay}" 
+             SelectedItem="{Binding SelectedSection, Mode=TwoWay}"/>
 
-        <ui:Button Grid.Row="5" Content="Создать" 
+        <ui:Button Grid.Row="4" Content="Создать" 
             Command="{Binding CreateWorksetsCommand}"
             Icon="{ui:SymbolIcon Symbol=Play24}"
             Appearance="Primary"
-            Width="100" Height="30" HorizontalAlignment="Center"/>
+            Width="120" Height="45" HorizontalAlignment="Center"/>
 
-        <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="5,0,0,0">
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="5,0,0,0">
             <TextBlock Text="Тема:" VerticalAlignment="Center" Margin="0,0,10,0"/>
             <ui:ToggleSwitch
                 IsChecked="{Binding DataContext.DarkTheme, RelativeSource={RelativeSource AncestorType=ui:FluentWindow}, Mode=TwoWay}"
@@ -73,6 +77,7 @@
                 OnContent="Темная"/>
         </StackPanel>
         
+    </Grid>
     </Grid>
 
 </ui:FluentWindow>

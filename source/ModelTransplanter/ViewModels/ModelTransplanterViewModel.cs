@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using ModelTransplanter.Models;
 using ModelTransplanter.Services;
+using RPToolsUI.Models;
 using Wpf.Ui.Appearance;
 using RPToolsUI.Services;
 using Settings = ModelTransplanter.Configuration.Settings;
@@ -62,13 +63,23 @@ public partial class ModelTransplanterViewModel : ObservableObject
             // Проверка документов
             if (SelectedSourceDoc == null || SelectedTargetDoc == null)
             {
-                TaskDialog.Show("Ошибка", "Не выбраны исходный или целевой документ");
+                var dial = ToadDialogService.Show(
+                    "Ошибка!",
+                    "Не выбраны исходный или целевой документ",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
                 return;
             }
 
             if (SelectedSourceDoc.IsReadOnly || SelectedTargetDoc.IsReadOnly)
             {
-                TaskDialog.Show("Ошибка", "Один из документов открыт в режиме только для чтения");
+                var dial = ToadDialogService.Show(
+                    "Ошибка!",
+                    "Один из документов открыт в режиме только для чтения",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
                 return;
             }
 
@@ -82,17 +93,32 @@ public partial class ModelTransplanterViewModel : ObservableObject
                 var transferService = new ElementTransferService(_logger);
                 transferService.TransferElements(SelectedSourceDoc, SelectedTargetDoc, progress);
 
-                TaskDialog.Show("Готово", "Перенос элементов завершен успешно!");
+                var dial = ToadDialogService.Show(
+                    "Успех!",
+                    $"Перенос элементов завершен успешно!",
+                    DialogButtons.OK,
+                    DialogIcon.Info
+                );
             }
             catch (Exception ex)
             {
-                TaskDialog.Show("Ошибка", $"Ошибка: {ex.Message}");
+                var dial = ToadDialogService.Show(
+                    "Ошибка!",
+                    $"Ошибка: {ex.Message}",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
                 _logger.LogError("Ошибка при переносе", ex);
             }
         }
-        catch
+        catch (Exception ex)
         {
-            // ignored
+            var dial = ToadDialogService.Show(
+                "Ошибка!",
+                $"Ошибка: {ex.Message}",
+                DialogButtons.OK,
+                DialogIcon.Error
+            );
         }
     }
 

@@ -18,7 +18,7 @@ public partial class ToadDialogViewModel : ObservableObject
     public string Message { get => _message; set => SetProperty(ref _message, value); }
     public SymbolRegular Icon { get => _icon; set => SetProperty(ref _icon, value); }
 
-    public string? Result { get; private set; }
+    public string Result { get; private set; }
 
     public ObservableCollection<DialogButtonModel> Buttons { get; } = new();
 

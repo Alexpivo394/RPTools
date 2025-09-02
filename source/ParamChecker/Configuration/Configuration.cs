@@ -4,6 +4,8 @@ using System.Reflection;
 using Autodesk.Revit.UI;
 using Newtonsoft.Json;
 using ParamChecker.Models.Filters;
+using RPToolsUI.Models;
+using RPToolsUI.Services;
 
 namespace ParamChecker.Configuration;
 
@@ -77,7 +79,12 @@ public class Configuration
         }
         catch (Exception ex)
         {
-            TaskDialog.Show("Error", $"Ошибка при загрузке настроек: {ex.Message}");
+            var dial1 = ToadDialogService.Show(
+                "Ошибка!",
+                $"Ошибка при загрузке настроек: {ex.Message}",
+                DialogButtons.OK,
+                DialogIcon.Error
+            );
             return null;
         }
     }
@@ -91,7 +98,12 @@ public class Configuration
         }
         catch (Exception ex)
         {
-            TaskDialog.Show("Error", $"Ошибка при сохранении настроек: {ex.Message}");
+            var dial2 = ToadDialogService.Show(
+                "Ошибка!",
+                $"Ошибка при сохранении настроек: {ex.Message}",
+                DialogButtons.OK,
+                DialogIcon.Error
+            );
         }
     }
 }

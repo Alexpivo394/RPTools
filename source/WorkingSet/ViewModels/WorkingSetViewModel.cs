@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿#nullable enable
+using System.Windows;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 using RPToolsUI.Models;
@@ -11,15 +12,15 @@ namespace WorkingSet.ViewModels;
 
 public partial class WorkingSetViewModel : ObservableObject
 {
-    private WorkingSetModel _model;
+    private WorkingSetModel? _model;
     private readonly ExternalCommandData _commandData;
-    CreateWorksetsHandler _createWorksetsHandler;
-    private ExternalEvent _externalEvent;
+    CreateWorksetsHandler? _createWorksetsHandler;
+    private ExternalEvent? _externalEvent;
 
-    [ObservableProperty] private string _selectedSection;
-    [ObservableProperty] private List<string> _sections;
+    [ObservableProperty] private string? _selectedSection;
+    [ObservableProperty] private List<string>? _sections;
     [ObservableProperty] private bool _darkTheme = true;
-    [ObservableProperty] private string _excelFilePath;
+    [ObservableProperty] private string? _excelFilePath;
     
     partial void OnDarkThemeChanged(bool value)
     {
@@ -27,7 +28,7 @@ public partial class WorkingSetViewModel : ObservableObject
         ThemeWatcherService.ApplyTheme(newTheme);
     }
 
-    partial void OnExcelFilePathChanged(string value)
+    partial void OnExcelFilePathChanged(string? value)
     {
         _model = new WorkingSetModel(value);
         _createWorksetsHandler = new CreateWorksetsHandler();
@@ -42,7 +43,7 @@ public partial class WorkingSetViewModel : ObservableObject
     }
     private void LoadSections()
     {
-        Sections = _model.GetSections();
+        Sections = _model?.GetSections();
     }
 
     [RelayCommand]
@@ -50,17 +51,31 @@ public partial class WorkingSetViewModel : ObservableObject
     {
         if (string.IsNullOrEmpty(SelectedSection))
         {
-            MessageBox.Show("Пожалуйста, выберите раздел.");
+            string dial1 = ToadDialogService.Show(
+                "Внимание!",
+                "Пожалуйста, выберите раздел.",
+                DialogButtons.OK,
+                DialogIcon.Warning
+            );
             return;
         }
         
-        var worksets = _model.GetWorksetsFromSection(SelectedSection);
+        var worksets = _model?.GetWorksetsFromSection(SelectedSection);
+
+        if (_createWorksetsHandler != null)
+        {
+            _createWorksetsHandler.Worksets = worksets;
+            _createWorksetsHandler.CommandData = _commandData;
+        }
+
+        _externalEvent?.Raise();
         
-        _createWorksetsHandler.Worksets = worksets;
-        _createWorksetsHandler.CommandData = _commandData;
-        _externalEvent.Raise();
-        
-        MessageBox.Show("Рабочие наборы созданы успешно!");
+        string dial2 = ToadDialogService.Show(
+            "Успех!",
+            "Рабочие наборы созданы успешно!",
+            DialogButtons.OK,
+            DialogIcon.Warning
+        );
         
     }
     

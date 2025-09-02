@@ -41,7 +41,7 @@ public partial class QuantityCheckViewModel(Logger? logger, Document doc) : Obse
         _processor.Process(ParameterName);
         
         
-        string? dildo = ToadDialogService.Show(
+        string dildo = ToadDialogService.Show(
             "Готово",
             "Длина заполнена",
             DialogButtons.OK,

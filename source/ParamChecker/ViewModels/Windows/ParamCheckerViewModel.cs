@@ -9,6 +9,8 @@ using ParamChecker.ViewModels.PagesViewModels;
 using ParamChecker.Views.Dialogs;
 using ParamChecker.Views.Pages;
 using ParamChecker.Models;
+using RPToolsUI.Models;
+using RPToolsUI.Services;
 
 namespace ParamChecker.ViewModels.Windows;
 
@@ -134,7 +136,12 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
         }
         catch (Exception ex)
         {
-            MessageBox.Show($"Ошибка при импорте: {ex.Message}");
+            var dial = ToadDialogService.Show(
+                "Ошибка!",
+                $"Ошибка при импорте: {ex.Message}",
+                DialogButtons.OK,
+                DialogIcon.Error
+            );
         }
     }
 
@@ -142,7 +149,14 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
     private void StartExport()
     {
 
-        if (!CustomNavItems.Any()) MessageBox.Show("Нет профилей для экспорта!", "Ошибка!");
+        if (!CustomNavItems.Any())
+        { 
+            var dial = ToadDialogService.Show(
+            "Ошибка!",
+            "Нет профилей для экспорта",
+            DialogButtons.OK,
+            DialogIcon.Error);
+        }
         else
         {
             _logger.StartLog(_settingsViewModel.LogFilePath);
@@ -154,10 +168,26 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
                 if (profile == null) continue;
                 if (profile.IsChecked == true)
                 {
-                    if (!profile.Models.Any()) MessageBox.Show($"Добавьте хотябы одну модель в профиль {profile.ProfileName}!", "Ошибка!");
+                    if (!profile.Models.Any())
+                    {
+                        var dial = ToadDialogService.Show(
+                            "Ошибка!",
+                            $"Добавьте хотябы одну модель в профиль {profile.ProfileName}!",
+                            DialogButtons.OK,
+                            DialogIcon.Error
+                        );
+                    }
                     else
                     {
-                        if (!profile.Rules.Any()) MessageBox.Show($"Добавьте хотябы одно правило в профиль {profile.ProfileName}!", "Ошибка!");
+                        if (!profile.Rules.Any())
+                        {
+                            var dial = ToadDialogService.Show(
+                                "Ошибка!",
+                                $"Добавьте хотябы одно правило в профиль {profile.ProfileName}!",
+                                DialogButtons.OK,
+                                DialogIcon.Error
+                            );
+                        }
                         else
                         {
                             _logger.Log($"Обрабатываем профиль {profile.ProfileName}");
@@ -170,7 +200,12 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
                     _logger.Log($"Профиль {profile.ProfileName} не выбран для экспорта");
                 }
             }
-            MessageBox.Show("Экспорт завершен!", "Успех!");
+            var dial1 = ToadDialogService.Show(
+                "Успех!",
+                "Экспорт завершен!",
+                DialogButtons.OK,
+                DialogIcon.Info
+            );
         }
     }
 } 

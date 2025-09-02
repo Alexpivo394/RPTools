@@ -4,6 +4,8 @@ using ParamChecker.Models.ExportProfiles;
 using ParamChecker.Services;
 using ParamChecker.ViewModels.Windows;
 using ParamChecker.Views.Windows;
+using RPToolsUI.Models;
+using RPToolsUI.Services;
 
 namespace ParamChecker.ViewModels.PagesViewModels;
 
@@ -62,7 +64,12 @@ public partial class ExportProfilesViewModel : ObservableObject
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке фильтра: {ex.Message}");
+                var dial1 = ToadDialogService.Show(
+                    "Ошибка!",
+                    $"Ошибка при загрузке фильтра: {ex.Message}",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
             }
 
         var filterWindow = new FilterConfig(filterConfigViewModel);
@@ -92,7 +99,12 @@ public partial class ExportProfilesViewModel : ObservableObject
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при загрузке параметров: {ex.Message}");
+                var dial2 = ToadDialogService.Show(
+                    "Ошибка!",
+                    $"Ошибка при загрузке параметров: {ex.Message}",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
             }
         
         paramViewModel.OnApplyRequested = json =>

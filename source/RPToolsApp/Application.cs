@@ -36,7 +36,7 @@ namespace RPToolsApp
             
             var panelSS = Application.CreatePanel("Сети связи", "RPTools");
             var panelBackgroundBrushPlum =
-                new SolidColorBrush(System.Windows.Media.Color.FromRgb(128, 102, 160)); // Plum Purple
+                new SolidColorBrush(System.Windows.Media.Color.FromRgb(155, 242, 222)); // Plum Purple
             panelSS.SetTitleBarBackground(panelBackgroundBrushPlum);
             ;
 

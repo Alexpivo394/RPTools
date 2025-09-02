@@ -3,6 +3,8 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using RPToolsUI.Models;
+using RPToolsUI.Services;
 
 namespace LotkiColor;
 
@@ -12,8 +14,6 @@ public class StartupCommand : IExternalCommand
 {
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
-        //Task Dialog =>
-        var taskDialog = new TaskDialog("Task dialog");
         //Set application =>
         var uiapp = commandData.Application;
         var uidoc = uiapp.ActiveUIDocument;
@@ -99,8 +99,12 @@ public class StartupCommand : IExternalCommand
         }
 
 
-        taskDialog.MainContent = "Покрашено!";
-        taskDialog.Show();
+        var dial = ToadDialogService.Show(
+            "Успех!",
+            $"Лотки покрашены.",
+            DialogButtons.OK,
+            DialogIcon.Info
+        );
         return Result.Succeeded;
     }
 }

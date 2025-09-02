@@ -3,6 +3,8 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using ModelTransplanter.ViewModels;
 using ModelTransplanter.Views;
+using RPToolsUI.Models;
+using RPToolsUI.Services;
 
 namespace ModelTransplanter.Commands
 {
@@ -14,7 +16,12 @@ namespace ModelTransplanter.Commands
         {
             if (commandData.Application.ActiveUIDocument?.Document?.IsReadOnly == true)
             {
-                TaskDialog.Show("Ошибка", "Документ открыт в режиме только для чтения");
+                var dial = ToadDialogService.Show(
+                    "Ошибка!",
+                    $"Документ открыт в режиме только для чтения",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
                 return Result.Cancelled;
             }
 

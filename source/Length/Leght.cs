@@ -1,6 +1,8 @@
 ﻿using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using RPToolsUI.Models;
+using RPToolsUI.Services;
 
 namespace Leght;
 
@@ -12,7 +14,6 @@ public class StartupCommand : IExternalCommand
     //Get application and document objects
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
-        var taskDialog = new TaskDialog("Task dialog");
         //Set application =>
         var uiapp = commandData.Application;
         var uidoc = uiapp.ActiveUIDocument;
@@ -38,9 +39,13 @@ public class StartupCommand : IExternalCommand
         }
 
         summ = Math.Round(summ);
-
-        taskDialog.MainContent = summ + " мм";
-        taskDialog.Show();
+        
+        var dial = ToadDialogService.Show(
+            "Успех!",
+            $"Длина элементов - {summ} мм",
+            DialogButtons.OK,
+            DialogIcon.Info
+        );
         return Result.Succeeded;
     }
 }
