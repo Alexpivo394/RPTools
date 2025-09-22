@@ -34,11 +34,11 @@ public class ExportService
         try
         {
             _logger.Log($"Начало экспорта профиля: {profile.ProfileName}");
-            int greenCount = 0, redCount = 0, yellowCount = 0;
             foreach (var model in profile.Models)
             {
                 _logger.Log($"Обработка модели: {model.ServerPath}");
                 var doc = OpenDocumentAsDetach(_commandData, model.ServerPath, model.WorksetKeyword);
+                int greenCount = 0, redCount = 0, yellowCount = 0;
 
                 ExcelPackage.License.SetNonCommercialPersonal("RPTools");
                 using var excelDoc = new ExcelPackage();

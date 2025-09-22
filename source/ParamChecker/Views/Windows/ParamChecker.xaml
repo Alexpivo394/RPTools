@@ -77,6 +77,7 @@
                                                 </Grid.ColumnDefinitions>
                                                 <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay}" VerticalAlignment="Center"
                                                           Margin="0,0,6,0" />
+                                                <!-- ReSharper disable once Xaml.DynamicResourceError -->
                                                 <TextBlock Grid.Column="1" Text="{Binding Title}"
                                                            VerticalAlignment="Center"
                                                            Foreground="{DynamicResource ForegroundBrush}" />

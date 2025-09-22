@@ -31,4 +31,4 @@ public class FailureProcessorOpenDocument
     {
         e.OverrideResult(1);
     }
-}
+}    

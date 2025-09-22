@@ -51,7 +51,7 @@ public partial class WorkingSetViewModel : ObservableObject
     {
         if (string.IsNullOrEmpty(SelectedSection))
         {
-            string dial1 = ToadDialogService.Show(
+            string? dial1 = ToadDialogService.Show(
                 "Внимание!",
                 "Пожалуйста, выберите раздел.",
                 DialogButtons.OK,
@@ -70,7 +70,7 @@ public partial class WorkingSetViewModel : ObservableObject
 
         _externalEvent?.Raise();
         
-        string dial2 = ToadDialogService.Show(
+        string? dial2 = ToadDialogService.Show(
             "Успех!",
             "Рабочие наборы созданы успешно!",
             DialogButtons.OK,

@@ -18,14 +18,14 @@ public partial class ToadDialogViewModel : ObservableObject
     public string Message { get => _message; set => SetProperty(ref _message, value); }
     public SymbolRegular Icon { get => _icon; set => SetProperty(ref _icon, value); }
 
-    public string Result { get; private set; }
+    public string? Result { get; private set; }
 
     public ObservableCollection<DialogButtonModel> Buttons { get; } = new();
 
     /// <summary>Сигнал вьюхе «закрой окно»</summary>
     public event EventHandler? RequestClose;
 
-    private void Close(string result)
+    private void Close(string? result)
     {
         Result = result;
         RequestClose?.Invoke(this, EventArgs.Empty);
@@ -33,7 +33,7 @@ public partial class ToadDialogViewModel : ObservableObject
 
     public void BuildButtons(DialogButtons buttons)
     {
-        void AddBtn(string text, SymbolRegular icon)
+        void AddBtn(string? text, SymbolRegular icon)
         {
             Buttons.Add(new DialogButtonModel
             {

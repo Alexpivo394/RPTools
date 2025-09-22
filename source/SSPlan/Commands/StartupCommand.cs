@@ -21,7 +21,7 @@ public class StartupCommand : IExternalCommand
 
         if (activeView == null)
         {
-            string error = ToadDialogService.Show(
+            string? error = ToadDialogService.Show(
                 "Ошибка",
                 "Активный вид не является чертежным видом",
                 DialogButtons.OK,

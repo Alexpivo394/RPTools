@@ -8,7 +8,7 @@ namespace RPToolsUI.Services;
 
 public class ToadDialogService
 {
-    public static string Show(string title, string message, DialogButtons buttons, DialogIcon icon = DialogIcon.None, Window? owner = null)
+    public static string? Show(string title, string message, DialogButtons buttons, DialogIcon icon = DialogIcon.None, Window? owner = null)
     {
         var vm = new ToadDialogViewModel
         {
