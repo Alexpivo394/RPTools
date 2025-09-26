@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using RPToolsUI.Services;
 using WorksetCheck.Models;
+using WorksetCheck.Services;
 using Wpf.Ui.Appearance;
+using Settings = WorksetCheck.Configuration.Settings;
 
 namespace WorksetCheck.ViewModels;
 
@@ -26,5 +28,24 @@ public sealed partial class WorksetCheckViewModel : ObservableObject
     private void RemoveModel(ExportModel model)
     {
         Models.Remove(model);
+    }
+    
+    public void LoadFromSettings(Settings settings)
+    {
+        DarkTheme = settings.DarkTheme;
+    }
+
+    public Settings ToSettings()
+    {
+        return new Settings
+        {
+            DarkTheme = DarkTheme
+        };
+    }
+
+    [RelayCommand]
+    public void Start()
+    {
+
     }
 }
