@@ -121,8 +121,8 @@
                 VerticalAlignment="Bottom">
             <DockPanel Margin="10,0">
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
-                    <ui:Button Content="Импорт" Command="{Binding ImportCommand}" Margin="0,0,10,0" />
-                    <ui:Button Content="Экспорт" Command="{Binding ExportCommand}"/>
+                    <ui:Button Content="Импорт" Command="{Binding ImportModelsCommand}" Margin="0,0,10,0" />
+                    <ui:Button Content="Экспорт" Command="{Binding ExportModelsCommand}"/>
                     <TextBlock Text="Тема:" VerticalAlignment="Center" Margin="10,0,10,0"/>
                     <ui:ToggleSwitch
                         IsChecked="{Binding DataContext.DarkTheme, RelativeSource={RelativeSource AncestorType=ui:FluentWindow}, Mode=TwoWay}"

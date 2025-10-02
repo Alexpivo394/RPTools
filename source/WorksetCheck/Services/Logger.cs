@@ -4,11 +4,11 @@ namespace WorksetCheck.Services
 {
     public class Logger
     {
-        private string _logFilePath;
+        private string _logFilePath = null!;
         
-        public void StartLog()
+        public void StartLog(string? fileName)
         {
-            _logFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "WorksetCheckReport.txt");
+            _logFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), fileName + ".txt");
 
             File.WriteAllText(_logFilePath, $"Лог начат: {DateTime.Now}\n\n");
         }
@@ -29,7 +29,7 @@ namespace WorksetCheck.Services
         /// <summary>
         /// Логирует список строк (например, ошибки проверки рабочих наборов).
         /// </summary>
-        public void LogList(IEnumerable<string> messages, string header = null)
+        public void LogList(IEnumerable<string>? messages, string? header = null)
         {
             if (messages == null) return;
 

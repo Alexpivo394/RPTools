@@ -14,7 +14,8 @@ public class StartupCommand : IExternalCommand
     {
         var doc = commandData.Application.ActiveUIDocument.Document;
         var model = new WorksetCheckModel(commandData);
-        var vm = new WorksetCheckViewModel();
+        
+        var vm = new WorksetCheckViewModel(model);
         var view = new WorksetCheckView(vm);
         
         view.ShowDialog();

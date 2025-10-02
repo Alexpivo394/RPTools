@@ -2,8 +2,20 @@ namespace WorksetCheck.Services;
 
 public class CheckService
 {
+    private static readonly Dictionary<string[], string[]> SectionMapping = new()
+    {
+        { new[] { "AR" }, new[] { "АР", "AR" } },
+        { new[] { "KR" }, new[] { "КР", "KR" } },
+        { new[] { "OVV", "OVO", "OVK" }, new[] { "OVV", "OVO", "OVK", "ОВ" } },
+        { new[] { "VK" }, new[] { "ВК", "VK" } },
+        { new[] { "PT" }, new[] { "ПТ", "PT" } },
+        { new[] { "SS" }, new[] { "СС", "SS" } },
+        { new[] { "EOM" }, new[] { "ЭОМ", "EOM" } },
+        { new[] { "AVT" }, new[] { "АВТ", "AVT" } },
+        { new[] { "ITP" }, new[] { "ИТП", "ITP" } },
+    };
     public List<string> CheckWorksets(
-            Document doc,
+            Document? doc,
             string rvtLinksPrefix,
             string gridsAndLevelsWorksetName,
             string openingsWorksetName)
@@ -11,7 +23,7 @@ public class CheckService
             var errors = new List<string>();
 
             // 1. Берем список всех рабочих наборов
-            var worksetTable = doc.GetWorksetTable();
+            var worksetTable = doc?.GetWorksetTable();
             var allWorksets = new FilteredWorksetCollector(doc)
                 .OfKind(WorksetKind.UserWorkset)
                 .ToWorksets();
@@ -35,6 +47,29 @@ public class CheckService
                         if (el.Category?.Id.IntegerValue != (int)BuiltInCategory.OST_RvtLinks)
                         {
                             errors.Add($"[WS: {wsName}] Недопустимый элемент (Id {el.Id}) — должны быть только связи");
+                            continue;
+                        }
+
+                        var linkName = el.Name ?? string.Empty;
+
+                        // Проверяем соответствие имени файла и имени РН
+                        bool matched = false;
+
+                        foreach (var mapping in SectionMapping)
+                        {
+                            if (mapping.Key.Any(k => linkName.Contains(k, StringComparison.OrdinalIgnoreCase)))
+                            {
+                                if (mapping.Value.Any(v => wsName.Contains(v, StringComparison.OrdinalIgnoreCase)))
+                                {
+                                    matched = true;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (!matched)
+                        {
+                            errors.Add($"[WS: {wsName}] Файл связи '{linkName}' не соответствует разделу рабочего набора");
                         }
                     }
                 }
