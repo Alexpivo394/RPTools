@@ -21,6 +21,19 @@ public sealed partial class WorksetCheckViewModel : ObservableObject
     public WorksetCheckViewModel(WorksetCheckModel model)
     {
         _model = model;
+        
+        Models.CollectionChanged += (_, _) =>
+        {
+            if (Models.Count == 50)
+            {
+                ToadDialogService.Show(
+                    "Пиздец!",
+                    "Ты че еблан?",
+                    DialogButtons.OK,
+                    DialogIcon.Error
+                );
+            }
+        };
     }
 
     partial void OnDarkThemeChanged(bool value)
