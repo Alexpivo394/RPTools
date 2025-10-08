@@ -4,7 +4,7 @@ public class CheckService
 {
     private static readonly Dictionary<string[], string[]> SectionMapping = new()
     {
-        { new[] { "AR" }, new[] { "АР", "AR" } },
+        { new[] { "AR" }, new[] { "АР", "AR" , "AI", "АИ"} },
         { new[] { "KR" }, new[] { "КР", "KR" } },
         { new[] { "OVV", "OVO", "OVK" }, new[] { "OVV", "OVO", "OVK", "ОВ" } },
         { new[] { "VK" }, new[] { "ВК", "VK" } },

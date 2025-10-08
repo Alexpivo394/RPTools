@@ -86,6 +86,7 @@
       <ProjectReference Include="..\QuantityCheck\QuantityCheck.csproj" />
       <ProjectReference Include="..\SSPlan\SSPlan.csproj" />
       <ProjectReference Include="..\WorkingSet\WorkingSet.csproj" />
+      <ProjectReference Include="..\WorksetCheck\WorksetCheck.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -127,6 +128,10 @@
       <Resource Include="Resources\Icons\SSPlan16.png" />
       <None Remove="Resources\Icons\SSPlan32.png" />
       <Resource Include="Resources\Icons\SSPlan32.png" />
+      <None Remove="Resources\Icons\WorksetsCheck16.png" />
+      <Resource Include="Resources\Icons\WorksetsCheck16.png" />
+      <None Remove="Resources\Icons\WorksetsCheck32.png" />
+      <Resource Include="Resources\Icons\WorksetsCheck32.png" />
     </ItemGroup>
 
 </Project>

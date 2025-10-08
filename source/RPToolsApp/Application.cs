@@ -61,6 +61,11 @@ namespace RPToolsApp
                 .SetImage("/RPToolsApp;component/Resources/Icons/Transplanter16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/Transplanter32.png")
                 .SetToolTip("Позволяет копировать элементы\nиз модели в модель.");
+            
+            panelBim.AddPushButton<WorksetCheck.Commands.StartupCommand>("Проверка рабочих\nнаборов")
+                .SetImage("/RPToolsApp;component/Resources/Icons/WorksetsCheck16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/WorksetsCheck32.png")
+                .SetToolTip("Позволяет проверить заданные\nмодели на соответствие элементов\nрабочим наборам.");
 
             //Лотки
             var pullButton = panelTray.AddPullDownButton("Кабельные лотки", "Кабельные лотки");
