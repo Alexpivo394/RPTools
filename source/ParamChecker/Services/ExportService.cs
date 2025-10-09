@@ -330,6 +330,7 @@ public class ExportService
         catch (Exception e)
         {
             _logger.LogError("Ошибка при открытии документа", e);
+            _logger.Log($"Подробности ошибки: {e.GetType().FullName}");
             throw;
         }
         finally
