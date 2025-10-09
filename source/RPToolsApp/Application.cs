@@ -1,5 +1,6 @@
 ﻿using Nice3point.Revit.Toolkit.External;
 using System.Windows.Media;
+using Autodesk.Revit.UI;
 
 namespace RPToolsApp
 {
@@ -45,33 +46,40 @@ namespace RPToolsApp
             panelBim.AddPushButton<ParamChecker.Commands.StartupCommand>("ParamChecker")
                 .SetImage("/RPToolsApp;component/Resources/Icons/Export16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/Export32.png")
-                .SetToolTip("Выгружает из моделей на сервере\nотчет по заполнению параметров.");
+                .SetToolTip("Выгружает из моделей на сервере\nотчет по заполнению параметров.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/paramchecker-movFIkYSwy"));
 
             panelBim.AddPushButton<WorkingSet.Commands.StartupCommand>("Создание Рабочих\nнаборов")
                 .SetImage("/RPToolsApp;component/Resources/Icons/Create16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/Create32.png")
-                .SetToolTip("Создает в модели рабочие наборы\nдля выбранного раздела.");
+                .SetToolTip("Создает в модели рабочие наборы\nдля выбранного раздела.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/sozdanie-rabochih-naborov-plaginom-rptools-j3Ycy39HVW"));
             
             panelBim.AddPushButton<QuantityCheck.Commands.StartupCommand>("Записать количество")
                 .SetImage("/RPToolsApp;component/Resources/Icons/QuantityCheck16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/QuantityCheck32.png")
-                .SetToolTip("Заполняет параметр количества\nв элементах модели.");
+                .SetToolTip("Заполняет параметр количества\nв элементах модели.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/zapolnenie-parametra-kolichestvo-beinN88LwP"));
 
             panelBim.AddPushButton<ModelTransplanter.Commands.StartupCommand>("Копирование элементов")
                 .SetImage("/RPToolsApp;component/Resources/Icons/Transplanter16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/Transplanter32.png")
-                .SetToolTip("Позволяет копировать элементы\nиз модели в модель.");
+                .SetToolTip("Позволяет копировать элементы\nиз модели в модель.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/kopirovanie-soderzhimogo-modeli-7q8Wf296FB"));
             
             panelBim.AddPushButton<WorksetCheck.Commands.StartupCommand>("Проверка рабочих\nнаборов")
                 .SetImage("/RPToolsApp;component/Resources/Icons/WorksetsCheck16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/WorksetsCheck32.png")
-                .SetToolTip("Позволяет проверить заданные\nмодели на соответствие элементов\nрабочим наборам.");
+                .SetToolTip("Позволяет проверить заданные\nмодели на соответствие элементов\nрабочим наборам.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/worksetcheck-rfycq6j0Bd"));
 
             //Лотки
             var pullButton = panelTray.AddPullDownButton("Кабельные лотки", "Кабельные лотки");
 
             pullButton.SetImage("/RPToolsApp;component/Resources/Icons/1Tray16.png");
             pullButton.SetLargeImage("/RPToolsApp;component/Resources/Icons/1Tray32.png");
+            pullButton.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url,
+                "https://bim-baza.yonote.ru/doc/kabelnye-lotki-hSP8BFIW8g"));
 
             pullButton.AddPushButton<ArticulLotok.StartupCommand>("Артикулы и наименования");
             pullButton.AddPushButton<LotkiColor.StartupCommand>("Покрасить по перфорации");
@@ -89,7 +97,8 @@ namespace RPToolsApp
             panelSS.AddPushButton<SSPlan.Commands.StartupCommand>("Структурная\nсхема")
                 .SetImage("/RPToolsApp;component/Resources/Icons/SSPlan16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/SSPlan32.png")
-                .SetToolTip("Создать структурную схему.");
+                .SetToolTip("Создать структурную схему.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/strukturnaya-shema-yO3TQrgqVS"));
         }        
 
     }
