@@ -290,6 +290,7 @@ public class ExportService
         catch (Exception ex)
         {
             _logger.LogError("Ошибка при настройке параметров открытия документа", ex);
+            _logger.Log($"Подробности ошибки: {ex.GetType().FullName}");
             Debug.WriteLine(ex.ToString());
         }
 
