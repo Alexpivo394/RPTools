@@ -137,7 +137,7 @@ public class WriteFromExcel : IExternalCommand
                     logger.Log($"Строка {row}: '{paramName}' не число: '{stringVal}'");
                     return false;
                 }
-                
+#if REVIT2022_OR_GREATER
                 if (p.Definition.GetDataType() == SpecTypeId.HeatingLoad)
                 {
                     // Конвертируем Вт в Btu/h явно, если Revit не делает это автоматически
@@ -152,6 +152,24 @@ public class WriteFromExcel : IExternalCommand
                     p.Set(internalVal);
                     logger.Log($"ID {el.Id}: {paramName} = {dbl}°C → internal {internalVal}K");
                 }
+
+#else
+
+                if (p.Definition.ParameterType == ParameterType.HVACHeatingLoad)
+                {
+                    // Конвертируем Вт в Btu/h явно, если Revit не делает это автоматически
+                    double valueInBtuPerHour = dbl * 10.7639;
+                    p.Set(valueInBtuPerHour);
+                    logger.Log($"ID {el.Id}: {paramName} = {dbl} Вт → {valueInBtuPerHour} Bт/фт2");
+                }
+                else if (p.Definition.ParameterType == ParameterType.HVACTemperature)
+                {
+                    // Excel даёт °C, Revit internal = K
+                    double internalVal = dbl + 273.15;
+                    p.Set(internalVal);
+                    logger.Log($"ID {el.Id}: {paramName} = {dbl}°C → internal {internalVal}K");
+                }
+#endif
                 else
                 {
                     // Любой другой double-параметр
