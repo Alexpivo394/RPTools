@@ -85,6 +85,7 @@
       <ProjectReference Include="..\ParamChecker\ParamChecker.csproj" />
       <ProjectReference Include="..\QuantityCheck\QuantityCheck.csproj" />
       <ProjectReference Include="..\SSPlan\SSPlan.csproj" />
+      <ProjectReference Include="..\WarmSync\WarmSync.csproj" />
       <ProjectReference Include="..\WorkingSet\WorkingSet.csproj" />
       <ProjectReference Include="..\WorksetCheck\WorksetCheck.csproj" />
     </ItemGroup>
@@ -132,6 +133,10 @@
       <Resource Include="Resources\Icons\WorksetsCheck16.png" />
       <None Remove="Resources\Icons\WorksetsCheck32.png" />
       <Resource Include="Resources\Icons\WorksetsCheck32.png" />
+      <None Remove="Resources\Icons\WarmSync16.png" />
+      <Resource Include="Resources\Icons\WarmSync16.png" />
+      <None Remove="Resources\Icons\WarmSync32.png" />
+      <Resource Include="Resources\Icons\WarmSync32.png" />
     </ItemGroup>
 
 </Project>

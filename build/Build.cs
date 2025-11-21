@@ -11,7 +11,7 @@ sealed partial class Build : NukeBuild
 
     /// <summary>
     ///     Extract solution configuration names from the solution file.
-    /// </summary>
+    /// </summary> 
     List<string> GlobBuildConfigurations()
     {
         var configurations = Solution.Configurations

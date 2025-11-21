@@ -24,7 +24,7 @@ public class CheckService
 
             // 1. Берем список всех рабочих наборов
             var worksetTable = doc?.GetWorksetTable();
-            var allWorksets = new FilteredWorksetCollector(doc)
+var allWorksets = new FilteredWorksetCollector(doc)         
                 .OfKind(WorksetKind.UserWorkset)
                 .ToWorksets();
 

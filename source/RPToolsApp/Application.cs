@@ -35,11 +35,14 @@ namespace RPToolsApp
                 new SolidColorBrush(System.Windows.Media.Color.FromRgb(204, 153, 102));
             panelGeneral.SetTitleBarBackground(panelBackgroundBrushSoftTerracotta);
             
-            var panelSS = Application.CreatePanel("Сети связи", "RPTools");
+            var panelSs = Application.CreatePanel("Сети связи", "RPTools");
             var panelBackgroundBrushPlum =
-                new SolidColorBrush(System.Windows.Media.Color.FromRgb(155, 242, 222)); // Plum Purple
-            panelSS.SetTitleBarBackground(panelBackgroundBrushPlum);
-            ;
+                new SolidColorBrush(System.Windows.Media.Color.FromRgb(155, 242, 222));
+            panelSs.SetTitleBarBackground(panelBackgroundBrushPlum);
+            
+            var panelOv = Application.CreatePanel("ОВ", "RPTools");
+            var panelBackgroundBrushRose = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 209, 220));
+            panelOv.SetTitleBarBackground(panelBackgroundBrushRose);
 
             //Добавляем кнопки на панели
             //BIM
@@ -74,18 +77,18 @@ namespace RPToolsApp
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/worksetcheck-rfycq6j0Bd"));
 
             //Лотки
-            var pullButton = panelTray.AddPullDownButton("Кабельные лотки", "Кабельные лотки");
+            var pullButtonTray = panelTray.AddPullDownButton("Кабельные лотки", "Кабельные лотки");
 
-            pullButton.SetImage("/RPToolsApp;component/Resources/Icons/1Tray16.png");
-            pullButton.SetLargeImage("/RPToolsApp;component/Resources/Icons/1Tray32.png");
-            pullButton.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url,
+            pullButtonTray.SetImage("/RPToolsApp;component/Resources/Icons/1Tray16.png");
+            pullButtonTray.SetLargeImage("/RPToolsApp;component/Resources/Icons/1Tray32.png");
+            pullButtonTray.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url,
                 "https://bim-baza.yonote.ru/doc/kabelnye-lotki-hSP8BFIW8g"));
 
-            pullButton.AddPushButton<ArticulLotok.StartupCommand>("Артикулы и наименования");
-            pullButton.AddPushButton<LotkiColor.StartupCommand>("Покрасить по перфорации");
-            pullButton.AddPushButton<LotkiColorIsp.StartupCommand>("Покрасить по исполнению");
+            pullButtonTray.AddPushButton<ArticulLotok.StartupCommand>("Артикулы и наименования");
+            pullButtonTray.AddPushButton<LotkiColor.StartupCommand>("Покрасить по перфорации");
+            pullButtonTray.AddPushButton<LotkiColorIsp.StartupCommand>("Покрасить по исполнению");
             // pullButton.AddPushButton<LotkiColorKrshka.StartupCommand>("Покрасить крышки");
-            pullButton.AddPushButton<CreateCover.StartupCommand>("Разместить крышки");
+            pullButtonTray.AddPushButton<CreateCover.StartupCommand>("Разместить крышки");
             
             //Общие
             panelGeneral.AddPushButton<Leght.StartupCommand>("Длина элементов\nмодели")
@@ -94,11 +97,25 @@ namespace RPToolsApp
                 .SetToolTip("Посчитать суммарную длину выбранных элементов.");
             
             //Сети связи
-            panelSS.AddPushButton<SSPlan.Commands.StartupCommand>("Структурная\nсхема")
+            panelSs.AddPushButton<SSPlan.Commands.StartupCommand>("Структурная\nсхема")
                 .SetImage("/RPToolsApp;component/Resources/Icons/SSPlan16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/SSPlan32.png")
                 .SetToolTip("Создать структурную схему.")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/strukturnaya-shema-yO3TQrgqVS"));
+            
+            //Панель ОВ
+            var pullButtonWarm = panelOv.AddPullDownButton("Теплопотери", "Теплопотери");
+            
+            pullButtonWarm.SetImage("/RPToolsApp;component/Resources/Icons/WarmSync16.png");
+            pullButtonWarm.SetLargeImage("/RPToolsApp;component/Resources/Icons/WarmSync32.png");
+            pullButtonWarm.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url,
+                "https://bim-baza.yonote.ru/doc/sinhronizaciya-teplopoter-RWMUuxZBdq"));
+
+            pullButtonWarm.AddPushButton<WarmSync.CreateSpaces>("Создание пространств");
+            pullButtonWarm.AddPushButton<WarmSync.RenameSpaces>("Заполнение имен пространств");
+            pullButtonWarm.AddPushButton<WarmSync.WriteSpaceIdToParam>("Запись ID пространств");
+            pullButtonWarm.AddPushButton<WarmSync.ExportSpacesToExcel>("Экспорт пространств в Excel");
+            pullButtonWarm.AddPushButton<WarmSync.WriteFromExcel>("Импорт значений из Excel");
         }        
 
     }

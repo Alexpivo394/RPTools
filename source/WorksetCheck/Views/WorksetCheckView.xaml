@@ -26,9 +26,11 @@
             </ui:TitleBar.Icon>
         </ui:TitleBar>
         
+        <!-- ReSharper disable Xaml.DynamicResourceError -->
         <Border Grid.Row="1" Margin="10,0,10,0" CornerRadius="5" Padding="10"
                 Background="{DynamicResource ControlFillColorDefaultBrush}"
                 BorderBrush="{DynamicResource SystemAccentColorBrush}" BorderThickness="1">
+            <!-- ReSharper restore Xaml.DynamicResourceError -->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -47,9 +49,11 @@
                         ScrollViewer.VerticalScrollBarVisibility="Disabled">
                         <ui:ListView.ItemTemplate>
                             <DataTemplate>
+                                <!-- ReSharper disable Xaml.DynamicResourceError -->
                                 <Border Margin="0" Background="{DynamicResource ControlElevationBorderBrush}" Padding="2"
                                         BorderThickness="4,0,0,0" BorderBrush="{DynamicResource SystemAccentColorTertiaryBrush}">
-                                <Grid Margin="0,0">
+                                    <!-- ReSharper restore Xaml.DynamicResourceError -->
+                                    <Grid Margin="0,0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
@@ -115,10 +119,12 @@
             </Grid>
         </Border>
         
+        <!-- ReSharper disable Xaml.DynamicResourceError -->
         <Border Grid.Row="2"
                 Background="{DynamicResource ControlBackgroundBrush}"
                 Height="48"
                 VerticalAlignment="Bottom">
+            <!-- ReSharper restore Xaml.DynamicResourceError -->
             <DockPanel Margin="10,0">
                 <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" VerticalAlignment="Center">
                     <ui:Button Content="Импорт" Command="{Binding ImportModelsCommand}" Margin="0,0,10,0" />
