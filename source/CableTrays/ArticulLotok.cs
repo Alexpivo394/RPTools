@@ -2,6 +2,7 @@
 
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Electrical;
 using Autodesk.Revit.UI;
 using RPToolsUI.Models;
 using RPToolsUI.Services;
@@ -23,8 +24,12 @@ public class StartupCommand : IExternalCommand
         List<Element> alllotkirealall = new List<Element>();
 
         
-        var selection = uidoc.Selection.GetElementIds()
-            .Select(elId => doc.GetElement(elId)).ToList();
+        var selection = uidoc.Selection
+            .GetElementIds()
+            .Select(id => doc.GetElement(id))
+            .Where(e => e is CableTray)
+            .ToList();
+
 
         if (selection.Count == 0)
         {
