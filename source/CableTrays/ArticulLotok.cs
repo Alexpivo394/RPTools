@@ -19,40 +19,58 @@ public class StartupCommand : IExternalCommand
         var uidoc = uiapp.ActiveUIDocument;
         var app = uiapp.Application;
         var doc = uidoc.Document;
+        
+        List<Element> alllotkirealall = new List<Element>();
 
-        var lotkiperforirovannye = new FilteredElementCollector(doc)
-            .OfCategory(BuiltInCategory.OST_CableTray).WhereElementIsNotElementType()
-            .Where(lotok =>
-                doc.GetElement(lotok.GetTypeId()).LookupParameter("ADSK_Наименование (по типу)").AsString() ==
-                "Лоток перфорированный")
-            .ToList();
-        var lotki = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
-            .WhereElementIsNotElementType()
-            .Where(lotok =>
-                doc.GetElement(lotok.GetTypeId()).LookupParameter("ADSK_Наименование (по типу)").AsString() ==
-                "Лоток неперфорированный")
-            .ToList();
-        var provolocka = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
-            .WhereElementIsNotElementType()
-            .Where(lotok =>
-                doc.GetElement(lotok.GetTypeId()).LookupParameter("ADSK_Наименование (по типу)").AsString() ==
-                "Лоток проволочный")
-            .ToList();
+        
+        var selection = uidoc.Selection.GetElementIds()
+            .Select(elId => doc.GetElement(elId)).ToList();
 
-        var alllotki = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
-            .WhereElementIsNotElementType()
-            .Where(lotok =>
-                doc.GetElement(lotok.GetTypeId()).LookupParameter("ADSK_Наименование (по типу)").AsString() !=
-                "Лоток лестничный")
+        if (selection.Count == 0)
+        {
+        alllotkirealall = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
+        .WhereElementIsNotElementType()
+        .ToList();
+        }
+        else
+        {
+            alllotkirealall = selection.ToList();
+        }
+        
+        var lotkiperforirovannye = alllotkirealall
+            .Where(t =>
+            {
+                var type = doc.GetElement(t.GetTypeId());
+                var p = type?.LookupParameter("ADSK_Наименование (по типу)");
+                return p?.AsString() == "Лоток перфорированный";
+            })
             .ToList();
-        var stairs = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
-            .WhereElementIsNotElementType()
-            .Where(lotok =>
-                doc.GetElement(lotok.GetTypeId()).LookupParameter("ADSK_Наименование (по типу)").AsString() ==
-                "Лоток лестничный")
+        
+        var lotki = alllotkirealall
+            .Where(t =>
+            {
+                var type = doc.GetElement(t.GetTypeId());
+                var p = type?.LookupParameter("ADSK_Наименование (по типу)");
+                return p?.AsString() == "Лоток неперфорированный";
+            })
             .ToList();
-        var alllotkirealall = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
-            .WhereElementIsNotElementType()
+        
+        var provolocka = alllotkirealall
+            .Where(t =>
+            {
+                var type = doc.GetElement(t.GetTypeId());
+                var p = type?.LookupParameter("ADSK_Наименование (по типу)");
+                return p?.AsString() == "Лоток проволочный";
+            })
+            .ToList();
+        
+        var stairs = alllotkirealall
+            .Where(t =>
+            {
+                var type = doc.GetElement(t.GetTypeId());
+                var p = type?.LookupParameter("ADSK_Наименование (по типу)");
+                return p?.AsString() == "Лоток лестничный";
+            })
             .ToList();
 
         var artikul = "";

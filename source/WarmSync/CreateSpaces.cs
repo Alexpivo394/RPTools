@@ -21,7 +21,9 @@ public class CreateSpaces : IExternalCommand
             var links = new FilteredElementCollector(doc)
                 .OfClass(typeof(RevitLinkInstance))
                 .Cast<RevitLinkInstance>()
+                .Where(x => x.Name.ToUpper().Contains("AR"))
                 .ToList();
+
 
             List<Document> linkDocs = new List<Document>();
             foreach (var link in links)
