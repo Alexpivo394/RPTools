@@ -80,6 +80,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CableTrays\CableTrays.csproj" />
+      <ProjectReference Include="..\DoorSide\DoorSide.csproj" />
       <ProjectReference Include="..\Length\Length.csproj" />
       <ProjectReference Include="..\ModelTransplanter\ModelTransplanter.csproj" />
       <ProjectReference Include="..\ParamChecker\ParamChecker.csproj" />
@@ -137,6 +138,10 @@
       <Resource Include="Resources\Icons\WarmSync16.png" />
       <None Remove="Resources\Icons\WarmSync32.png" />
       <Resource Include="Resources\Icons\WarmSync32.png" />
+      <None Remove="Resources\Icons\DoorSide32.png" />
+      <Resource Include="Resources\Icons\DoorSide32.png" />
+      <None Remove="Resources\Icons\DoorSide16.png" />
+      <Resource Include="Resources\Icons\DoorSide16.png" />
     </ItemGroup>
 
 </Project>

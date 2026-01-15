@@ -33,6 +33,29 @@ public class StartupCommand : IExternalCommand
             var coverParamName = "ADSK_Крышка";
             var articulParamName = "ADSK_Исполнение";
             
+            var selection = uidoc.Selection
+                .GetElementIds()
+                .Select(id => doc.GetElement(id))
+                .OfType<CableTray>()
+                .ToList();
+
+
+            List<CableTray> trays = new List<CableTray>();
+
+
+            if (selection.Count == 0)
+            {
+                trays = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
+                    .WhereElementIsNotElementType()
+                    .Cast<CableTray>()
+                    .ToList();
+            }
+            else
+            {
+                trays = selection.ToList();
+            }
+            
+            
             var coverSymbol = GetOrLoadFamilySymbol(doc, CoverFamilyName, CoverFamilyPath);
 
             if (coverSymbol == null)
@@ -85,10 +108,7 @@ public class StartupCommand : IExternalCommand
                     coverSymbol.Activate();
                 }
 
-                var trays = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
-                    .WhereElementIsNotElementType()
-                    .Cast<CableTray>()
-                    .ToList();
+
                 
                 foreach (var tray in trays)
                 {

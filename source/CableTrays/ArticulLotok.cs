@@ -22,7 +22,6 @@ public class StartupCommand : IExternalCommand
         var doc = uidoc.Document;
         
         List<Element> alllotkirealall = new List<Element>();
-
         
         var selection = uidoc.Selection
             .GetElementIds()
@@ -33,7 +32,7 @@ public class StartupCommand : IExternalCommand
 
         if (selection.Count == 0)
         {
-        alllotkirealall = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
+            alllotkirealall = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
         .WhereElementIsNotElementType()
         .ToList();
         }

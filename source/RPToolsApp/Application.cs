@@ -43,6 +43,10 @@ namespace RPToolsApp
             var panelOv = Application.CreatePanel("ОВ", "RPTools");
             var panelBackgroundBrushRose = new SolidColorBrush(System.Windows.Media.Color.FromRgb(255, 209, 220));
             panelOv.SetTitleBarBackground(panelBackgroundBrushRose);
+            
+            var panelAr = Application.CreatePanel("АР", "RPTools");
+            var panelBackgroundBrushBezheviy = new SolidColorBrush(System.Windows.Media.Color.FromRgb(245, 245, 220));
+            panelAr.SetTitleBarBackground(panelBackgroundBrushRose);
 
             //Добавляем кнопки на панели
             //BIM
@@ -104,7 +108,7 @@ namespace RPToolsApp
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/strukturnaya-shema-yO3TQrgqVS"));
             
             //Панель ОВ
-            var pullButtonWarm = panelOv.AddPullDownButton("Теплопотери", "Теплопотери");
+            var pullButtonWarm = panelAr.AddPullDownButton("Теплопотери", "Теплопотери");
             
             pullButtonWarm.SetImage("/RPToolsApp;component/Resources/Icons/WarmSync16.png");
             pullButtonWarm.SetLargeImage("/RPToolsApp;component/Resources/Icons/WarmSync32.png");
@@ -116,6 +120,14 @@ namespace RPToolsApp
             pullButtonWarm.AddPushButton<WarmSync.WriteSpaceIdToParam>("Запись ID пространств");
             pullButtonWarm.AddPushButton<WarmSync.ExportSpacesToExcel>("Экспорт пространств в Excel");
             pullButtonWarm.AddPushButton<WarmSync.WriteFromExcel>("Импорт значений из Excel");
+            
+            //Панель АР
+            
+            panelSs.AddPushButton<DoorSide.DoorSideCommand>("Открывание\nдверей")
+                .SetImage("/RPToolsApp;component/Resources/Icons/DoorSide16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/DoorSide32.png")
+                .SetToolTip("Записать сторону открывания двери в параметр Открывание")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/otkryvanie-dveri-JJyZ1390oD"));
         }        
 
     }

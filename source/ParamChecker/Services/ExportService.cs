@@ -302,22 +302,12 @@ public class ExportService
         {
             failureProcessor = new FailureProcessorOpenDocument();
 
-            controlledApp.FailuresProcessing += failureProcessor.ApplicationOnFailuresProcessing;
-            app.DialogBoxShowing += failureProcessor.UIApplicationOnDialogBoxShowing;
+            controlledApp.FailuresProcessing += failureProcessor.OnFailuresProcessing;
+            app.DialogBoxShowing += failureProcessor.OnDialogBoxShowing;
 
-            using (var transGroup = new TransactionGroup(app.ActiveUIDocument.Document, "Open Document Group"))
-            {
-                transGroup.Start();
 
-                using (var transaction = new Transaction(app.ActiveUIDocument.Document, "Open Document"))
-                {
-                    transaction.Start();
-                    openDoc = controlledApp.OpenDocumentFile(modelPathServ, openOptions);
-                    transaction.Commit();
-                }
+            openDoc = controlledApp.OpenDocumentFile(modelPathServ, openOptions);
 
-                transGroup.Assimilate();
-            }
 
             if (openDoc != null && openDoc.IsValidObject)
             {
@@ -338,8 +328,8 @@ public class ExportService
         {
             if (failureProcessor != null)
             {
-                controlledApp.FailuresProcessing -= failureProcessor.ApplicationOnFailuresProcessing;
-                app.DialogBoxShowing -= failureProcessor.UIApplicationOnDialogBoxShowing;
+                controlledApp.FailuresProcessing -= failureProcessor.OnFailuresProcessing;
+                app.DialogBoxShowing -= failureProcessor.OnDialogBoxShowing;
             }
         }
     }

@@ -1,34 +1,65 @@
-﻿using Autodesk.Revit.DB.Events;
+﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Events;
+using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 
 namespace ParamChecker.Models;
 
 public class FailureProcessorOpenDocument
 {
-    public void ApplicationOnFailuresProcessing(object sender, FailuresProcessingEventArgs e)
+    public void OnFailuresProcessing(object sender, FailuresProcessingEventArgs e)
     {
         var accessor = e.GetFailuresAccessor();
-        accessor.DeleteAllWarnings();
+        var failures = accessor.GetFailureMessages();
 
-        accessor.ResolveFailures(accessor.GetFailureMessages());
-
-        var elementIds = accessor.GetFailureMessages()
-            .SelectMany(item => item.GetFailingElementIds())
-            .ToArray();
-
-        if (elementIds.Length > 0)
-        {
-            accessor.DeleteElements(elementIds);
-            e.SetProcessingResult(FailureProcessingResult.ProceedWithCommit);
-        }
-        else
+        if (failures.Count == 0)
         {
             e.SetProcessingResult(FailureProcessingResult.Continue);
+            return;
         }
+
+        bool hadErrors = false;
+
+        foreach (var failure in failures)
+        {
+            var severity = failure.GetSeverity();
+
+            if (severity == FailureSeverity.Warning)
+            {
+                // Молча сжираем предупреждения
+                accessor.DeleteWarning(failure);
+            }
+            else
+            {
+                // Ошибки НЕ ТРОГАЕМ
+                hadErrors = true;
+            }
+        }
+
+        // ⚠️ КРИТИЧЕСКИЙ МОМЕНТ
+        // Если есть ошибки — просто Continue
+        // Revit сам решит, что делать
+        e.SetProcessingResult(FailureProcessingResult.Continue);
     }
 
-    public void UIApplicationOnDialogBoxShowing(object sender, DialogBoxShowingEventArgs e)
+    public void OnDialogBoxShowing(object sender, DialogBoxShowingEventArgs e)
     {
-        e.OverrideResult(1);
+        // ❗️ТОЛЬКО БЕЗОПАСНЫЕ ДИАЛОГИ
+        switch (e.DialogId)
+        {
+            // Апгрейд версии
+            case "Dialog_Revit_DocUpgrade":
+                e.OverrideResult((int)TaskDialogResult.Ok);
+                break;
+
+            // Предупреждение о detached / central
+            case "TaskDialog_DetachModel":
+                e.OverrideResult((int)TaskDialogResult.Yes);
+                break;
+
+            // Всё остальное — НЕ ТРОГАЕМ
+            default:
+                break;
+        }
     }
-}    
+}
