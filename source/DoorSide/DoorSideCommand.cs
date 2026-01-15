@@ -103,13 +103,13 @@ public class DoorSideCommand : IExternalCommand
          true        | true          | Левая
         */
 
-        if (!handFlipped && !facingFlipped) return "Л";
+        if (!handFlipped && !facingFlipped) return "л";
 
         if (handFlipped && !facingFlipped) return "";
 
         if (!handFlipped && facingFlipped) return "";
 
-        if (handFlipped && facingFlipped) return "Л";
+        if (handFlipped && facingFlipped) return "л";
 
         return "N/A";
     }
