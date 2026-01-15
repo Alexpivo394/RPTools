@@ -17,8 +17,7 @@ public class FailureProcessorOpenDocument
             e.SetProcessingResult(FailureProcessingResult.Continue);
             return;
         }
-
-        bool hadErrors = false;
+        
 
         foreach (var failure in failures)
         {
@@ -32,7 +31,6 @@ public class FailureProcessorOpenDocument
             else
             {
                 // Ошибки НЕ ТРОГАЕМ
-                hadErrors = true;
             }
         }
 

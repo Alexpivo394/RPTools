@@ -69,9 +69,17 @@ public class DoorSideCommand : IExternalCommand
 
         spManager.CreateSharedParameter(
             parameterName: SwingParameterName,
+#if REVIT2022_OR_GREATER
             parameterTypeId: SpecTypeId.String.Text,
+#else
+            parameterTypeId: ParameterType.Text,
+#endif
             categories: categories,
+#if REVIT2025_OR_GREATER
+            parameterGroup: GroupTypeId.Data,
+#else
             parameterGroup: BuiltInParameterGroup.PG_DATA,
+#endif
             isInstance: true,
             isUserModifiable: true,
             isVisible: true,

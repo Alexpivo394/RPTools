@@ -17,9 +17,17 @@ namespace DoorSide
 
         public void CreateSharedParameter(
             string parameterName,
+#if REVIT2022_OR_GREATER
             ForgeTypeId parameterTypeId, // или ParameterType для старых версий
+#else
+            ParameterType parameterTypeId,
+#endif
             IList<BuiltInCategory> categories,
+#if REVIT2025_OR_GREATER
+            ForgeTypeId parameterGroup,
+#else
             BuiltInParameterGroup parameterGroup,
+#endif
             bool isInstance,
             bool isUserModifiable,
             bool isVisible,
@@ -151,7 +159,11 @@ namespace DoorSide
         private static Definition CreateDefinition(
             DefinitionGroup group,
             string name,
-            ForgeTypeId typeId,
+#if REVIT2022_OR_GREATER
+            ForgeTypeId typeId, // или ParameterType для старых версий
+#else
+            ParameterType typeId,
+#endif
             bool isUserModifiable,
             bool isVisible,
             Guid? guid)
@@ -181,7 +193,14 @@ namespace DoorSide
             return categorySet;
         }
 
-        private void BindParameterToDocument(Definition definition, Binding binding, BuiltInParameterGroup group)
+        private void BindParameterToDocument(Definition definition,
+            Binding binding,
+#if REVIT2025_OR_GREATER
+            ForgeTypeId group
+#else
+            BuiltInParameterGroup group
+#endif
+            )
         {
             using (Transaction tx = new Transaction(_doc, "Bind Shared Parameter"))
             {
