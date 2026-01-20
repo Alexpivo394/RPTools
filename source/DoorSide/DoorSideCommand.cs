@@ -86,6 +86,8 @@ public class DoorSideCommand : IExternalCommand
             createTempFile: true,
             guid: SwingParameterGuid
         );
+        
+        spManager.SetAllowVaryBetweenGroups(SwingParameterName, true);
 
     }
 

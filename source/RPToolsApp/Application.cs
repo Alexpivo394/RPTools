@@ -46,7 +46,7 @@ namespace RPToolsApp
             
             var panelAr = Application.CreatePanel("АР", "RPTools");
             var panelBackgroundBrushBezheviy = new SolidColorBrush(System.Windows.Media.Color.FromRgb(245, 245, 220));
-            panelAr.SetTitleBarBackground(panelBackgroundBrushRose);
+            panelAr.SetTitleBarBackground(panelBackgroundBrushBezheviy);
 
             //Добавляем кнопки на панели
             //BIM
@@ -92,7 +92,12 @@ namespace RPToolsApp
             pullButtonTray.AddPushButton<LotkiColor.StartupCommand>("Покрасить по перфорации");
             pullButtonTray.AddPushButton<LotkiColorIsp.StartupCommand>("Покрасить по исполнению");
             // pullButton.AddPushButton<LotkiColorKrshka.StartupCommand>("Покрасить крышки");
-            pullButtonTray.AddPushButton<CreateCover.StartupCommand>("Разместить крышки");
+            
+            panelTray.AddPushButton<CreateCover.Commands.StartupCommand>("Разместить\nкрышки")
+                .SetImage("/RPToolsApp;component/Resources/Icons/CreateCover16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/CreateCover32.png")
+                .SetToolTip("Разместить в модели крышки на кабельные лотки")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/razmestit-kryshki-pJSWjFkyzL"));
             
             //Общие
             panelGeneral.AddPushButton<Leght.StartupCommand>("Длина элементов\nмодели")
@@ -108,7 +113,7 @@ namespace RPToolsApp
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/strukturnaya-shema-yO3TQrgqVS"));
             
             //Панель ОВ
-            var pullButtonWarm = panelAr.AddPullDownButton("Теплопотери", "Теплопотери");
+            var pullButtonWarm = panelOv.AddPullDownButton("Теплопотери", "Теплопотери");
             
             pullButtonWarm.SetImage("/RPToolsApp;component/Resources/Icons/WarmSync16.png");
             pullButtonWarm.SetLargeImage("/RPToolsApp;component/Resources/Icons/WarmSync32.png");
@@ -123,7 +128,7 @@ namespace RPToolsApp
             
             //Панель АР
             
-            panelSs.AddPushButton<DoorSide.DoorSideCommand>("Открывание\nдверей")
+            panelAr.AddPushButton<DoorSide.DoorSideCommand>("Открывание\nдверей")
                 .SetImage("/RPToolsApp;component/Resources/Icons/DoorSide16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/DoorSide32.png")
                 .SetToolTip("Записать сторону открывания двери в параметр Открывание")

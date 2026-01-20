@@ -80,6 +80,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CableTrays\CableTrays.csproj" />
+      <ProjectReference Include="..\CreateCover\CreateCover.csproj" />
       <ProjectReference Include="..\DoorSide\DoorSide.csproj" />
       <ProjectReference Include="..\Length\Length.csproj" />
       <ProjectReference Include="..\ModelTransplanter\ModelTransplanter.csproj" />
@@ -142,6 +143,10 @@
       <Resource Include="Resources\Icons\DoorSide32.png" />
       <None Remove="Resources\Icons\DoorSide16.png" />
       <Resource Include="Resources\Icons\DoorSide16.png" />
+      <None Remove="Resources\Icons\CreateCover16.png" />
+      <Resource Include="Resources\Icons\CreateCover16.png" />
+      <None Remove="Resources\Icons\CreateCover32.png" />
+      <Resource Include="Resources\Icons\CreateCover32.png" />
     </ItemGroup>
 
 </Project>
