@@ -22,13 +22,6 @@ public class StartupCommand : IExternalCommand
         var allsoed = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTrayFitting)
             .WhereElementIsNotElementType()
             .ToList();
-        var alllotki = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
-            .WhereElementIsNotElementType()
-            .Where(lotok =>
-                doc.GetElement(lotok.GetTypeId()).LookupParameter("ADSK_Наименование (по типу)").AsString() !=
-                "Лоток лестничный")
-            .ToList();
-
         var alllotkirealall = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTray)
             .WhereElementIsNotElementType()
             .ToList();
@@ -43,27 +36,27 @@ public class StartupCommand : IExternalCommand
         ogs3.SetCutLineColor(color3);
 
 
+        t0.Start("Modify color1");
         foreach (var lotok in alllotkirealall)
         {
-            t0.Start("Modify color1");
 
             doc.ActiveView.SetElementOverrides(lotok.Id, ogs3);
 
-            t0.Commit();
         }
+        t0.Commit();
 
+        t0.Start("Modify color1");
         foreach (var soed in allsoed)
         {
-            t0.Start("Modify color1");
 
             doc.ActiveView.SetElementOverrides(soed.Id, ogs3);
 
-            t0.Commit();
         }
+        t0.Commit();
 
+        t0.Start("Modify color2");
         foreach (var lotok in alllotkirealall)
         {
-            t0.Start("Modify color2");
 
             var color1 = new Color(0, 174, 152);
             var ogs1 = new OverrideGraphicSettings();
@@ -95,8 +88,8 @@ public class StartupCommand : IExternalCommand
                 "Лоток проволочный")
                 doc.ActiveView.SetElementOverrides(lotok.Id, ogsBlin);
 
-            t0.Commit();
         }
+        t0.Commit();
 
 
         var dial = ToadDialogService.Show(

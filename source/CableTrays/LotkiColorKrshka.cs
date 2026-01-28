@@ -34,38 +34,38 @@ public class StartupCommand : IExternalCommand
         {
             t.Start();
 
-        foreach (var a in alllotkirealall)
-        {
-            var color4 = new Color(0, 0, 0);
+                foreach (var a in alllotkirealall)
+                {
+                    var color4 = new Color(0, 0, 0);
 
-            var ogs4 = new OverrideGraphicSettings();
-            ogs4.SetProjectionLineColor(color4);
-            ogs4.SetCutForegroundPatternColor(color4);
-            ogs4.SetSurfaceForegroundPatternColor(color4);
-            ogs4.SetCutLineColor(color4);
+                    var ogs4 = new OverrideGraphicSettings();
+                    ogs4.SetProjectionLineColor(color4);
+                    ogs4.SetCutForegroundPatternColor(color4);
+                    ogs4.SetSurfaceForegroundPatternColor(color4);
+                    ogs4.SetCutLineColor(color4);
 
-            doc.ActiveView.SetElementOverrides(a.Id, ogs4);
-            
-        }
+                    doc.ActiveView.SetElementOverrides(a.Id, ogs4);
+                    
+                }
 
-        foreach (var lotok in alllotkirealall)
-        {
-            var color1 = new Color(255, 0, 0);
+                foreach (var lotok in alllotkirealall)
+                {
+                    var color1 = new Color(255, 0, 0);
 
-            var ogs1 = new OverrideGraphicSettings();
-            ogs1.SetProjectionLineColor(color1);
-            ogs1.SetCutForegroundPatternColor(color1);
-            ogs1.SetCutLineColor(color1);
+                    var ogs1 = new OverrideGraphicSettings();
+                    ogs1.SetProjectionLineColor(color1);
+                    ogs1.SetCutForegroundPatternColor(color1);
+                    ogs1.SetCutLineColor(color1);
 
-            var paramName = "ADSK_Крышка";
-            var param = lotok.LookupParameter(paramName);
-            
-            if (param is not null && param.AsInteger() == 1)
-                doc.ActiveView.SetElementOverrides(lotok.Id, ogs1);
+                    var paramName = "ADSK_Крышка";
+                    var param = lotok.LookupParameter(paramName);
+                    
+                    if (param is not null && param.AsInteger() == 1)
+                        doc.ActiveView.SetElementOverrides(lotok.Id, ogs1);
 
-        }
+                }
         
-        t.Commit();
+            t.Commit();
         }
 
         var dial = ToadDialogService.Show(
