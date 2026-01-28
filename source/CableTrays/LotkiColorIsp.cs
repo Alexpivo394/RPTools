@@ -15,7 +15,9 @@ public class StartupCommand : IExternalCommand
 {
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
-        //Set application =>
+        try
+        {
+//Set application =>
         var uiapp = commandData.Application;
         var uidoc = uiapp.ActiveUIDocument;
         var app = uiapp.Application;
@@ -85,5 +87,17 @@ public class StartupCommand : IExternalCommand
             DialogIcon.Info
         );
         return Result.Succeeded;
+        }
+        catch (Exception e)
+        {
+            var dial = ToadDialogService.Show(
+                "Ошибка!",
+                $"Ошибка, {e.Message}\n{e.StackTrace}",
+                DialogButtons.OK,
+                DialogIcon.Error
+            );
+            return Result.Cancelled;
+        }
+        
     }
 }

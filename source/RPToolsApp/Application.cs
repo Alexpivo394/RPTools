@@ -91,7 +91,7 @@ namespace RPToolsApp
             pullButtonTray.AddPushButton<ArticulLotok.StartupCommand>("Артикулы и наименования");
             pullButtonTray.AddPushButton<LotkiColor.StartupCommand>("Покрасить по перфорации");
             pullButtonTray.AddPushButton<LotkiColorIsp.StartupCommand>("Покрасить по исполнению");
-            // pullButton.AddPushButton<LotkiColorKrshka.StartupCommand>("Покрасить крышки");
+            pullButtonTray.AddPushButton<LotkiColorKrshka.StartupCommand>("Покрасить крышки");
             
             panelTray.AddPushButton<CreateCover.Commands.StartupCommand>("Разместить\nкрышки")
                 .SetImage("/RPToolsApp;component/Resources/Icons/CreateCover16.png")
