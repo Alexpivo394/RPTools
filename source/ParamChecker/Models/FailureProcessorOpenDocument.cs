@@ -57,6 +57,7 @@ public class FailureProcessorOpenDocument
 
             // Всё остальное — НЕ ТРОГАЕМ
             default:
+                e.OverrideResult(1001);
                 break;
         }
     }
