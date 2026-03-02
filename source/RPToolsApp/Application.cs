@@ -105,6 +105,12 @@ namespace RPToolsApp
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/Ruler32.png")
                 .SetToolTip("Посчитать суммарную длину выбранных элементов.");
             
+            panelGeneral.AddPushButton<CreateSpaces.Commands.StartupCommand>("Создание\nпространств")
+                .SetImage("/RPToolsApp;component/Resources/Icons/Spaces16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/Spaces32.png")
+                .SetToolTip("Создает в проекте пространства на основе помещений из раздела АР.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/sozdanie-prostranstv-Bia5rDOjqY"));
+            
             //Сети связи
             panelSs.AddPushButton<SSPlan.Commands.StartupCommand>("Структурная\nсхема")
                 .SetImage("/RPToolsApp;component/Resources/Icons/SSPlan16.png")

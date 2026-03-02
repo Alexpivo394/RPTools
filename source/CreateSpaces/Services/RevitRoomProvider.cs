@@ -6,35 +6,49 @@ namespace CreateSpaces.Services;
 public class RevitRoomProvider
 {
     private readonly Document _doc;
+    private IReadOnlyList<Room?>?  _rooms;
 
     public RevitRoomProvider(Document document)
     {
         _doc = document ?? throw new ArgumentNullException(nameof(document));
     }
-    
-    public IReadOnlyList<Room?> GetRoomsFromLink(LinkDescriptor link)
+
+    public void Initialize(LinkDescriptor link)
     {
         if (link == null || string.IsNullOrEmpty(link.Name))
-            return Array.Empty<Room>();
+            _rooms = Array.Empty<Room>();
         
         var linkInstance = new FilteredElementCollector(_doc)
             .OfClass(typeof(RevitLinkInstance))
             .Cast<RevitLinkInstance>()
-            .FirstOrDefault(x => x.GetLinkDocument()?.Title == link.Name);
+            .FirstOrDefault(x => x.GetLinkDocument()?.Title == link?.Name);
 
         if (linkInstance == null)
-            return Array.Empty<Room>();
+            _rooms = Array.Empty<Room>();
 
-        var linkedDoc = linkInstance.GetLinkDocument();
+        var linkedDoc = linkInstance?.GetLinkDocument();
         if (linkedDoc == null)
-            return Array.Empty<Room>();
+            _rooms = Array.Empty<Room>();
         
-        List<Room?> rooms = new FilteredElementCollector(linkedDoc)
+        List<Room?>? rooms = new FilteredElementCollector(linkedDoc)
             .OfCategory(BuiltInCategory.OST_Rooms)
             .WhereElementIsNotElementType()
             .Cast<Room>()
             .ToList()!;
+        
+        _rooms = rooms;
+    }
+    
+    public IReadOnlyList<Room?>? GetRoomsFromLink()
+    {
+        return _rooms;
+    }
 
-        return rooms;
+    public bool DetectRooms()
+    {
+        if (_rooms!.Count == 0)
+            return false;
+        
+        return true;
     }
 }

@@ -50,7 +50,7 @@ public class GetParameterService
     {
         var dict = new Dictionary<string, ParameterDescriptor>();
 
-        foreach (Parameter param in element.Parameters)
+        foreach (Parameter param in element?.Parameters!)
         {
             if (param.Definition == null)
                 continue;

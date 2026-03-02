@@ -25,4 +25,15 @@ public class RevitLinkProvider
             .ToList();
 
     }
+    
+    public RevitLinkInstance? GetByName(Document doc, string? name)
+    {
+        if (string.IsNullOrEmpty(name))
+            return null;
+
+        return new FilteredElementCollector(doc)
+            .OfClass(typeof(RevitLinkInstance))
+            .Cast<RevitLinkInstance>()
+            .FirstOrDefault(x => x.Name.Contains(name));
+    }
 }

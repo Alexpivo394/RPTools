@@ -1,7 +1,6 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using CreateSpaces.Services;
-using CreateSpaces.Tests;
 using CreateSpaces.ViewModels;
 using CreateSpaces.Views;
 
@@ -17,11 +16,13 @@ public class StartupCommand : IExternalCommand
         var linkProvider = new RevitLinkProvider();
         var getParameterService = new GetParameterService(doc);
         var roomProvider = new RevitRoomProvider(doc);
+        var loadParameters = new LoadParametersService(getParameterService, roomProvider);
+        var createService = new SpaceCreationService(linkProvider, roomProvider, doc);
         
-
+        
+        
         var links = linkProvider.GetLinks(doc);
-
-        var vm = new CreateSpacesViewModel(links, getParameterService, roomProvider);
+        var vm = new CreateSpacesViewModel(links, loadParameters, roomProvider, createService);
         
         var view = new CreateSpacesView(vm);
         

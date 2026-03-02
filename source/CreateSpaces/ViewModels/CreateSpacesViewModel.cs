@@ -1,9 +1,13 @@
 using System.Collections.ObjectModel;
-using Autodesk.Revit.DB.Architecture;
+using System.IO;
 using CreateSpaces.Models;
 using CreateSpaces.Services;
+using RPToolsUI.Models;
 using RPToolsUI.Services;
+using Microsoft.Win32;
+using Newtonsoft.Json;
 using Wpf.Ui.Appearance;
+using Wpf.Ui.Controls;
 
 namespace CreateSpaces.ViewModels;
 
@@ -13,16 +17,17 @@ public partial class CreateSpacesViewModel : ObservableObject
     [ObservableProperty] private bool _createSpaces = true;
     [ObservableProperty] private ObservableCollection<ParameterMappingModel> _models = new();
     public ObservableCollection<LinkDescriptor> LinkedModels { get; set; }
-    [ObservableProperty] private LinkDescriptor _selectedLink;
-    private GetParameterService _getParameterService;
+    [ObservableProperty] private LinkDescriptor? _selectedLink;
+    private LoadParametersService? _loadParameterService;
     private RevitRoomProvider _roomProvider;
-    
-    public CreateSpacesViewModel(IReadOnlyList<LinkDescriptor> linkedModels, GetParameterService getParameterService,  RevitRoomProvider roomProvider)
+    private readonly ISpaceCreationService _spaceCreationService;
+    public CreateSpacesViewModel(IReadOnlyList<LinkDescriptor> linkedModels, LoadParametersService? loadParameterService, RevitRoomProvider roomProvider, ISpaceCreationService spaceCreationService)
     {
         LinkedModels = new ObservableCollection<LinkDescriptor>(linkedModels);
         Models = new ObservableCollection<ParameterMappingModel>();
-        _getParameterService = getParameterService;
+        _loadParameterService = loadParameterService;
         _roomProvider = roomProvider;
+        _spaceCreationService = spaceCreationService;
     }
 
     partial void OnDarkThemeChanged(bool value)
@@ -34,21 +39,30 @@ public partial class CreateSpacesViewModel : ObservableObject
     partial void OnSelectedLinkChanged(LinkDescriptor? value)
     {
         if (value == null)
+        {
+            Models.Clear();
             return;
+        }
 
         LoadRoomParameters(value);
     }
     
     private void LoadRoomParameters(LinkDescriptor link)
     {
-        var roomParameters = _getParameterService.GetFromRoom(_roomProvider.GetRoomsFromLink(link).FirstOrDefault());
-        var spaceParameters = _getParameterService.GetFromTemporarySpace();
+        _roomProvider.Initialize(link);
+        var roomParameters = _loadParameterService?.GetRoomParameters();
+        if (roomParameters!.Count == 0)
+        {
+            Models.Clear();
+            return;
+        }
+        var spaceParameters = _loadParameterService?.GetSpaceParameters();
         
         UpdateModels(spaceParameters, roomParameters);
     }
-    
-    public void UpdateModels(
-        IEnumerable<ParameterDescriptor> spaceParameters,
+
+    private void UpdateModels(
+        IEnumerable<ParameterDescriptor>? spaceParameters,
         IEnumerable<ParameterDescriptor> roomParameters)
     {
         Models = new ObservableCollection<ParameterMappingModel>(
@@ -56,5 +70,110 @@ public partial class CreateSpacesViewModel : ObservableObject
                 new ParameterMappingModel(sp, roomParameters))
         );
     }
+
+    [RelayCommand]
+    private void Start()
+    {
+        if (SelectedLink == null)
+            return;
+
+        var result = _spaceCreationService.CreateSpaces(
+            SelectedLink,
+            Models,
+            CreateSpaces);
+        
+        var dial = ToadDialogService.Show(
+            "Успех!",
+            $"Создано: {result.Created}\nОбновлено: {result.Updated}",
+            DialogButtons.OK,
+            DialogIcon.Info
+        );
+    }
+
+    [RelayCommand]
+    private void Export()
+    {
+        if (Models == null || Models.Count == 0)
+            return;
+
+        var config = new ParameterMappingConfig();
+
+        foreach (var model in Models)
+        {
+            if (model.SelectedRoomParameter == null)
+                continue;
+
+            config.Items.Add(new ParameterMappingItem
+            {
+                SpaceParameterName = model.SpaceParameter.Name,
+                RoomParameterName = model.SelectedRoomParameter.Name
+            });
+        }
+
+        if (config.Items.Count == 0)
+            return;
+
+        var dialog = new SaveFileDialog
+        {
+            Filter = "JSON (*.json)|*.json",
+            DefaultExt = "json",
+            FileName = "CreateSpacesMapping"
+        };
+
+        if (dialog.ShowDialog() != true)
+            return;
+
+        var json = JsonConvert.SerializeObject(config, Formatting.Indented);
+
+        File.WriteAllText(dialog.FileName, json);
+    }
+
+    [RelayCommand]
+    private void Import()
+    {
+        if (Models == null || Models.Count == 0)
+            return;
+
+        var dialog = new OpenFileDialog
+        {
+            Filter = "JSON (*.json)|*.json",
+            DefaultExt = "json"
+        };
+
+        if (dialog.ShowDialog() != true)
+            return;
+
+        ParameterMappingConfig? config;
+        try
+        {
+            var json = File.ReadAllText(dialog.FileName);
+            config = JsonConvert.DeserializeObject<ParameterMappingConfig>(json);
+        }
+        catch
+        {
+            return;
+        }
+
+        if (config?.Items == null || config.Items.Count == 0)
+            return;
+
+        var map = config.Items
+            .GroupBy(i => i.SpaceParameterName)
+            .ToDictionary(g => g.Key, g => g.First().RoomParameterName);
+
+        foreach (var model in Models)
+        {
+            if (!map.TryGetValue(model.SpaceParameter.Name, out var roomParamName))
+                continue;
+
+            if (string.IsNullOrEmpty(roomParamName))
+                continue;
+
+            var target = model.RoomParameters.FirstOrDefault(r => r.Name == roomParamName);
+            if (target != null)
+                model.SelectedRoomParameter = target;
+        }
+    }
     
 }
+

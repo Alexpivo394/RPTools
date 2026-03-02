@@ -1,4 +1,4 @@
-﻿<ui:FluentWindow
+<ui:FluentWindow
     x:Class="CreateSpaces.Views.CreateSpacesView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -143,13 +143,13 @@
                 
                 <ui:Button Content="Экспорт"
                            Icon="{ui:SymbolIcon Symbol=ArrowExportLtr24}"
-                           Command="{Binding RemoveModelCommand}"
+                           Command="{Binding ExportCommand}"
                            Appearance="Secondary"
                            Margin="20,0,0,0" />
                 
                 <ui:Button Content="Импорт"
                            Icon="{ui:SymbolIcon Symbol=ArrowImport24}"
-                           Command="{Binding RemoveModelCommand}"
+                           Command="{Binding ImportCommand}"
                            Appearance="Secondary"
                            Margin="10,0,0,0" />
             </StackPanel>
