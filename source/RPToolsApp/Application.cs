@@ -59,7 +59,7 @@ namespace RPToolsApp
             panelBim.AddPushButton<WorkingSet.Commands.StartupCommand>("Создание Рабочих\nнаборов")
                 .SetImage("/RPToolsApp;component/Resources/Icons/Create16.png")
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/Create32.png")
-                .SetToolTip("Создает в модели рабочие наборы\nдля выбранного раздела.")
+                .SetToolTip("Создает в модели рабочие наборы\nдля выбранного раздела.")  
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/sozdanie-rabochih-naborov-plaginom-rptools-j3Ycy39HVW"));
             
             panelBim.AddPushButton<QuantityCheck.Commands.StartupCommand>("Записать количество")
@@ -125,8 +125,7 @@ namespace RPToolsApp
             pullButtonWarm.SetLargeImage("/RPToolsApp;component/Resources/Icons/WarmSync32.png");
             pullButtonWarm.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url,
                 "https://bim-baza.yonote.ru/doc/sinhronizaciya-teplopoter-RWMUuxZBdq"));
-
-            pullButtonWarm.AddPushButton<WarmSync.CreateSpaces>("Создание пространств");
+            
             pullButtonWarm.AddPushButton<WarmSync.RenameSpaces>("Заполнение имен пространств");
             pullButtonWarm.AddPushButton<WarmSync.WriteSpaceIdToParam>("Запись ID пространств");
             pullButtonWarm.AddPushButton<WarmSync.ExportSpacesToExcel>("Экспорт пространств в Excel");
