@@ -115,7 +115,11 @@ public sealed class SpaceCreationService : ISpaceCreationService
         ParameterDescriptor descriptor)
     {
         if (descriptor.BuiltInParameter.HasValue)
-            return element?.get_Parameter(descriptor.BuiltInParameter.Value);
+        {
+            var param = element?.get_Parameter(descriptor.BuiltInParameter.Value);
+            if (param != null)
+                return param;
+        }
 
         return element?.LookupParameter(descriptor.Name);
     }

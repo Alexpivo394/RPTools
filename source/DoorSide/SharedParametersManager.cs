@@ -18,7 +18,7 @@ namespace DoorSide
         public void CreateSharedParameter(
             string parameterName,
 #if REVIT2022_OR_GREATER
-            ForgeTypeId parameterTypeId, // или ParameterType для старых версий
+            ForgeTypeId parameterTypeId, // или ParameterType для старых версий 
 #else
             ParameterType parameterTypeId,
 #endif
