@@ -47,8 +47,8 @@
         <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
         <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
         <PackageReference Include="CommunityToolkit.Mvvm" Version="8.*"/>
-        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0"/>
-        <PackageReference Include="System.Buffers" Version="4.6.0"/>
+        <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2"/>
+        <PackageReference Include="System.Buffers" Version="4.6.1"/>
         <PackageReference Include="WPF-UI" Version="4.0.2"/>
         <PackageReference Include="WPF-UI.Abstractions" Version="4.0.2"/>
     </ItemGroup>
