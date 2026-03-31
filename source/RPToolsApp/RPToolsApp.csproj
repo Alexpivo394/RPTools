@@ -87,6 +87,7 @@
       <ProjectReference Include="..\ModelTransplanter\ModelTransplanter.csproj" />
       <ProjectReference Include="..\ParamChecker\ParamChecker.csproj" />
       <ProjectReference Include="..\QuantityCheck\QuantityCheck.csproj" />
+      <ProjectReference Include="..\ReinforcementByColor\ReinforcementByColor.csproj" />
       <ProjectReference Include="..\SSPlan\SSPlan.csproj" />
       <ProjectReference Include="..\WarmSync\WarmSync.csproj" />
       <ProjectReference Include="..\WorkingSet\WorkingSet.csproj" />
@@ -152,6 +153,10 @@
       <Resource Include="Resources\Icons\Spaces16.png" />
       <None Remove="Resources\Icons\Spaces32.png" />
       <Resource Include="Resources\Icons\Spaces32.png" />
+      <None Remove="Resources\Icons\Rei16.png" />
+      <Resource Include="Resources\Icons\Rei16.png" />
+      <None Remove="Resources\Icons\Rei32.png" />
+      <Resource Include="Resources\Icons\Rei32.png" />
     </ItemGroup>
 
 </Project>

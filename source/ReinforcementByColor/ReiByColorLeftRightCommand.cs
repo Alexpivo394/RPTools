@@ -7,7 +7,7 @@ namespace ReinforcementByColor;
 
 [Transaction(TransactionMode.Manual)]
 [Regeneration(RegenerationOption.Manual)]
-public class ReinforcementByColorCommand : IExternalCommand
+public class ReiByColorLeftRightCommand : IExternalCommand
 {
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
@@ -50,11 +50,28 @@ public class ReinforcementByColorCommand : IExternalCommand
             { "REI_d36_s200", "D36-A500C" },
             { "REI_d36_s250", "D36-A500C" }
         };
-
-        var regions = new FilteredElementCollector(doc, view.Id)
-            .OfClass(typeof(FilledRegion))
-            .Cast<FilledRegion>()
+        
+        var selection = uiDoc.Selection.GetElementIds()
+            .Select(elId => doc.GetElement(elId))
+            .Where(el => el != null)
             .ToList();
+
+        if (selection.Count == 0)
+        {
+            var dial1 = ToadDialogService.Show(
+                "Ошибка!",
+                "Не выбраны семейства для замены. Выберите семейства на виде и запустите команду повторно.",
+                DialogButtons.OK,
+                DialogIcon.Error
+            );
+            
+            return Result.Cancelled;
+        }
+        
+        var regions = selection
+            .OfType<FilledRegion>()
+            .ToList();
+
 
         var symbols = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol))
             .OfCategory(BuiltInCategory.OST_DetailComponents)
@@ -108,31 +125,35 @@ public class ReinforcementByColorCommand : IExternalCommand
                 if (!verticalLines.Any() || !horizontalLines.Any())
                     continue;
                 
-                var leftLine = verticalLines
-                    .OrderBy(l => l.GetEndPoint(0).X)
+
+                var bottomLine = horizontalLines
+                    .OrderBy(l => l.GetEndPoint(0).Y) 
                     .First();
+
+                var p1 = bottomLine.GetEndPoint(0);
+                var p2 = bottomLine.GetEndPoint(1);
                 
-                var p1 = leftLine.GetEndPoint(0);
-                var p2 = leftLine.GetEndPoint(1);
-                
-                if (p1.Y < p2.Y)
+                if (p1.X > p2.X)
                 {
                     (p1, p2) = (p2, p1);
                 }
 
-                var verticalLine = Line.CreateBound(p1, p2);
+                var horizontalLine = Line.CreateBound(p1, p2);
                 
-                var horizontal = horizontalLines
+
+                var vertical = verticalLines
                     .OrderByDescending(l => l.Length)
                     .First();
 
-                double length = horizontal.Length;
+                double length = vertical.Length;
                 
+
                 var instance = doc.Create.NewFamilyInstance(
-                    verticalLine,
+                    horizontalLine,
                     symbol,
                     view);
                 
+
                 var param = instance.LookupParameter("Длина стержней");
 
                 if (param != null && !param.IsReadOnly)

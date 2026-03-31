@@ -47,6 +47,10 @@ namespace RPToolsApp
             var panelAr = Application.CreatePanel("АР", "RPTools");
             var panelBackgroundBrushBezheviy = new SolidColorBrush(System.Windows.Media.Color.FromRgb(245, 245, 220));
             panelAr.SetTitleBarBackground(panelBackgroundBrushBezheviy);
+            
+            var panelKr = Application.CreatePanel("КР", "RPTools");
+            var panelBackgroundBrushSnowBlue = new SolidColorBrush(System.Windows.Media.Color.FromRgb(172, 229, 238));
+            panelKr.SetTitleBarBackground(panelBackgroundBrushSnowBlue);
 
             //Добавляем кнопки на панели
             //BIM
@@ -138,6 +142,19 @@ namespace RPToolsApp
                 .SetLargeImage("/RPToolsApp;component/Resources/Icons/DoorSide32.png")
                 .SetToolTip("Записать сторону открывания двери в параметр Открывание")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/otkryvanie-dveri-JJyZ1390oD"));
+            
+            //Панель КР
+
+            var pullButtonRei = panelKr.AddPullDownButton("Армирование", "Армирование");
+            
+            pullButtonRei.SetImage("/RPToolsApp;component/Resources/Icons/Rei16.png");
+            pullButtonRei.SetLargeImage("/RPToolsApp;component/Resources/Icons/Rei32.png");
+            pullButtonRei.SetToolTip("Размещает семейства армирования взамен цветовых областей");
+
+            pullButtonRei.AddPushButton<ReinforcementByColor.ReiByColorLeftRightCommand>("Заменить горизонтальными");
+            pullButtonRei.AddPushButton<ReinforcementByColor.ReiByColorUpDownCommand>("Заменить вертикальными");
+
+
         }        
 
     }
