@@ -7,7 +7,7 @@ namespace ReinforcementByColor;
 
 [Transaction(TransactionMode.Manual)]
 [Regeneration(RegenerationOption.Manual)]
-public class ReiByColorLeftRightCommand : IExternalCommand
+public class RSUMLeftRightCommand : IExternalCommand
 {
     public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
     {
@@ -15,41 +15,9 @@ public class ReiByColorLeftRightCommand : IExternalCommand
         var doc = uiDoc.Document;
         var view = doc.ActiveView;
 
-        var map = new Dictionary<string, string>()
-        {
-            { "REI_d10_s100", "D10-A500C" },
-            { "REI_d10_s125", "D10-A500C" },
-            { "REI_d10_s200", "D10-A500C" },
-            { "REI_d10_s250", "D10-A500C" },
-            { "REI_d12_s100", "D12-A500C" },
-            { "REI_d12_s125", "D12-A500C" },
-            { "REI_d12_s200", "D12-A500C" },
-            { "REI_d12_s250", "D12-A500C" },
-            { "REI_d16_s100", "D16-A500C" },
-            { "REI_d16_s125", "D16-A500C" },
-            { "REI_d16_s200", "D16-A500C" },
-            { "REI_d16_s250", "D16-A500C" },
-            { "REI_d20_s100", "D20-A500C" },
-            { "REI_d20_s125", "D20-A500C" },
-            { "REI_d20_s200", "D20-A500C" },
-            { "REI_d20_s250", "D20-A500C" },
-            { "REI_d25_s100", "D25-A500C" },
-            { "REI_d25_s125", "D25-A500C" },
-            { "REI_d25_s200", "D25-A500C" },
-            { "REI_d25_s250", "D25-A500C" },
-            { "REI_d28_s100", "D28-A500C" },
-            { "REI_d28_s125", "D28-A500C" },
-            { "REI_d28_s200", "D28-A500C" },
-            { "REI_d28_s250", "D28-A500C" },
-            { "REI_d32_s100", "D32-A500C" },
-            { "REI_d32_s125", "D32-A500C" },
-            { "REI_d32_s200", "D32-A500C" },
-            { "REI_d32_s250", "D32-A500C" },
-            { "REI_d36_s100", "D36-A500C" },
-            { "REI_d36_s125", "D36-A500C" },
-            { "REI_d36_s200", "D36-A500C" },
-            { "REI_d36_s250", "D36-A500C" }
-        };
+        var map = new Dictionaries().Map;
+        
+        var step = new Dictionaries().Step;
         
         var selection = uiDoc.Selection.GetElementIds()
             .Select(elId => doc.GetElement(elId))
@@ -75,7 +43,7 @@ public class ReiByColorLeftRightCommand : IExternalCommand
 
         var symbols = new FilteredElementCollector(doc).OfClass(typeof(FamilySymbol))
             .OfCategory(BuiltInCategory.OST_DetailComponents)
-            .Cast<FamilySymbol>()
+        .Cast<FamilySymbol>() 
             .ToList();
 
         int replaced = 0;
@@ -91,7 +59,7 @@ public class ReiByColorLeftRightCommand : IExternalCommand
 
                 if (!map.TryGetValue(regionName, out string targetName)) continue;
 
-                var targetFamilyName = "R-SHP-01 - Дополнительная";
+                var targetFamilyName = "R-SUM - Распределение по прямой - стержень";
 
                 var symbol = symbols
                     .FirstOrDefault(x =>
@@ -154,13 +122,55 @@ public class ReiByColorLeftRightCommand : IExternalCommand
                     view);
                 
 
-                var param = instance.LookupParameter("Длина стержней");
+                var param = instance.LookupParameter("Ширина конструкции");
 
                 if (param != null && !param.IsReadOnly)
                 {
                     param.Set(length);
                 }
                 // end
+                
+                if (step.TryGetValue(regionName, out double stepValue))
+                {
+                    var stepParam = instance.LookupParameter("REI.LNG.Шаг");
+
+                    if (stepParam != null && !stepParam.IsReadOnly)
+                    {
+                        double stepInFeet = UnitUtils.ConvertToInternalUnits(
+                            stepValue,
+                            UnitTypeId.Millimeters);
+
+                        stepParam.Set(stepInFeet);
+                    }
+                }
+                
+                var commentParam = region.LookupParameter("Комментарии");
+                string comment = commentParam?.AsString() ?? string.Empty;
+
+                doc.Regenerate();
+
+                var bottomParam = instance.GetParameters("Обозначение гнутых стержней снизу")
+                    .FirstOrDefault(p => p.StorageType == StorageType.Integer);
+
+                var topParam = instance.GetParameters("Обозначение гнутых стержней сверху")
+                    .FirstOrDefault(p => p.StorageType == StorageType.Integer);
+
+                bottomParam?.Set(0);
+                topParam?.Set(0);
+
+                doc.Regenerate();
+                
+                var normalized = comment.ToUpperInvariant();
+
+                if (normalized.Contains("П"))
+                {
+                    bottomParam?.Set(1);
+                    topParam?.Set(1);
+                }
+                else if (normalized.Contains("Г"))
+                {
+                    bottomParam?.Set(1);
+                }
 
                 doc.Delete(region.Id);
 

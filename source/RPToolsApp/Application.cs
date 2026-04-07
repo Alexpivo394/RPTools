@@ -151,8 +151,10 @@ namespace RPToolsApp
             pullButtonRei.SetLargeImage("/RPToolsApp;component/Resources/Icons/Rei32.png");
             pullButtonRei.SetToolTip("Размещает семейства армирования взамен цветовых областей");
 
-            pullButtonRei.AddPushButton<ReinforcementByColor.ReiByColorLeftRightCommand>("Заменить горизонтальными");
-            pullButtonRei.AddPushButton<ReinforcementByColor.ReiByColorUpDownCommand>("Заменить вертикальными");
+            pullButtonRei.AddPushButton<ReinforcementByColor.RSHPLeftRightCommand>("R-SHP-Армирование по Y");
+            pullButtonRei.AddPushButton<ReinforcementByColor.RSHPUpDownCommand>("R-SHP-Армирование по X");
+            pullButtonRei.AddPushButton<ReinforcementByColor.RSUMLeftRightCommand>("R-SUM-Армирование по Y");
+            pullButtonRei.AddPushButton<ReinforcementByColor.RSUMUpDownCommand>("R-SUM-Армирование по X");
 
 
         }        
