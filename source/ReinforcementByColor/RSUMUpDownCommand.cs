@@ -132,9 +132,15 @@ public class RSUMUpDownCommand : IExternalCommand
 
                     if (stepParam != null && !stepParam.IsReadOnly)
                     {
+#if REVIT2021_OR_GREATER
                         double stepInFeet = UnitUtils.ConvertToInternalUnits(
                             stepValue,
                             UnitTypeId.Millimeters);
+#else
+                        double stepInFeet = UnitUtils.ConvertToInternalUnits(
+                            stepValue,
+                            DisplayUnitType.DUT_MILLIMETERS);
+#endif
 
                         stepParam.Set(stepInFeet);
                     }

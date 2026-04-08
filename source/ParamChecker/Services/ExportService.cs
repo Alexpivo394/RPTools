@@ -452,24 +452,42 @@ public class ExportService
             {
                 case FilterLogic.Equals:
                     return string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
+
                 case FilterLogic.NotEquals:
                     return !string.Equals(val, cond.Value, StringComparison.OrdinalIgnoreCase);
+
                 case FilterLogic.Contains:
-                    return val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false;
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        return val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false;
+#else
+                    return val?.IndexOf(cond.Value, StringComparison.OrdinalIgnoreCase) >= 0;
+#endif
+
                 case FilterLogic.NotContains:
-                    return !(val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false);
+#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+        return !(val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false);
+#else
+                    return !(val?.IndexOf(cond.Value, StringComparison.OrdinalIgnoreCase) >= 0);
+#endif
+
                 case FilterLogic.Exists:
                     return param != null && (!string.IsNullOrWhiteSpace(val) || param.HasValue);
+
                 case FilterLogic.NotExists:
                     return param == null || (string.IsNullOrWhiteSpace(val) && !param.HasValue);
+
                 case FilterLogic.GreaterThan:
                     return parsedVal && parsedCond && number > targetNumber;
+
                 case FilterLogic.GreaterThanOrEquals:
                     return parsedVal && parsedCond && number >= targetNumber;
+
                 case FilterLogic.LessThan:
                     return parsedVal && parsedCond && number < targetNumber;
+
                 case FilterLogic.LessThanOrEquals:
                     return parsedVal && parsedCond && number <= targetNumber;
+
                 default:
                     return false;
             }

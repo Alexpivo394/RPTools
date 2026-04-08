@@ -78,7 +78,12 @@ public partial class FilterConfigViewModel : ObservableObject
         }
 
         var filtered = Categories.Where(c =>
-                c.CatName != null && c.CatName.Contains(CategoryFilter, StringComparison.OrdinalIgnoreCase))
+#if REVIT2025_OR_GREATER
+        c.CatName != null && c.CatName.Contains(CategoryFilter, StringComparison.OrdinalIgnoreCase)
+#else
+                    c.CatName != null && c.CatName.IndexOf(CategoryFilter, StringComparison.OrdinalIgnoreCase) >= 0
+#endif
+            )
             .ToList();
 
         FilteredCategories = new ObservableCollection<CategoryFilterItem>(filtered);
