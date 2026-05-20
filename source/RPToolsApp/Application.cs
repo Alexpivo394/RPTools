@@ -67,11 +67,6 @@ namespace RPToolsApp
                 .SetToolTip("Создает в модели рабочие наборы\nдля выбранного раздела.")  
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/sozdanie-rabochih-naborov-plaginom-rptools-j3Ycy39HVW"));
             
-            panelBim.AddPushButton<QuantityCheck.Commands.StartupCommand>("Записать количество")
-                .SetImage("/RPToolsApp;component/Resources/Icons/QuantityCheck16.png")
-                .SetLargeImage("/RPToolsApp;component/Resources/Icons/QuantityCheck32.png")
-                .SetToolTip("Заполняет параметр количества\nв элементах модели.")
-                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/zapolnenie-parametra-kolichestvo-beinN88LwP"));
 
             panelBim.AddPushButton<ModelTransplanter.Commands.StartupCommand>("Копирование элементов")
                 .SetImage("/RPToolsApp;component/Resources/Icons/Transplanter16.png")
@@ -116,6 +111,18 @@ namespace RPToolsApp
                 .SetToolTip("Создает в проекте пространства на основе помещений из раздела АР.")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/sozdanie-prostranstv-Bia5rDOjqY"));
             
+            panelGeneral.AddPushButton<QuantityCheck.Commands.StartupCommand>("Записать количество")
+                .SetImage("/RPToolsApp;component/Resources/Icons/QuantityCheck16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/QuantityCheck32.png")
+                .SetToolTip("Заполняет параметр количества\nв элементах модели.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/zapolnenie-parametra-kolichestvo-beinN88LwP"));
+            
+            panelGeneral.AddPushButton<WriteDash.Commands.StartupCommand>("Записать прочерк")
+                .SetImage("/RPToolsApp;component/Resources/Icons/WriteDash16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/WriteDash32.png")
+                .SetToolTip("Заполняет прочерк в указанные параметры\nесли в них нет значения.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/zapisat-procherk-kfwUDj6TeL"));
+
             //Сети связи
             panelSs.AddPushButton<SSPlan.Commands.StartupCommand>("Структурная\nсхема")
                 .SetImage("/RPToolsApp;component/Resources/Icons/SSPlan16.png")

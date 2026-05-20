@@ -463,7 +463,7 @@ public class ExportService
                     return val?.IndexOf(cond.Value, StringComparison.OrdinalIgnoreCase) >= 0;
 #endif
 
-                case FilterLogic.NotContains:
+                case FilterLogic.NotContains:    
 #if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
         return !(val?.Contains(cond.Value, StringComparison.OrdinalIgnoreCase) ?? false);
 #else

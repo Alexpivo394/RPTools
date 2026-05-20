@@ -93,6 +93,7 @@
       <ProjectReference Include="..\WarmSync\WarmSync.csproj" />
       <ProjectReference Include="..\WorkingSet\WorkingSet.csproj" />
       <ProjectReference Include="..\WorksetCheck\WorksetCheck.csproj" />
+      <ProjectReference Include="..\WriteDash\WriteDash.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -158,6 +159,10 @@
       <Resource Include="Resources\Icons\Rei16.png" />
       <None Remove="Resources\Icons\Rei32.png" />
       <Resource Include="Resources\Icons\Rei32.png" />
+      <None Remove="Resources\Icons\WriteDash16.png" />
+      <Resource Include="Resources\Icons\WriteDash16.png" />
+      <None Remove="Resources\Icons\WriteDash32.png" />
+      <Resource Include="Resources\Icons\WriteDash32.png" />
     </ItemGroup>
 
 </Project>
