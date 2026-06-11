@@ -12,7 +12,7 @@ public class GetParameterService
             .FirstOrDefault();
 
         if (wall == null)
-            return [];
+            return new List<ParameterDescriptor>();
 
         var parameterNames = new HashSet<string?>();
 
