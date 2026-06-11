@@ -151,6 +151,12 @@ namespace RPToolsApp
                 .SetToolTip("Записать сторону открывания двери в параметр Открывание")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/otkryvanie-dveri-JJyZ1390oD"));
             
+            panelAr.AddPushButton<ParamToFinish.Commands.StartupCommand>("Основание\nотделки")
+                .SetImage("/RPToolsApp;component/Resources/Icons/ParamToFinish16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/ParamToFinish32.png")
+                .SetToolTip("Позволяет записать основание отделки в выбранный параметр")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/osnovanie-otdelki-EcPw4yHPWP"));
+
             //Панель КР
 
             var pullButtonRei = panelKr.AddPullDownButton("Армирование", "Армирование");
