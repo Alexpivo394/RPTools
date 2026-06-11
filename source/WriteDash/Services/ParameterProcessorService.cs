@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using System.Windows;
 using RPToolsUI.Models;
 using RPToolsUI.Services;
 using WriteDash.Models;
@@ -8,7 +6,6 @@ namespace WriteDash.Services;
 
 public class ParameterProcessorService
 {
-    
     private readonly Document _document;
 
     public ParameterProcessorService(Document document)
@@ -18,15 +15,15 @@ public class ParameterProcessorService
 
     public void Process(List<ParameterDescriptor> selectedParameters)
     {
-        if (selectedParameters.Count == 0)
+        if (selectedParameters == null || selectedParameters.Count == 0)
         {
-            var dial = ToadDialogService.Show(
+            ToadDialogService.Show(
                 "Ошибка!",
                 "Выберите параметры для записи!",
                 DialogButtons.OK,
                 DialogIcon.Error
             );
-            
+
             return;
         }
 
@@ -41,49 +38,74 @@ public class ParameterProcessorService
                 x.Category != null &&
                 x.Category.CategoryType == CategoryType.Model);
 
+        var processedTypeIds = new HashSet<ElementId>();
+
         using var transaction = new Transaction(_document, "Fill empty parameters");
 
         transaction.Start();
 
         foreach (var element in elements)
         {
-            foreach (Parameter parameter in element.Parameters)
+            ProcessParameters(element.Parameters, parameterNames);
+
+            var typeId = element.GetTypeId();
+
+            if (typeId == ElementId.InvalidElementId)
+                continue;
+
+            if (!processedTypeIds.Add(typeId))
+                continue;
+
+            if (_document.GetElement(typeId) is ElementType elementType)
             {
-                var definition = parameter.Definition;
-
-                if (definition == null)
-                    continue;
-
-                var parameterName = definition.Name;
-
-                if (string.IsNullOrWhiteSpace(parameterName))
-                    continue;
-
-                if (!parameterNames.Contains(parameterName))
-                    continue;
-
-                if (parameter.IsReadOnly)
-                    continue;
-
-                if (parameter.StorageType != StorageType.String)
-                    continue;
-
-                var currentValue = parameter.AsString();
-
-                if (!string.IsNullOrWhiteSpace(currentValue))
-                    continue;
-
-                parameter.Set("-");
+                ProcessParameters(elementType.Parameters, parameterNames);
             }
         }
 
         transaction.Commit();
-        
-        var dialDone = ToadDialogService.Show(
+
+        ToadDialogService.Show(
             "Успех!",
             "Значение записано в выбранные параметры!",
             DialogButtons.OK,
             DialogIcon.Info
         );
+    }
+
+    private static void ProcessParameters(
+        ParameterSet parameters,
+        HashSet<string?> parameterNames)
+    {
+        foreach (Parameter parameter in parameters)
+        {
+            if (parameter == null)
+                continue;
+
+            var definition = parameter.Definition;
+
+            if (definition == null)
+                continue;
+
+            var parameterName = definition.Name;
+
+            if (string.IsNullOrWhiteSpace(parameterName))
+                continue;
+
+            if (!parameterNames.Contains(parameterName))
+                continue;
+
+            if (parameter.IsReadOnly)
+                continue;
+
+            if (parameter.StorageType != StorageType.String)
+                continue;
+
+            var currentValue = parameter.AsString();
+
+            if (!string.IsNullOrWhiteSpace(currentValue))
+                continue;
+
+            parameter.Set("-");
+        }
     }
 }

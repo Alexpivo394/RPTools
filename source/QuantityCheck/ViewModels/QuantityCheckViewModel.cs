@@ -12,6 +12,7 @@ public partial class QuantityCheckViewModel(Logger? logger, Document doc) : Obse
 {
     [ObservableProperty] private bool _darkTheme = true;
     [ObservableProperty] private string? _parameterName = "";
+    [ObservableProperty] private double _reverse = 0;
     // private readonly Logger _logger = logger;
     // private readonly Document _doc = doc;
     private readonly QuantityProcessor _processor = new QuantityProcessor(doc, logger);
@@ -38,7 +39,7 @@ public partial class QuantityCheckViewModel(Logger? logger, Document doc) : Obse
     [RelayCommand]
     private void WriteQuantity()
     {
-        _processor.Process(ParameterName);
+        _processor.Process(ParameterName, Reverse);
         
         
         string? dildo = ToadDialogService.Show(

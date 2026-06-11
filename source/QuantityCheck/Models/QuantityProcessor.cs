@@ -9,6 +9,7 @@ public class QuantityProcessor
         private readonly Document _doc;
         private readonly Logger? _logger;
         private string? _paramName;
+        private double _reserve;
 
         public QuantityProcessor(Document doc, Logger? logger)
         {
@@ -16,9 +17,10 @@ public class QuantityProcessor
             _doc = doc;
         }
 
-        public void Process(string? paramName)
+        public void Process(string? paramName, double reserve)
         {
             _paramName = paramName;
+            _reserve = reserve;
             _logger?.StartLog(string.Empty);
             _logger?.Log($"Старт обработки. Параметр: '{_paramName}'");
             // Собираем все элементы
@@ -69,7 +71,8 @@ public class QuantityProcessor
                     double lengthMm = GetLengthInMm(el);
                     if (lengthMm > 0)
                     {
-                        double quantity = (lengthMm / 1000.0) * 1.1;
+                        var zapas = (_reserve / 100) + 1;
+                        double quantity = (lengthMm / 1000.0) * zapas;
                         var result = WriteQuantity(el, quantity);
                         if (result.ok) writtenCount++; else failed.Add((el.Id, result.reason ?? "Неизвестная причина"));
                     }
