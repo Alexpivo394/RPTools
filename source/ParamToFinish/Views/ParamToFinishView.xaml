@@ -5,6 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+    xmlns:viewModels="clr-namespace:ParamToFinish.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewModels:ParamToFinishViewModel}"
     mc:Ignorable="d"
     Title="ModelTransplanter"
     WindowStartupLocation="CenterScreen"
@@ -31,6 +33,9 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
@@ -39,12 +44,24 @@
             <ComboBox Grid.Row="1" ItemsSource="{Binding WallParameters, Mode=TwoWay}" 
                       SelectedItem="{Binding SelectedWallParameter, Mode=TwoWay}"/>
             
-            <TextBlock Grid.Row="2" Text="Параметр отделки" FontWeight="Bold" Margin="10,0,0,10" />
+            <TextBlock Grid.Row="2" Text="Ключевое слово для фильтра отделки" FontWeight="Bold" Margin="10,10,0,10" />
             
-            <ComboBox Grid.Row="3" ItemsSource="{Binding WallParameters, Mode=TwoWay}" 
+            <ui:TextBox Grid.Row="3" Text="{Binding Filter, Mode=TwoWay}"/>
+            
+            <TextBlock Grid.Row="4" Text="Параметр отделки" FontWeight="Bold" Margin="10,10,0,10" />
+            
+            <ComboBox Grid.Row="5" ItemsSource="{Binding WallParameters, Mode=TwoWay}" 
                       SelectedItem="{Binding SelectedFinishParameter, Mode=TwoWay}"/>
             
-            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,10,0,0">
+            <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Left" Margin="10,10,0,10">
+                <TextBlock Text="Вариант обработки модели:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <ui:ToggleSwitch
+                    IsChecked="{Binding DataContext.AllModel, RelativeSource={RelativeSource AncestorType=ui:FluentWindow}, Mode=TwoWay}"
+                    OffContent="Активный вид"
+                    OnContent="Вся модель"/>
+            </StackPanel>
+            
+            <StackPanel Grid.Row="7" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,10,0,0">
                 <ui:Button Content="Запуск"
                            Icon="{ui:SymbolIcon Rocket24}"
                            Command="{Binding StartCommand}"

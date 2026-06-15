@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using Nice3point.Revit.Extensions.Runtime;
 using ParamToFinish.Models;
 using ParamToFinish.Services;
 using RPToolsUI.Models;
@@ -9,8 +10,10 @@ namespace ParamToFinish.ViewModels;
 
 public sealed partial class ParamToFinishViewModel : ObservableObject
 {
-    [ObservableProperty]
-    private bool _darkTheme = true;
+    [ObservableProperty] private bool _darkTheme = true;
+    [ObservableProperty] private bool _allModel = false;
+    [ObservableProperty] private string _filter = "";
+    public event EventHandler? CloseRequested;
 
     [ObservableProperty] private ObservableCollection<ParameterDescriptor>? _wallParameters;
     [ObservableProperty] private ParameterDescriptor? _selectedWallParameter;
@@ -46,8 +49,20 @@ public sealed partial class ParamToFinishViewModel : ObservableObject
             
             return;
         }
+
+        if (Filter.IsNullOrWhiteSpace())
+        {
+            var dial1 = ToadDialogService.Show(
+                "Ошибка!",
+                "Введите фильтр для поиска отделки",
+                DialogButtons.OK,
+                DialogIcon.Error
+            );
+            
+            return;
+        }
         
-        _transferService.Transfer(SelectedWallParameter, SelectedFinishParameter);
+        _transferService.Transfer(SelectedWallParameter, SelectedFinishParameter, AllModel, Filter);
         
         var dial = ToadDialogService.Show(
             "Успех!",
@@ -55,5 +70,10 @@ public sealed partial class ParamToFinishViewModel : ObservableObject
             DialogButtons.OK,
             DialogIcon.Info
         );
+
+        if (dial == "OK")
+        {
+            CloseRequested?.Invoke(this, EventArgs.Empty);
+        }
     }
 }

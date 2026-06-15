@@ -15,5 +15,7 @@ public sealed partial class ParamToFinishView
         ThemeWatcherService.ApplyTheme(ApplicationTheme.Dark);
         
         DataContext = viewModel;
+        
+        viewModel.CloseRequested += (_, _) => Close();
     }
 }

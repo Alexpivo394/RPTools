@@ -6,5 +6,5 @@ public interface IFinishParameterTransferService
 {
     void Transfer(
         ParameterDescriptor? selectedWallParameter,
-        ParameterDescriptor? selectedFinishParameter);
+        ParameterDescriptor? selectedFinishParameter, bool allModel, string filter);
 }
