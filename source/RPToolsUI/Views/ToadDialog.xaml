@@ -11,11 +11,9 @@
                  WindowCornerPreference="Round"
                  ExtendsContentIntoTitleBar="True"
                  Title="Диалог"
-                 MinHeight="100"
-                 MinWidth="250"
-                 Width="350"
-                 Height="150"
-                 SizeToContent="Manual">
+                 MinHeight="150"
+                 MinWidth="350"
+                 SizeToContent="WidthAndHeight">
 
     <Grid Margin="5,15,5,5"
           MouseLeftButtonDown="RootGrid_OnMouseLeftButtonDown">
@@ -25,7 +23,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
@@ -36,17 +34,24 @@
                        VerticalAlignment="Top" />
 
         <!-- Title -->
-        <ui:TextBlock Grid.Row="0" Text="{Binding Title}"
-                   Grid.Column="1"
-                   FontWeight="Bold"
-                   FontSize="18"
-                   Margin="0,0,0,10"/>
+        <ui:TextBlock x:Name="TitleTextBlock"
+                      Grid.Row="0" Text="{Binding Title}"
+                      Grid.Column="1"
+                      FontWeight="Bold"
+                      FontSize="18"
+                      TextWrapping="Wrap"
+                      Margin="0,0,0,10"/>
 
         <!-- Message -->
-        <ui:TextBlock Text="{Binding Message}"
+        <ScrollViewer x:Name="MessageScrollViewer"
                       Grid.Row="1" Grid.Column="1"
-                      TextWrapping="Wrap"
-                      FontSize="14"/>
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <ui:TextBlock x:Name="MessageTextBlock"
+                          Text="{Binding Message}"
+                          TextWrapping="Wrap"
+                          FontSize="14"/>
+        </ScrollViewer>
 
         <!-- Buttons -->
         <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
