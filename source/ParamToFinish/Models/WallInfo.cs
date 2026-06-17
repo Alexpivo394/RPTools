@@ -5,12 +5,13 @@ public sealed class WallInfo
     public WallInfo(
         Wall wall,
         string? sourceValue,
-        Line? centerLine,
+        Curve? centerCurve,
         Box3D? box)
     {
         Wall = wall;
         SourceValue = sourceValue;
-        CenterLine = centerLine;
+        CenterCurve = centerCurve;
+        CenterLine = centerCurve as Line;
         Box = box;
         Width = wall.Width;
     }
@@ -18,6 +19,8 @@ public sealed class WallInfo
     public Wall Wall { get; }
 
     public string? SourceValue { get; }
+
+    public Curve? CenterCurve { get; }
 
     public Line? CenterLine { get; }
 

@@ -92,10 +92,7 @@ public sealed class WallGeometryService
             return result;
         }
 
-        var startPoint = curve.GetEndPoint(0);
-        var endPoint = curve.GetEndPoint(1);
-
-        var wallDirection = (endPoint - startPoint).Normalize();
+        var endDirections = GetCurveEndDirections(curve);
 
         var options = new Options
         {
@@ -118,7 +115,7 @@ public sealed class WallGeometryService
             {
                 CollectEndFacesFromSolid(
                     solid,
-                    wallDirection,
+                    endDirections,
                     result);
             }
             else if (geometryObject is GeometryInstance instance)
@@ -131,7 +128,7 @@ public sealed class WallGeometryService
                     {
                         CollectEndFacesFromSolid(
                             instanceSolid,
-                            wallDirection,
+                            endDirections,
                             result);
                     }
                 }
@@ -142,16 +139,32 @@ public sealed class WallGeometryService
         return result;
     }
 
+    public bool TryGetWallLocationCurve(
+        Wall wall,
+        out Curve curve)
+    {
+        curve = null!;
+
+        if (wall.Location is not LocationCurve locationCurve)
+            return false;
+
+        if (locationCurve.Curve == null)
+            return false;
+
+        curve = locationCurve.Curve;
+        return true;
+    }
+
     public bool TryGetWallLine(
         Wall wall,
         out Line line)
     {
         line = null!;
 
-        if (wall.Location is not LocationCurve locationCurve)
+        if (!TryGetWallLocationCurve(wall, out var curve))
             return false;
 
-        if (locationCurve.Curve is not Line wallLine)
+        if (curve is not Line wallLine)
             return false;
 
         line = wallLine;
@@ -160,7 +173,7 @@ public sealed class WallGeometryService
 
     private static void CollectEndFacesFromSolid(
         Solid solid,
-        XYZ wallDirection,
+        IReadOnlyList<XYZ> wallEndDirections,
         List<PlanarFace> result)
     {
         if (solid == null || solid.Volume <= 0)
@@ -178,8 +191,41 @@ public sealed class WallGeometryService
             if (Math.Abs(normal.DotProduct(XYZ.BasisZ)) > tolerance)
                 continue;
 
-            if (Math.Abs(normal.DotProduct(wallDirection)) > tolerance)
+            if (wallEndDirections.Any(direction =>
+                    Math.Abs(normal.DotProduct(direction)) > tolerance))
                 result.Add(planarFace);
         }
+    }
+
+    private static List<XYZ> GetCurveEndDirections(
+        Curve curve)
+    {
+        var result = new List<XYZ>();
+        var points = curve.Tessellate();
+
+        if (points.Count >= 2)
+        {
+            AddDirection(result, points[1] - points[0]);
+            AddDirection(
+                result,
+                points[points.Count - 1] - points[points.Count - 2]);
+        }
+
+        if (result.Count == 0)
+        {
+            AddDirection(result, curve.GetEndPoint(1) - curve.GetEndPoint(0));
+        }
+
+        return result;
+    }
+
+    private static void AddDirection(
+        List<XYZ> directions,
+        XYZ vector)
+    {
+        if (vector.GetLength() <= 1e-9)
+            return;
+
+        directions.Add(vector.Normalize());
     }
 }

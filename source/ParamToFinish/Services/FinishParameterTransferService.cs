@@ -109,12 +109,13 @@ public class FinishParameterTransferService : IFinishParameterTransferService
 
     private WallInfo CreateWallInfo(Wall wall, string? sourceValue)
     {
-        Line? centerLine = null;
+        Curve? centerCurve = null;
 
-        if (_geometryService.TryGetWallLine(wall, out var line)) centerLine = line;
+        if (_geometryService.TryGetWallLocationCurve(wall, out var curve))
+            centerCurve = curve;
 
-        var box = Box3D.FromWall(wall, SpatialSearchMargin, centerLine);
+        var box = Box3D.FromWall(wall, SpatialSearchMargin, centerCurve);
 
-        return new WallInfo(wall, sourceValue, centerLine, box);
+        return new WallInfo(wall, sourceValue, centerCurve, box);
     }
 }

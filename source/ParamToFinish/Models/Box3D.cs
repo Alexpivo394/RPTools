@@ -33,7 +33,7 @@ public sealed class Box3D
     public static Box3D? FromWall(
         Wall wall,
         double expand,
-        Line? fallbackLine)
+        Curve? fallbackCurve)
     {
         var box = wall.get_BoundingBox(null);
 
@@ -48,19 +48,38 @@ public sealed class Box3D
                 box.Max.Z + expand);
         }
 
-        if (fallbackLine == null)
+        if (fallbackCurve == null)
             return null;
 
-        var p0 = fallbackLine.GetEndPoint(0);
-        var p1 = fallbackLine.GetEndPoint(1);
+        var points = fallbackCurve.Tessellate();
+
+        if (points.Count == 0)
+            return null;
+
+        var minX = points[0].X;
+        var minY = points[0].Y;
+        var minZ = points[0].Z;
+        var maxX = points[0].X;
+        var maxY = points[0].Y;
+        var maxZ = points[0].Z;
+
+        for (var i = 1; i < points.Count; i++)
+        {
+            minX = Math.Min(minX, points[i].X);
+            minY = Math.Min(minY, points[i].Y);
+            minZ = Math.Min(minZ, points[i].Z);
+            maxX = Math.Max(maxX, points[i].X);
+            maxY = Math.Max(maxY, points[i].Y);
+            maxZ = Math.Max(maxZ, points[i].Z);
+        }
 
         return new Box3D(
-            Math.Min(p0.X, p1.X) - expand,
-            Math.Min(p0.Y, p1.Y) - expand,
-            Math.Min(p0.Z, p1.Z) - expand,
-            Math.Max(p0.X, p1.X) + expand,
-            Math.Max(p0.Y, p1.Y) + expand,
-            Math.Max(p0.Z, p1.Z) + expand);
+            minX - expand,
+            minY - expand,
+            minZ - expand,
+            maxX + expand,
+            maxY + expand,
+            maxZ + expand);
     }
 
     public bool Intersects(

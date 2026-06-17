@@ -11,6 +11,9 @@ public sealed class WallTouchService
     private const double MinOverlapLength = 0.1;        // ~30 мм
     private const double MinOverlapWidth = 0.05;        // ~15 мм
     private const double MinOverlapFraction = 0.25;
+    private const double ArcCenterTolerance = 0.1;
+    private const double AngularTolerance = 1e-9;
+    private const double TwoPi = Math.PI * 2;
 
     public WallTouchService(
         WallGeometryService geometryService)
@@ -89,12 +92,37 @@ public sealed class WallTouchService
         WallInfo finishWall,
         WallInfo mainWall)
     {
-        var finishLine = finishWall.CenterLine;
-        var mainLine = mainWall.CenterLine;
+        var finishCurve = finishWall.CenterCurve;
+        var mainCurve = mainWall.CenterCurve;
 
-        if (finishLine == null || mainLine == null)
+        if (finishCurve == null || mainCurve == null)
             return false;
 
+        if (finishCurve is Arc finishArc && mainCurve is Arc mainArc)
+        {
+            return AreArcWallsTouchingByCenterline(
+                finishWall,
+                mainWall,
+                finishArc,
+                mainArc);
+        }
+
+        if (finishCurve is not Line finishLine || mainCurve is not Line mainLine)
+            return false;
+
+        return AreLineWallsTouchingByCenterline(
+            finishWall,
+            mainWall,
+            finishLine,
+            mainLine);
+    }
+
+    private static bool AreLineWallsTouchingByCenterline(
+        WallInfo finishWall,
+        WallInfo mainWall,
+        Line finishLine,
+        Line mainLine)
+    {
         if (!AreLinesParallel(finishLine, mainLine))
             return false;
 
@@ -122,14 +150,59 @@ public sealed class WallTouchService
         return overlapLength >= minRequiredOverlap;
     }
 
+    private static bool AreArcWallsTouchingByCenterline(
+        WallInfo finishWall,
+        WallInfo mainWall,
+        Arc finishArc,
+        Arc mainArc)
+    {
+        if (!AreArcCentersClose(finishArc, mainArc))
+            return false;
+
+        if (!HaveVerticalOverlap(finishWall, mainWall))
+            return false;
+
+        var centerlineDistance = Math.Abs(finishArc.Radius - mainArc.Radius);
+
+        var maxCenterlineDistance =
+            (finishWall.Width + mainWall.Width) / 2 + PlaneDistanceTolerance;
+
+        if (centerlineDistance > maxCenterlineDistance)
+            return false;
+
+        var overlapLength = GetArcOverlapLength(
+            finishArc,
+            mainArc);
+
+        var minRequiredOverlap = Math.Max(
+            MinOverlapLength,
+            Math.Min(finishArc.Length, mainArc.Length) * MinOverlapFraction);
+
+        return overlapLength >= minRequiredOverlap;
+    }
+
     private static double GetCenterlineTouchDistance(
         WallInfo finishWall,
         WallInfo mainWall)
     {
-        var finishLine = finishWall.CenterLine;
-        var mainLine = mainWall.CenterLine;
+        var finishCurve = finishWall.CenterCurve;
+        var mainCurve = mainWall.CenterCurve;
 
-        if (finishLine == null || mainLine == null)
+        if (finishCurve == null || mainCurve == null)
+            return double.MaxValue;
+
+        if (finishCurve is Arc finishArc && mainCurve is Arc mainArc)
+        {
+            if (!AreArcCentersClose(finishArc, mainArc))
+                return double.MaxValue;
+
+            var arcCenterlineDistance = Math.Abs(finishArc.Radius - mainArc.Radius);
+            var arcExpectedDistance = (finishWall.Width + mainWall.Width) / 2;
+
+            return Math.Abs(arcCenterlineDistance - arcExpectedDistance);
+        }
+
+        if (finishCurve is not Line finishLine || mainCurve is not Line mainLine)
             return double.MaxValue;
 
         if (!AreLinesParallel(finishLine, mainLine))
@@ -374,6 +447,123 @@ public sealed class WallTouchService
             Math.Min(aMax, bMax) - Math.Max(aMin, bMin));
     }
 
+    private static bool AreArcCentersClose(
+        Arc a,
+        Arc b)
+    {
+        return GetXyDistance(a.Center, b.Center) <= ArcCenterTolerance;
+    }
+
+    private static double GetArcOverlapLength(
+        Arc a,
+        Arc b)
+    {
+        var aIntervals = GetArcAngleIntervals(a);
+        var bIntervals = GetArcAngleIntervals(b);
+        var overlapAngle = 0.0;
+
+        foreach (var aInterval in aIntervals)
+        {
+            foreach (var bInterval in bIntervals)
+            {
+                overlapAngle += Math.Max(
+                    0,
+                    Math.Min(aInterval.End, bInterval.End) -
+                    Math.Max(aInterval.Start, bInterval.Start));
+            }
+        }
+
+        return overlapAngle * Math.Min(a.Radius, b.Radius);
+    }
+
+    private static List<AngleInterval> GetArcAngleIntervals(
+        Arc arc)
+    {
+        var start = GetAngle(arc.GetEndPoint(0), arc.Center);
+        var end = GetAngle(arc.GetEndPoint(1), arc.Center);
+        var middle = GetAngle(GetArcMiddlePoint(arc), arc.Center);
+
+        if (IsAngleOnCcwInterval(middle, start, end))
+            return SplitAngleInterval(start, NormalizePositive(end - start));
+
+        return SplitAngleInterval(end, NormalizePositive(start - end));
+    }
+
+    private static XYZ GetArcMiddlePoint(
+        Arc arc)
+    {
+        return arc.Evaluate(0.5, true);
+    }
+
+    private static List<AngleInterval> SplitAngleInterval(
+        double start,
+        double span)
+    {
+        var result = new List<AngleInterval>();
+
+        if (span <= AngularTolerance)
+            return result;
+
+        start = NormalizeAngle(start);
+        var end = start + span;
+
+        if (end <= TwoPi + AngularTolerance)
+        {
+            result.Add(new AngleInterval(start, Math.Min(end, TwoPi)));
+            return result;
+        }
+
+        result.Add(new AngleInterval(start, TwoPi));
+        result.Add(new AngleInterval(0, end - TwoPi));
+
+        return result;
+    }
+
+    private static bool IsAngleOnCcwInterval(
+        double angle,
+        double start,
+        double end)
+    {
+        var span = NormalizePositive(end - start);
+        var offset = NormalizePositive(angle - start);
+
+        return offset <= span + AngularTolerance;
+    }
+
+    private static double GetAngle(
+        XYZ point,
+        XYZ center)
+    {
+        return NormalizeAngle(Math.Atan2(point.Y - center.Y, point.X - center.X));
+    }
+
+    private static double NormalizeAngle(
+        double angle)
+    {
+        return NormalizePositive(angle);
+    }
+
+    private static double NormalizePositive(
+        double angle)
+    {
+        angle %= TwoPi;
+
+        if (angle < 0)
+            angle += TwoPi;
+
+        return angle;
+    }
+
+    private static double GetXyDistance(
+        XYZ a,
+        XYZ b)
+    {
+        var dx = a.X - b.X;
+        var dy = a.Y - b.Y;
+
+        return Math.Sqrt(dx * dx + dy * dy);
+    }
+
     private static bool HaveVerticalOverlap(
         WallInfo a,
         WallInfo b)
@@ -383,5 +573,20 @@ public sealed class WallTouchService
 
         return a.Box.MinZ < b.Box.MaxZ &&
                b.Box.MinZ < a.Box.MaxZ;
+    }
+
+    private readonly struct AngleInterval
+    {
+        public AngleInterval(
+            double start,
+            double end)
+        {
+            Start = start;
+            End = end;
+        }
+
+        public double Start { get; }
+
+        public double End { get; }
     }
 }
