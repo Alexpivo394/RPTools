@@ -13,9 +13,12 @@
                  Title="Диалог"
                  MinHeight="150"
                  MinWidth="350"
-                 SizeToContent="WidthAndHeight">
+                 Width="350"
+                 Height="150"
+                 SizeToContent="Manual">
 
-    <Grid Margin="5,15,5,5"
+    <Grid x:Name="RootGrid"
+          Margin="5,15,5,5"
           MouseLeftButtonDown="RootGrid_OnMouseLeftButtonDown">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -39,7 +42,7 @@
                       Grid.Column="1"
                       FontWeight="Bold"
                       FontSize="18"
-                      TextWrapping="Wrap"
+                      TextWrapping="WrapWithOverflow"
                       Margin="0,0,0,10"/>
 
         <!-- Message -->
@@ -49,7 +52,7 @@
                       HorizontalScrollBarVisibility="Disabled">
             <ui:TextBlock x:Name="MessageTextBlock"
                           Text="{Binding Message}"
-                          TextWrapping="Wrap"
+                          TextWrapping="WrapWithOverflow"
                           FontSize="14"/>
         </ScrollViewer>
 

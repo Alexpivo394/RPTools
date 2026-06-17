@@ -1,6 +1,8 @@
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using ChangeSharedFamilies.Services;
+using RPToolsUI.Models;
+using RPToolsUI.Services;
 
 namespace ChangeSharedFamilies.Commands;
 
@@ -24,9 +26,11 @@ public class StartupCommand : IExternalCommand
 
         if (!doc.IsFamilyDocument)
         {
-            TaskDialog.Show(
+            ToadDialogService.Show(
                 "Ошибка",
-                "Эту команду надо запускать в редакторе семейства, а не в проекте.");
+                "Эту команду надо запускать в редакторе семейства, а не в проекте.",
+                DialogButtons.OK,
+                DialogIcon.Error);
 
             return Result.Cancelled;
         }
@@ -45,12 +49,14 @@ public class StartupCommand : IExternalCommand
                 ? ""
                 : "\n\nОшибки:\n" + string.Join("\n", report.Errors);
 
-            TaskDialog.Show(
+            ToadDialogService.Show(
                 "Готово",
                 $"Текущее семейство: {doc.Title}\n" +
                 $"Заменено shared вложенных семейств: {report.ConvertedFamiliesCount}\n\n" +
                 convertedNames +
-                errors);
+                errors,
+                DialogButtons.OK,
+                report.Errors.Any() ? DialogIcon.Warning : DialogIcon.Info);
 
             return report.Errors.Any()
                 ? Result.Failed
@@ -60,9 +66,11 @@ public class StartupCommand : IExternalCommand
         {
             message = exception.Message;
 
-            TaskDialog.Show(
+            ToadDialogService.Show(
                 "Ошибка",
-                exception.ToString());
+                exception.ToString(),
+                DialogButtons.OK,
+                DialogIcon.Error);
 
             return Result.Failed;
         }
