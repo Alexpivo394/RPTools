@@ -26,8 +26,9 @@ public class StartupCommand : IExternalCommand
         }
 
         var transferService = new FinishParameterTransferService(doc);
+        var settingsService = new ParamToFinishSettingsService();
 
-        var viewModel = new ParamToFinishViewModel(wallParameters, transferService);
+        var viewModel = new ParamToFinishViewModel(wallParameters, transferService, settingsService);
 
         var view = new ParamToFinishView(viewModel);
         

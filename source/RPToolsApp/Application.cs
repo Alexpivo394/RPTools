@@ -80,6 +80,12 @@ namespace RPToolsApp
                 .SetToolTip("Позволяет проверить заданные\nмодели на соответствие элементов\nрабочим наборам.")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/worksetcheck-rfycq6j0Bd"));
 
+            panelBim.AddPushButton<ChangeSharedFamilies.Commands.StartupCommand>("Заменить общие\nсемейства необщими")
+                .SetImage("/RPToolsApp;component/Resources/Icons/ChangeSharedFamilies16.png")
+                .SetLargeImage("/RPToolsApp;component/Resources/Icons/ChangeSharedFamilies32.png")
+                .SetToolTip("Заменяет общие вложенные семейства\nна необщие. Работает только с\nредактором семейства.")
+                .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/zamenit-obshie-semejstva-neobshimi-BDbyQvBJH7"));
+
             //Лотки
             var pullButtonTray = panelTray.AddPullDownButton("Кабельные лотки", "Кабельные лотки");
 

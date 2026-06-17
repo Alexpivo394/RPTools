@@ -81,6 +81,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CableTrays\CableTrays.csproj" />
+      <ProjectReference Include="..\ChangeSharedFamilies\ChangeSharedFamilies.csproj" />
       <ProjectReference Include="..\CreateCover\CreateCover.csproj" />
       <ProjectReference Include="..\CreateSpaces\CreateSpaces.csproj" />
       <ProjectReference Include="..\DoorSide\DoorSide.csproj" />
@@ -168,6 +169,10 @@
       <Resource Include="Resources\Icons\ParamToFinish16.png" />
       <None Remove="Resources\Icons\ParamToFinish32.png" />
       <Resource Include="Resources\Icons\ParamToFinish32.png" />
+      <None Remove="Resources\Icons\ChangeSharedFamilies16.png" />
+      <Resource Include="Resources\Icons\ChangeSharedFamilies16.png" />
+      <None Remove="Resources\Icons\ChangeSharedFamilies32.png" />
+      <Resource Include="Resources\Icons\ChangeSharedFamilies32.png" />
     </ItemGroup>
 
 </Project>

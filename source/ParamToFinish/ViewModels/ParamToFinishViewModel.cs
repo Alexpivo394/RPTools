@@ -19,11 +19,21 @@ public sealed partial class ParamToFinishViewModel : ObservableObject
     [ObservableProperty] private ParameterDescriptor? _selectedWallParameter;
     [ObservableProperty] private ParameterDescriptor? _selectedFinishParameter;
     private readonly IFinishParameterTransferService _transferService;
+    private readonly ParamToFinishSettingsService _settingsService;
+    private readonly ParamToFinishSettings _settings;
+    private bool _isRestoringSettings;
 
-    public ParamToFinishViewModel(List<ParameterDescriptor>  wallParameters, IFinishParameterTransferService transferService)
+    public ParamToFinishViewModel(
+        List<ParameterDescriptor> wallParameters,
+        IFinishParameterTransferService transferService,
+        ParamToFinishSettingsService settingsService)
     {
         WallParameters = new ObservableCollection<ParameterDescriptor>(wallParameters);
         _transferService = transferService;
+        _settingsService = settingsService;
+        _settings = _settingsService.Load();
+
+        RestoreSettings();
     }
     
     partial void OnDarkThemeChanged(bool value)
@@ -33,6 +43,53 @@ public sealed partial class ParamToFinishViewModel : ObservableObject
             : ApplicationTheme.Light;
 
         ThemeWatcherService.ApplyTheme(newTheme);
+    }
+
+    partial void OnFilterChanged(string value)
+    {
+        if (_isRestoringSettings)
+            return;
+
+        _settings.Filter = value;
+        _settingsService.Save(_settings);
+    }
+
+    partial void OnSelectedWallParameterChanged(ParameterDescriptor? value)
+    {
+        if (_isRestoringSettings)
+            return;
+
+        _settings.WallParameterName = value?.Name;
+        _settingsService.Save(_settings);
+    }
+
+    partial void OnSelectedFinishParameterChanged(ParameterDescriptor? value)
+    {
+        if (_isRestoringSettings)
+            return;
+
+        _settings.FinishParameterName = value?.Name;
+        _settingsService.Save(_settings);
+    }
+
+    private void RestoreSettings()
+    {
+        _isRestoringSettings = true;
+
+        Filter = _settings.Filter ?? string.Empty;
+        SelectedWallParameter = FindParameter(_settings.WallParameterName);
+        SelectedFinishParameter = FindParameter(_settings.FinishParameterName);
+
+        _isRestoringSettings = false;
+    }
+
+    private ParameterDescriptor? FindParameter(string? parameterName)
+    {
+        if (string.IsNullOrWhiteSpace(parameterName))
+            return null;
+
+        return WallParameters?.FirstOrDefault(x =>
+            string.Equals(x.Name, parameterName, StringComparison.Ordinal));
     }
 
     [RelayCommand]

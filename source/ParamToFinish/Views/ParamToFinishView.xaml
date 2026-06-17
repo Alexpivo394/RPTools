@@ -46,7 +46,7 @@
             
             <TextBlock Grid.Row="2" Text="Ключевое слово для фильтра отделки" FontWeight="Bold" Margin="10,10,0,10" />
             
-            <ui:TextBox Grid.Row="3" Text="{Binding Filter, Mode=TwoWay}"/>
+            <ui:TextBox Grid.Row="3" Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             
             <TextBlock Grid.Row="4" Text="Параметр отделки" FontWeight="Bold" Margin="10,10,0,10" />
             
