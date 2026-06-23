@@ -1,0 +1,24 @@
+<Project>
+
+    <!-- Inherit repository-wide settings (CPM, global usings, polyfills) -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))"/>
+
+    <!-- Shared configuration for every Revit add-in project -->
+    <PropertyGroup>
+        <UseWPF>true</UseWPF>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+        <PublishAddin>true</PublishAddin>
+        <Configurations>Debug.R20;Debug.R21;Debug.R22;Debug.R23;Debug.R24;Debug.R25;Debug.R26;Debug.R27</Configurations>
+        <Configurations>$(Configurations);Release.R20;Release.R21;Release.R22;Release.R23;Release.R24;Release.R25;Release.R26;Release.R27</Configurations>
+    </PropertyGroup>
+
+    <!-- Revit API packages referenced by every add-in project (versions in Directory.Packages.props) -->
+    <ItemGroup>
+        <PackageReference Include="Nice3point.Revit.Toolkit"/>
+        <PackageReference Include="Nice3point.Revit.Extensions"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI"/>
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI"/>
+    </ItemGroup>
+
+</Project>

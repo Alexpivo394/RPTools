@@ -1,31 +1,7 @@
-﻿<Project Sdk="Nice3point.Revit.Sdk/6.2.2">
-
-    <PropertyGroup>
-        <UseWPF>true</UseWPF>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <EnableDynamicLoading>true</EnableDynamicLoading>
-        <PublishAddin>true</PublishAddin>
-        <Configurations>Debug.R20;Debug.R21;Debug.R22;Debug.R23;Debug.R24;Debug.R25;Debug.R26;Debug.R27</Configurations>
-        <Configurations>$(Configurations);Release.R20;Release.R21;Release.R22;Release.R23;Release.R24;Release.R25;Release.R26;Release.R27</Configurations>
-    </PropertyGroup>
-
-    <PropertyGroup Condition="'$(RevitVersion)' &lt; '2027'">
-        <IsRepackable>false</IsRepackable>
-        <RepackBinariesExcludes>ToadTools*.dll</RepackBinariesExcludes>
-    </PropertyGroup>
-
+<Project Sdk="Nice3point.Revit.Sdk/6.2.2">
 
     <ItemGroup>
-        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*"/>
-        <PackageReference Include="Polyfill" Version="10.5.1" PrivateAssets="all"/>
-        <PackageReference Include="ILRepack" Version="2.0.45" PrivateAssets="all" IncludeAssets="build"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\ToadTools.UI\ToadTools.UI.csproj" />
+        <ProjectReference Include="..\ToadTools.UI\ToadTools.UI.csproj"/>
     </ItemGroup>
 
 </Project>

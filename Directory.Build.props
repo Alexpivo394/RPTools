@@ -1,0 +1,23 @@
+<Project>
+
+    <!-- Global build configuration -->
+    <PropertyGroup>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+        <ImplicitUsings>true</ImplicitUsings>
+        <PlatformTarget>AnyCPU</PlatformTarget>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
+        <SuppressTfmSupportBuildWarnings>true</SuppressTfmSupportBuildWarnings>
+    </PropertyGroup>
+    
+    <!-- Polyfills configuration -->
+    <PropertyGroup>
+        <PolyArgumentExceptions>true</PolyArgumentExceptions>
+    </PropertyGroup>
+
+    <!-- Global usings -->
+    <ItemGroup>
+        <Using Include="JetBrains.Annotations"/>
+    </ItemGroup>
+
+</Project>
