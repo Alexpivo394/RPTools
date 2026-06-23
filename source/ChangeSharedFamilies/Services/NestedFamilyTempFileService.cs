@@ -16,7 +16,7 @@ internal class NestedFamilyTempFileService
         string tempFamilyName,
         string tempFamilyPath)
     {
-        Document nestedFamilyDocument = null;
+        Document? nestedFamilyDocument = null;
 
         try
         {
@@ -42,9 +42,9 @@ internal class NestedFamilyTempFileService
         }
     }
 
-    private static void SetOwnerFamilySharedFlag(Document nestedFamilyDocument, bool shared)
+    private static void SetOwnerFamilySharedFlag(Document? nestedFamilyDocument, bool shared)
     {
-        if (!nestedFamilyDocument.IsFamilyDocument)
+        if (!(nestedFamilyDocument is { IsFamilyDocument: true }))
         {
             throw new InvalidOperationException(
                 "Документ вложенного семейства не является family document.");
@@ -78,7 +78,7 @@ internal class NestedFamilyTempFileService
         }
     }
 
-    private static void TryRenameOwnerFamily(Document nestedFamilyDocument, string newName)
+    private static void TryRenameOwnerFamily(Document? nestedFamilyDocument, string newName)
     {
         try
         {
@@ -86,7 +86,7 @@ internal class NestedFamilyTempFileService
             {
                 transaction.Start();
 
-                nestedFamilyDocument.OwnerFamily.Name = newName;
+                nestedFamilyDocument!.OwnerFamily.Name = newName;
 
                 transaction.Commit();
             }

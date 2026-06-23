@@ -1,0 +1,14 @@
+﻿<RevitAddIns>
+    <AddIn Type="Application">
+        <Name>ToadTools</Name>
+        <Assembly>ToadTools/ToadTools.dll</Assembly>
+        <AddInId>557B031F-53B8-4E71-B1FB-E6AA3A483A66</AddInId>
+        <FullClassName>ToadTools.Application</FullClassName>
+        <VendorId>Alexpivo394</VendorId>
+        <VendorDescription>Alexpivo394, https://github.com/Alexpivo394</VendorDescription>
+    </AddIn>
+    <ManifestSettings>
+        <UseRevitContext>False</UseRevitContext>
+        <ContextName>RevitLookup</ContextName>
+    </ManifestSettings>
+</RevitAddIns>

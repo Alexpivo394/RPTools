@@ -2,9 +2,9 @@
 using System.Windows.Input;
 using ModelTransplanter.Models;
 using ModelTransplanter.Services;
-using RPToolsUI.Models;
+using ToadTools.UI.Models;
 using Wpf.Ui.Appearance;
-using RPToolsUI.Services;
+using ToadTools.UI.Services;
 using Settings = ModelTransplanter.Configuration.Settings;
 
 namespace ModelTransplanter.ViewModels;

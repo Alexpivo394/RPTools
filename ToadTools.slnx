@@ -1,0 +1,388 @@
+﻿<Solution>
+  <Configurations>
+    <BuildType Name="Debug.R20" />
+    <BuildType Name="Debug.R21" />
+    <BuildType Name="Debug.R22" />
+    <BuildType Name="Debug.R23" />
+    <BuildType Name="Debug.R24" />
+    <BuildType Name="Debug.R25" />
+    <BuildType Name="Debug.R26" />
+    <BuildType Name="Debug.R27" />
+    <BuildType Name="Release.R20" />
+    <BuildType Name="Release.R21" />
+    <BuildType Name="Release.R22" />
+    <BuildType Name="Release.R23" />
+    <BuildType Name="Release.R24" />
+    <BuildType Name="Release.R25" />
+    <BuildType Name="Release.R26" />
+    <BuildType Name="Release.R27" />
+  </Configurations>
+  <Folder Name="/Automation/">
+    <Project Path="build\Build.csproj">
+      <Configuration Solution="Debug.R20|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R21|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R22|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R23|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R24|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R25|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R26|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R27|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R20|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R21|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R22|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R23|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R24|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R25|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R26|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R27|Any CPU" Project="Release|Any CPU|NoBuild" />
+    </Project>
+    <Project Path="install\Installer.csproj">
+      <Configuration Solution="Debug.R20|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R21|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R22|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R23|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R24|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R25|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R26|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Debug.R27|Any CPU" Project="Debug|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R20|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R21|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R22|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R23|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R24|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R25|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R26|Any CPU" Project="Release|Any CPU|NoBuild" />
+      <Configuration Solution="Release.R27|Any CPU" Project="Release|Any CPU|NoBuild" />
+    </Project>
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="Changelog.md" />
+    <File Path="Readme.md" />
+    <File Path="build\appsettings.json" />
+  </Folder>
+  <Project Path="source\CableTrays\CableTrays.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\ChangeSharedFamilies\ChangeSharedFamilies.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\CreateCover\CreateCover.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\CreateSpaces\CreateSpaces.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\DoorSide\DoorSide.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\Length\Length.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\ModelTransplanter\ModelTransplanter.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\ParamChecker\ParamChecker.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\ParamToFinish\ParamToFinish.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\QuantityCheck\QuantityCheck.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\ReinforcementByColor\ReinforcementByColor.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\SSPlan\SSPlan.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\ToadTools\ToadTools.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\ToadTools.UI\ToadTools.UI.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\WarmSync\WarmSync.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\WorkingSet\WorkingSet.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\WorksetCheck\WorksetCheck.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+  <Project Path="source\WriteDash\WriteDash.csproj" Type="Classic C#">
+    <Configuration Solution="Debug.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Debug.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Debug.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Debug.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Debug.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Debug.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Debug.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Debug.R27|Any CPU" Project="Debug.R27|Any CPU" />
+    <Configuration Solution="Release.R20|Any CPU" Project="Debug.R20|Any CPU" />
+    <Configuration Solution="Release.R21|Any CPU" Project="Debug.R21|Any CPU" />
+    <Configuration Solution="Release.R22|Any CPU" Project="Debug.R22|Any CPU" />
+    <Configuration Solution="Release.R23|Any CPU" Project="Debug.R23|Any CPU" />
+    <Configuration Solution="Release.R24|Any CPU" Project="Debug.R24|Any CPU" />
+    <Configuration Solution="Release.R25|Any CPU" Project="Debug.R25|Any CPU" />
+    <Configuration Solution="Release.R26|Any CPU" Project="Debug.R26|Any CPU" />
+    <Configuration Solution="Release.R27|Any CPU" Project="Debug.R27|Any CPU" />
+  </Project>
+</Solution>

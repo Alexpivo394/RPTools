@@ -1,12 +1,12 @@
 ﻿using ParamChecker.ViewModels.Dialogs;
-using RPToolsUI.Services;
+using ToadTools.UI.Services;
 using Wpf.Ui.Controls;
 
 namespace ParamChecker.Views.Dialogs;
 
 public partial class Rename : FluentWindow
 {
-    public Rename(string currentTitle)
+    public Rename(string? currentTitle)
     {
         InitializeComponent();
         ThemeWatcherService.Watch(this);
@@ -23,5 +23,5 @@ public partial class Rename : FluentWindow
 
     public RenameViewModel ViewModel { get; }
 
-    public string Result => ViewModel.NewTitle;
+    public string? Result => ViewModel.NewTitle;
 }

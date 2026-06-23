@@ -8,12 +8,12 @@ public partial class CustomNavItem : ObservableObject
 {
     private readonly Action<CustomNavItem> _removeCallback;
 
-    [ObservableProperty] private string _title;
+    [ObservableProperty] private string? _title;
     [ObservableProperty] private bool _isChecked;
 
-    public Action<Page> OnNavigate;
+    public Action<Page>? OnNavigate;
 
-    public CustomNavItem(bool isChecked, string title, Page page, object viewModel, Action<CustomNavItem> removeCallback)
+    public CustomNavItem(bool isChecked, string? title, Page page, object viewModel, Action<CustomNavItem> removeCallback)
     {
         IsChecked = isChecked;
         Title = title;
@@ -39,7 +39,7 @@ public partial class CustomNavItem : ObservableObject
         }
     }
 
-    partial void OnTitleChanged(string value)
+    partial void OnTitleChanged(string? value)
     {
         if (ViewModelInstance is ExportProfilesViewModel vm)
         {

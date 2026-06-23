@@ -2,7 +2,7 @@
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using ParamChecker.Configuration;
-using RPToolsUI.Services;
+using ToadTools.UI.Services;
 using Wpf.Ui.Appearance;
 
 namespace ParamChecker.ViewModels.PagesViewModels;
@@ -11,7 +11,7 @@ public sealed partial class SettingsViewModel : ObservableObject
 {
     [ObservableProperty] private bool _isDarkTheme = true;
 
-    [ObservableProperty] private string _logFilePath;
+    [ObservableProperty] private string? _logFilePath;
 
     [ObservableProperty] private string _reportFilePath;
 

@@ -1,0 +1,145 @@
+﻿<Project Sdk="Nice3point.Revit.Sdk/6.2.2">
+
+    <PropertyGroup>
+        <UseWPF>true</UseWPF>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+        <PublishAddin>true</PublishAddin>
+        <Configurations>Debug.R20;Debug.R21;Debug.R22;Debug.R23;Debug.R24;Debug.R25;Debug.R26;Debug.R27</Configurations>
+        <Configurations>$(Configurations);Release.R20;Release.R21;Release.R22;Release.R23;Release.R24;Release.R25;Release.R26;Release.R27</Configurations>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\Icons\1Tray16.png" />
+      <None Remove="Resources\Icons\1Tray32.png" />
+      <None Remove="Resources\Icons\cable1_16.png" />
+      <None Remove="Resources\Icons\cable1_32.png" />
+      <None Remove="Resources\Icons\cable2_16.png" />
+      <None Remove="Resources\Icons\cable2_32.png" />
+      <None Remove="Resources\Icons\cable3_16.png" />
+      <None Remove="Resources\Icons\cable3_32.png" />
+      <None Remove="Resources\Icons\cable4_16.png" />
+      <None Remove="Resources\Icons\cable4_32.png" />
+      <None Remove="Resources\Icons\Create16.png" />
+      <None Remove="Resources\Icons\Create32.png" />
+      <None Remove="Resources\Icons\create_16.png" />
+      <None Remove="Resources\Icons\create_32.png" />
+      <None Remove="Resources\Icons\Export16.png" />
+      <None Remove="Resources\Icons\Export32.png" />
+      <None Remove="Resources\Icons\export_16.png" />
+      <None Remove="Resources\Icons\export_32.png" />
+      <None Remove="Resources\Icons\Ruler16.png" />
+      <None Remove="Resources\Icons\Ruler32.png" />
+      <None Remove="Resources\Icons\ruler_16.png" />
+      <None Remove="Resources\Icons\ruler_32.png" />
+      <None Remove="Resources\Icons\Transplanter16.png" />
+      <None Remove="Resources\Icons\Transplanter32.png" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
+        <PackageReference Include="Nice3point.Revit.Toolkit" Version="$(RevitVersion).*" />
+        <PackageReference Include="Nice3point.Revit.Extensions" Version="$(RevitVersion).*" />
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPI" Version="$(RevitVersion).*" />
+        <PackageReference Include="Nice3point.Revit.Api.RevitAPIUI" Version="$(RevitVersion).*" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.*" />
+        <PackageReference Include="Polyfill" Version="10.5.1" PrivateAssets="all"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CableTrays\CableTrays.csproj" />
+      <ProjectReference Include="..\ChangeSharedFamilies\ChangeSharedFamilies.csproj" />
+      <ProjectReference Include="..\CreateCover\CreateCover.csproj" />
+      <ProjectReference Include="..\CreateSpaces\CreateSpaces.csproj" />
+      <ProjectReference Include="..\DoorSide\DoorSide.csproj" />
+      <ProjectReference Include="..\Length\Length.csproj" />
+      <ProjectReference Include="..\ModelTransplanter\ModelTransplanter.csproj" />
+      <ProjectReference Include="..\ParamChecker\ParamChecker.csproj" />
+      <ProjectReference Include="..\ParamToFinish\ParamToFinish.csproj" />
+      <ProjectReference Include="..\QuantityCheck\QuantityCheck.csproj" />
+      <ProjectReference Include="..\ReinforcementByColor\ReinforcementByColor.csproj" />
+      <ProjectReference Include="..\SSPlan\SSPlan.csproj" />
+      <ProjectReference Include="..\WarmSync\WarmSync.csproj" />
+      <ProjectReference Include="..\WorkingSet\WorkingSet.csproj" />
+      <ProjectReference Include="..\WorksetCheck\WorksetCheck.csproj" />
+      <ProjectReference Include="..\WriteDash\WriteDash.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Resource Include="Resources\Icons\1Tray16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\1Tray32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Create16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Create32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Export16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Export32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Ruler16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Ruler32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Transplanter16.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <Resource Include="Resources\Icons\Transplanter32.png">
+        <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      </Resource>
+      <None Remove="Resources\Icons\QuantityCheck16.png" />
+      <Resource Include="Resources\Icons\QuantityCheck16.png" />
+      <None Remove="Resources\Icons\QuantityCheck32.png" />
+      <Resource Include="Resources\Icons\QuantityCheck32.png" />
+      <None Remove="Resources\Icons\SSPlan16.png" />
+      <Resource Include="Resources\Icons\SSPlan16.png" />
+      <None Remove="Resources\Icons\SSPlan32.png" />
+      <Resource Include="Resources\Icons\SSPlan32.png" />
+      <None Remove="Resources\Icons\WorksetsCheck16.png" />
+      <Resource Include="Resources\Icons\WorksetsCheck16.png" />
+      <None Remove="Resources\Icons\WorksetsCheck32.png" />
+      <Resource Include="Resources\Icons\WorksetsCheck32.png" />
+      <None Remove="Resources\Icons\WarmSync16.png" />
+      <Resource Include="Resources\Icons\WarmSync16.png" />
+      <None Remove="Resources\Icons\WarmSync32.png" />
+      <Resource Include="Resources\Icons\WarmSync32.png" />
+      <None Remove="Resources\Icons\DoorSide32.png" />
+      <Resource Include="Resources\Icons\DoorSide32.png" />
+      <None Remove="Resources\Icons\DoorSide16.png" />
+      <Resource Include="Resources\Icons\DoorSide16.png" />
+      <None Remove="Resources\Icons\CreateCover16.png" />
+      <Resource Include="Resources\Icons\CreateCover16.png" />
+      <None Remove="Resources\Icons\CreateCover32.png" />
+      <Resource Include="Resources\Icons\CreateCover32.png" />
+      <None Remove="Resources\Icons\Spaces16.png" />
+      <Resource Include="Resources\Icons\Spaces16.png" />
+      <None Remove="Resources\Icons\Spaces32.png" />
+      <Resource Include="Resources\Icons\Spaces32.png" />
+      <None Remove="Resources\Icons\Rei16.png" />
+      <Resource Include="Resources\Icons\Rei16.png" />
+      <None Remove="Resources\Icons\Rei32.png" />
+      <Resource Include="Resources\Icons\Rei32.png" />
+      <None Remove="Resources\Icons\WriteDash16.png" />
+      <Resource Include="Resources\Icons\WriteDash16.png" />
+      <None Remove="Resources\Icons\WriteDash32.png" />
+      <Resource Include="Resources\Icons\WriteDash32.png" />
+      <None Remove="Resources\Icons\ParamToFinish16.png" />
+      <Resource Include="Resources\Icons\ParamToFinish16.png" />
+      <None Remove="Resources\Icons\ParamToFinish32.png" />
+      <Resource Include="Resources\Icons\ParamToFinish32.png" />
+      <None Remove="Resources\Icons\ChangeSharedFamilies16.png" />
+      <Resource Include="Resources\Icons\ChangeSharedFamilies16.png" />
+      <None Remove="Resources\Icons\ChangeSharedFamilies32.png" />
+      <Resource Include="Resources\Icons\ChangeSharedFamilies32.png" />
+    </ItemGroup>
+
+</Project>

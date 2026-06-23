@@ -40,7 +40,7 @@ public class ExportService
                 var doc = OpenDocumentAsDetach(_commandData, model.ServerPath, model.WorksetKeyword);
                 int greenCount = 0, redCount = 0, yellowCount = 0;
 
-                ExcelPackage.License.SetNonCommercialPersonal("RPTools");
+                ExcelPackage.License.SetNonCommercialPersonal("ToadTools");
                 using var excelDoc = new ExcelPackage();
                 foreach (var rule in profile.Rules)
                 {

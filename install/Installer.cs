@@ -1,14 +1,12 @@
-﻿using System;
-using Installer;
+﻿using Installer;
 using WixSharp;
 using WixSharp.CommonTasks;
 using WixSharp.Controls;
-using Assembly = System.Reflection.Assembly;
 
-const string outputName = "RPTools";
-const string projectName = "RPTools";
-const string manufacturer = "AlexB";
+const string outputName = "ToadTools";
+const string projectName = "ToadTools";
 
+var versioning = Versioning.CreateFromVersionStringAsync(args[0]);
 var project = new Project
 {
     OutDir = "output",
@@ -16,18 +14,18 @@ var project = new Project
     Platform = Platform.x64,
     UI = WUI.WixUI_FeatureTree,
     MajorUpgrade = MajorUpgrade.Default,
-    GUID = new Guid("2FAF75B7-963A-4C4B-8F71-E4248014047A"),
+    GUID = new Guid("460B3098-3D8B-44D4-B7CE-729124B81606"),
     BannerImage = @"install\Resources\Icons\BannerImage.png",
     BackgroundImage = @"install\Resources\Icons\BackgroundImage.png",
-    Version = Assembly.GetExecutingAssembly().GetName().Version.ClearRevision(),
+    Version = versioning.VersionPrefix,
     ControlPanelInfo =
     {
-        Manufacturer = manufacturer,
+        Manufacturer = Environment.UserName,
         ProductIcon = @"install\Resources\Icons\ShellIcon.ico"
     }
 };
 
-var wixEntities = Generator.GenerateWixEntities(args);
+var wixEntities = Generator.GenerateWixEntities(args[1..]);
 project.RemoveDialogsBetween(NativeDialogs.WelcomeDlg, NativeDialogs.CustomizeDlg);
 
 BuildSingleUserMsi();
@@ -35,8 +33,8 @@ BuildMultiUserUserMsi();
 
 void BuildSingleUserMsi()
 {
-    project.InstallScope = InstallScope.perUser;
-    project.OutFileName = $"{outputName}-{project.Version}-SingleUser";
+    project.Scope = InstallScope.perUser;
+    project.OutFileName = $"{outputName}-{versioning.Version}-SingleUser";
     project.Dirs =
     [
         new InstallDir(@"%AppDataFolder%\Autodesk\Revit\Addins\", wixEntities)
@@ -46,11 +44,14 @@ void BuildSingleUserMsi()
 
 void BuildMultiUserUserMsi()
 {
-    project.InstallScope = InstallScope.perMachine;
-    project.OutFileName = $"{outputName}-{project.Version}-MultiUser";
+    project.Scope = InstallScope.perMachine;
+    project.OutFileName = $"{outputName}-{versioning.Version}-MultiUser";
     project.Dirs =
     [
-        new InstallDir(@"%CommonAppDataFolder%\Autodesk\Revit\Addins\", wixEntities)
+        new InstallDir(
+            versioning.VersionPrefix.Major >= 2027
+                ? @"%ProgramFiles%\Autodesk\Revit\Addins"
+                : @"%CommonAppDataFolder%\Autodesk\Revit\Addins", wixEntities)
     ];
     project.BuildMsi();
 }

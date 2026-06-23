@@ -109,7 +109,7 @@ internal class InstanceParameterBindingService
                 if (elementParameter == null)
                     continue;
 
-                FamilyParameter currentAssociatedParameter = null;
+                FamilyParameter? currentAssociatedParameter = null;
 
                 try
                 {
@@ -146,7 +146,7 @@ internal class InstanceParameterBindingService
         }
     }
 
-    private static Parameter FindElementParameterByBindingSnapshot(
+    private static Parameter? FindElementParameterByBindingSnapshot(
         Element element,
         ParameterBindingSnapshot snapshot)
     {
@@ -163,7 +163,7 @@ internal class InstanceParameterBindingService
                 return parameter;
         }
 
-        foreach (Parameter parameter in element.Parameters)
+        foreach (Parameter? parameter in element.Parameters)
         {
             if (parameter?.Definition == null)
                 continue;

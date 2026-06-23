@@ -6,8 +6,8 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI;
 using Microsoft.Win32;
 using OfficeOpenXml;
-using RPToolsUI.Models;
-using RPToolsUI.Services;
+using ToadTools.UI.Models;
+using ToadTools.UI.Services;
 
 namespace WarmSync;
 
@@ -42,7 +42,7 @@ public class WriteFromExcel : IExternalCommand
 
         logger.Log($"Выбран файл: {excelPath}");
 
-        ExcelPackage.License.SetNonCommercialPersonal("RPTools");
+        ExcelPackage.License.SetNonCommercialPersonal("ToadTools");
 
         int updated = 0;
         int errors = 0;

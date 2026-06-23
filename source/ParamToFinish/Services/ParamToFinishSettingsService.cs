@@ -18,7 +18,7 @@ public sealed class ParamToFinishSettingsService
     {
         var settingsDirectory = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-            "RPTools",
+            "ToadTools",
             "ParamToFinish");
 
         _settingsPath = Path.Combine(settingsDirectory, SettingsFileName);

@@ -4,8 +4,8 @@ using ParamChecker.Models.ExportProfiles;
 using ParamChecker.Services;
 using ParamChecker.ViewModels.Windows;
 using ParamChecker.Views.Windows;
-using RPToolsUI.Models;
-using RPToolsUI.Services;
+using ToadTools.UI.Models;
+using ToadTools.UI.Services;
 
 namespace ParamChecker.ViewModels.PagesViewModels;
 
@@ -15,7 +15,7 @@ public partial class ExportProfilesViewModel : ObservableObject
 
     [ObservableProperty] private ObservableCollection<ExportModel> _models = new();
 
-    [ObservableProperty] private string _profileName;
+    [ObservableProperty] private string? _profileName;
     
     [ObservableProperty] private bool _isChecked;
 

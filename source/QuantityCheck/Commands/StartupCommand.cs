@@ -5,8 +5,8 @@ using QuantityCheck.Models;
 using QuantityCheck.Services;
 using QuantityCheck.ViewModels;
 using QuantityCheck.Views;
-using RPToolsUI.Models;
-using RPToolsUI.Services;
+using ToadTools.UI.Models;
+using ToadTools.UI.Services;
 
 namespace QuantityCheck.Commands;
 

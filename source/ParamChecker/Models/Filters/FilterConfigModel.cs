@@ -29,8 +29,8 @@ public class GroupConditionModel : ConditionModelBase
 
 public class FilterConfigRaw
 {
-    public List<BuiltInCategory> SelectedCategories { get; set; }
+    public List<BuiltInCategory>? SelectedCategories { get; set; }
     public CategoryParameterLogic CategoryParameterLogic { get; set; }
     public FilterParameterLogic ParameterLogic { get; set; }
-    public JArray Conditions { get; set; }
+    public JArray? Conditions { get; set; }
 }

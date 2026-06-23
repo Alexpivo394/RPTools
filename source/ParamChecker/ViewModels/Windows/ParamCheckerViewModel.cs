@@ -2,6 +2,8 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Newtonsoft.Json;
 using ParamChecker.Models.ExportProfiles;
 using ParamChecker.Services;
@@ -9,8 +11,8 @@ using ParamChecker.ViewModels.PagesViewModels;
 using ParamChecker.Views.Dialogs;
 using ParamChecker.Views.Pages;
 using ParamChecker.Models;
-using RPToolsUI.Models;
-using RPToolsUI.Services;
+using ToadTools.UI.Models;
+using ToadTools.UI.Services;
 
 namespace ParamChecker.ViewModels.Windows;
 
@@ -22,7 +24,7 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
     private readonly SettingsViewModel _settingsViewModel;
 
     [ObservableProperty] private bool _isChecked;
-    [ObservableProperty] private string _title;
+    [ObservableProperty] private string? _title;
 
     public ParamCheckerViewModel(CategoryService categoryService,  ExportService exportService,  SettingsViewModel settingsViewModel, Logger logger)
     {
@@ -34,7 +36,7 @@ public sealed partial class ParamCheckerViewModel : ObservableObject
 
     public ObservableCollection<CustomNavItem> CustomNavItems { get; set; } = new();
 
-    public Action<Page> NavigateAction { get; set; }
+    public Action<Page>? NavigateAction { get; set; }
 
     [RelayCommand]
     private void AddCustomNavItem()

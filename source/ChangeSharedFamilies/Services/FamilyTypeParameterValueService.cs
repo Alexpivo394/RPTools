@@ -62,7 +62,7 @@ internal class FamilyTypeParameterValueService
 
     public void Remap(
         List<FamilyTypeValueSnapshot> snapshots,
-        Dictionary<string, FamilySymbol> tempSymbolsByName)
+        Dictionary<string?, FamilySymbol> tempSymbolsByName)
     {
         if (snapshots.Count == 0)
             return;
@@ -98,14 +98,14 @@ internal class FamilyTypeParameterValueService
         }
     }
 
-    private FamilyType FindFamilyTypeByName(string familyTypeName)
+    private FamilyType? FindFamilyTypeByName(string? familyTypeName)
     {
         var familyManager = _familyDocument.FamilyManager;
 
-        foreach (FamilyType familyType in familyManager.Types)
+        foreach (FamilyType? familyType in familyManager.Types)
         {
             if (string.Equals(
-                    familyType.Name,
+                    familyType?.Name,
                     familyTypeName,
                     StringComparison.OrdinalIgnoreCase))
             {

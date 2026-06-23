@@ -5,8 +5,8 @@ namespace ChangeSharedFamilies.Services;
 internal static class FamilyParameterIdentity
 {
     public static bool IsSame(
-        FamilyParameter left,
-        FamilyParameter right)
+        FamilyParameter? left,
+        FamilyParameter? right)
     {
         if (left == null || right == null)
             return false;

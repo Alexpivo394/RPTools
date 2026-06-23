@@ -1,8 +1,8 @@
 ﻿using QuantityCheck.Configuration;
 using QuantityCheck.Models;
 using QuantityCheck.Services;
-using RPToolsUI.Models;
-using RPToolsUI.Services;
+using ToadTools.UI.Models;
+using ToadTools.UI.Services;
 using Wpf.Ui.Appearance;
 using Settings = QuantityCheck.Configuration.Settings;
 

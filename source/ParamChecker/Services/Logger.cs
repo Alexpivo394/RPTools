@@ -4,9 +4,9 @@ namespace ParamChecker.Services;
 
 public class Logger
 {
-    private string _logFilePath;
+    private string? _logFilePath;
     
-    public void StartLog(string logFilePath)
+    public void StartLog(string? logFilePath)
     {
         if (!string.IsNullOrEmpty(logFilePath))
         {

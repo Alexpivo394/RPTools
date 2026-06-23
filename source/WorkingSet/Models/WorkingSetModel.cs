@@ -17,7 +17,7 @@ public class WorkingSetModel
     // Получение списка разделов из Excel
     public List<string> GetSections()
     {
-        ExcelPackage.License.SetNonCommercialPersonal("RPTools");
+        ExcelPackage.License.SetNonCommercialPersonal("ToadTools");
 
         var sections = new List<string>();
         using (var package = new ExcelPackage(new FileInfo(_excelFilePath)))
@@ -35,7 +35,7 @@ public class WorkingSetModel
     {
         var worksets = new List<string>();
 
-        ExcelPackage.License.SetNonCommercialPersonal("RPTools");
+        ExcelPackage.License.SetNonCommercialPersonal("ToadTools");
 
         using (var package = new ExcelPackage(new FileInfo(_excelFilePath)))
         {

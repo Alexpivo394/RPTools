@@ -1,0 +1,78 @@
+<ui:FluentWindow x:Class="ToadTools.UI.Views.ToadDialog"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:m="clr-namespace:ToadTools.UI.Models"
+                 mc:Ignorable="d"
+                 WindowStartupLocation="CenterScreen"
+                 WindowBackdropType="Mica"
+                 WindowCornerPreference="Round"
+                 ExtendsContentIntoTitleBar="True"
+                 Title="Диалог"
+                 MinHeight="150"
+                 MinWidth="350"
+                 Width="350"
+                 Height="150"
+                 SizeToContent="Manual">
+
+    <Grid x:Name="RootGrid"
+          Margin="5,15,5,5"
+          MouseLeftButtonDown="RootGrid_OnMouseLeftButtonDown">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- Icon -->
+        <ui:SymbolIcon Grid.Row="0" Symbol="{Binding Icon}"
+                       FontSize="32"
+                       Margin="0,0,15,0"
+                       VerticalAlignment="Top" />
+
+        <!-- Title -->
+        <ui:TextBlock x:Name="TitleTextBlock"
+                      Grid.Row="0" Text="{Binding Title}"
+                      Grid.Column="1"
+                      FontWeight="Bold"
+                      FontSize="18"
+                      TextWrapping="WrapWithOverflow"
+                      Margin="0,0,0,10"/>
+
+        <!-- Message -->
+        <ScrollViewer x:Name="MessageScrollViewer"
+                      Grid.Row="1" Grid.Column="1"
+                      VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled">
+            <ui:TextBlock x:Name="MessageTextBlock"
+                          Text="{Binding Message}"
+                          TextWrapping="WrapWithOverflow"
+                          FontSize="14"/>
+        </ScrollViewer>
+
+        <!-- Buttons -->
+        <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
+                      ItemsSource="{Binding Buttons}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type m:DialogButtonModel}">
+                    <ui:Button Content="{Binding Text}"
+                               Icon="{Binding Icon}"
+                               Width="90" Margin="5"
+                               Command="{Binding Command}"/>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</ui:FluentWindow>
