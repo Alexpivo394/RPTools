@@ -7,7 +7,6 @@
 
   <PropertyGroup Condition="'$(RevitVersion)' &lt; '2027'">
     <IsRepackable>true</IsRepackable>
-    <RepackBinariesExcludes>ToadTools*.dll</RepackBinariesExcludes>
   </PropertyGroup>
   
     <ItemGroup>
