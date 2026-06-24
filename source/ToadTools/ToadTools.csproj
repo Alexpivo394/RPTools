@@ -4,11 +4,6 @@
     <PublishAddin>true</PublishAddin>
     <EnableDynamicLoading>true</EnableDynamicLoading>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(RevitVersion)' &lt; '2027'">
-    <IsRepackable>true</IsRepackable>
-    <RepackBinariesExcludes>$(AssemblyName).dll;$(AssemblyName).UI.dll;System*.dll</RepackBinariesExcludes>
-  </PropertyGroup>
   
     <ItemGroup>
       <None Remove="Resources\Icons\1Tray16.png" />
