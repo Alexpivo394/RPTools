@@ -24,27 +24,16 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'Directory.Build.props', 'Directory.Packages.props') }}
           restore-keys: ${{ runner.os }}-nuget-
 
-  - name: Restore
-    run: dotnet restore ToadTools.slnx
+      - name: Restore
+        run: dotnet restore ToadTools.slnx
 
-  - name: Fix Nice3point Repack target
-    shell: pwsh
-    run: |
-      $target = Get-ChildItem `
-        -Path "$env:USERPROFILE\.nuget\packages\nice3point.revit.sdk" `
-        -Filter "Nice3point.Revit.Repack.targets" `
-        -Recurse |
-        Select-Object -First 1 -ExpandProperty FullName
-      
-      if (-not $target) {
-        throw "Nice3point.Revit.Repack.targets not found after restore"
-      }
-      
-      Write-Host "Patching: $target"
-      
-      $content = Get-Content $target -Raw
-      $content = $content.Replace("%(identity) &quot;", "%(identity)&quot;")
-      Set-Content $target $content -NoNewline
+      - name: Fix Nice3point Repack target
+        shell: pwsh
+        run: |
+          $target = Join-Path $env:USERPROFILE ".nuget\packages\nice3point.revit.sdk\6.2.2\Sdk\Nice3point.Revit.Repack.targets"
+          $content = Get-Content $target -Raw
+          $content = $content.Replace("%(identity) &quot;", "%(identity)&quot;")
+          Set-Content $target $content -NoNewline
 
       - name: Compile solution
         run: dotnet run -c Release
