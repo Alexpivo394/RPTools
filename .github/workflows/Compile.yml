@@ -24,6 +24,14 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', 'Directory.Build.props', 'Directory.Packages.props') }}
           restore-keys: ${{ runner.os }}-nuget-
 
+      - name: Fix Nice3point Repack target
+        shell: pwsh
+        run: |
+          $target = Join-Path $env:USERPROFILE ".nuget\packages\nice3point.revit.sdk\6.2.2\Sdk\Nice3point.Revit.Repack.targets"
+          $content = Get-Content $target -Raw
+          $content = $content.Replace("%(identity) &quot;", "%(identity)&quot;")
+          Set-Content $target $content -NoNewline
+
       - name: Compile solution
         run: dotnet run -c Release
         working-directory: "build"
