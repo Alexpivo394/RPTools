@@ -30,10 +30,33 @@ jobs:
       - name: Fix Nice3point Repack target
         shell: pwsh
         run: |
-          $target = Join-Path $env:USERPROFILE ".nuget\packages\nice3point.revit.sdk\6.2.2\Sdk\Nice3point.Revit.Repack.targets"
+          $target = Get-ChildItem `
+            "$env:USERPROFILE\.nuget\packages\nice3point.revit.sdk" `
+            -Filter "Nice3point.Revit.Repack.targets" `
+            -Recurse |
+            Select-Object -First 1 -ExpandProperty FullName
+
+          if (-not $target) {
+            throw "Nice3point.Revit.Repack.targets not found"
+          }
+
           $content = Get-Content $target -Raw
-          $content = $content.Replace("%(identity) &quot;", "%(identity)&quot;")
+
+          # Исправляет как оригинальный вариант с пробелом,
+          # так и уже пропатченный вариант без пробела.
+          $content = $content.Replace(
+            "/lib:&quot;%(identity) &quot;",
+            "/lib:&quot;%(identity).&quot;"
+          )
+
+          $content = $content.Replace(
+            "/lib:&quot;%(identity)&quot;",
+            "/lib:&quot;%(identity).&quot;"
+          )
+
           Set-Content $target $content -NoNewline
+
+          Select-String -Path $target -Pattern "_ILRepackLib"
 
       - name: Compile solution
         run: dotnet run -c Release
