@@ -121,9 +121,8 @@ internal class NestedFamilyReplacementService
         Dictionary<string?, FamilySymbol> tempSymbolsByName,
         string tempFamilyName)
     {
-        var processedInstanceIds = bindingSnapshots
-            .Select(x => x.InstanceId)
-            .ToHashSet();
+        var processedInstanceIds = new HashSet<ElementId>(
+            bindingSnapshots.Select(x => x.InstanceId));
 
         foreach (var instance in nestedInstances)
         {

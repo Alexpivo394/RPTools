@@ -237,9 +237,18 @@ namespace SSPlan.Models;
 
                 case StorageType.ElementId:
                     ElementId id = param.AsElementId();
-                    if (id.IntegerValue < 0) return "—";
+
+#if REVIT2024_OR_GREATER
+                    long idValue = id.Value;
+#else
+    int idValue = id.IntegerValue;
+#endif
+
+                    if (idValue < 0)
+                        return "—";
+
                     Element referenced = doc.GetElement(id);
-                    return referenced?.Name ?? id.IntegerValue.ToString();
+                    return referenced?.Name ?? idValue.ToString();
 
                 default:
                     return "N/A";

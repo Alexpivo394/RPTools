@@ -58,8 +58,11 @@ public class ExportSpacesToExcel : IExternalCommand
                 foreach (var sp in spaces)
                 {
                     Debug.WriteLine($"Обрабатываю Space ID {sp.Id}");
-
+#if REVIT2024_OR_GREATER
+                    ws.Cells[row, 1].Value = sp.Id.Value;
+#else
                     ws.Cells[row, 1].Value = sp.Id.IntegerValue;
+#endif
                     ws.Cells[row, 2].Value = sp.Level?.Name ?? "";
                     ws.Cells[row, 3].Value = sp.Number ?? "";
                     ws.Cells[row, 4].Value = sp.Name ?? "";
@@ -131,7 +134,11 @@ public class ExportSpacesToExcel : IExternalCommand
             StorageType.Double => p.AsDouble(),
             StorageType.Integer => p.AsInteger(),
             StorageType.String => p.AsString(),
+#if REVIT2024_OR_GREATER
+            StorageType.ElementId => p.AsElementId()?.Value,
+#else
             StorageType.ElementId => p.AsElementId()?.IntegerValue,
+#endif
             _ => null
         };
     }

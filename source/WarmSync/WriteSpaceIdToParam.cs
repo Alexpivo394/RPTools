@@ -48,7 +48,11 @@ public class WriteSpaceIdToParam : IExternalCommand
                     var param = space.LookupParameter(targetParamName);
                     if (param != null && !param.IsReadOnly)
                     {
+#if REVIT2024_OR_GREATER
+                        param.Set(space.Id.Value.ToString());
+#else
                         param.Set(space.Id.IntegerValue.ToString());
+#endif
                         updated++;
                     }
                 }

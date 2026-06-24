@@ -15,111 +15,152 @@ public class CheckService
         { new[] { "ITP" }, new[] { "ИТП", "ITP" } },
     };
 
-    public List<string> CheckWorksets(Document? doc, string rvtLinksPrefix, string gridsAndLevelsWorksetName,
+    public List<string> CheckWorksets(
+        Document? doc,
+        string rvtLinksPrefix,
+        string gridsAndLevelsWorksetName,
         string openingsWorksetName)
     {
+        if (doc == null)
+            throw new ArgumentNullException(nameof(doc));
+
         var errors = new List<string>();
 
-        // 1. Берем список всех рабочих наборов
-        var worksetTable = doc?.GetWorksetTable();
-        var allWorksets = new FilteredWorksetCollector(doc).OfKind(WorksetKind.UserWorkset).ToWorksets();
+        var allWorksets = new FilteredWorksetCollector(doc)
+            .OfKind(WorksetKind.UserWorkset)
+            .ToWorksets();
 
-        // 2. Идем по рабочим наборам
         foreach (var ws in allWorksets)
         {
-            string wsName = ws.Name;
+            var wsName = ws.Name;
 
-            // Собираем все элементы из этого рабочего набора
-            var elementsInWs = new FilteredElementCollector(doc).WhereElementIsNotElementType()
+            var elementsInWs = new FilteredElementCollector(doc)
+                .WhereElementIsNotElementType()
                 .Where(x => x.WorksetId == ws.Id)
                 .ToList();
 
-            // Если это рабочий набор для связей
-            if (wsName.StartsWith(rvtLinksPrefix, StringComparison.OrdinalIgnoreCase))
+            // Рабочий набор для связей
+            if (wsName.StartsWith(
+                    rvtLinksPrefix,
+                    StringComparison.OrdinalIgnoreCase))
             {
-                foreach (var el in elementsInWs)
+                foreach (var element in elementsInWs)
                 {
-                    if (el.Category?.Id.IntegerValue != (int)BuiltInCategory.OST_RvtLinks)
+                    if (!IsCategory(element, BuiltInCategory.OST_RvtLinks))
                     {
-                        errors.Add($"[WS: {wsName}] Недопустимый элемент (Id {el.Id}) — должны быть только связи");
+                        errors.Add(
+                            $"[WS: {wsName}] Недопустимый элемент (Id {element.Id}) — должны быть только связи");
+
                         continue;
                     }
 
-                    var linkName = el.Name ?? string.Empty;
-
-                    // Проверяем соответствие имени файла и имени РН
-                    bool matched = false;
+                    var linkName = element.Name ?? string.Empty;
+                    var matched = false;
 
                     foreach (var mapping in SectionMapping)
                     {
 #if REVIT2025_OR_GREATER
-                        if (mapping.Key.Any(k => linkName.Contains(k, StringComparison.OrdinalIgnoreCase)))
-                            {
-                                if (mapping.Value.Any(v => wsName.Contains(v, StringComparison.OrdinalIgnoreCase)))
-                                {
-                                    matched = true;
-                                    break;
-                                }
-                            }
+                        var linkMatches = mapping.Key.Any(
+                            key => linkName.Contains(
+                                key,
+                                StringComparison.OrdinalIgnoreCase));
+
+                        var worksetMatches = mapping.Value.Any(
+                            value => wsName.Contains(
+                                value,
+                                StringComparison.OrdinalIgnoreCase));
 #else
-                        if (mapping.Key.Any(k => linkName.IndexOf(k, StringComparison.OrdinalIgnoreCase) >= 0))
-                        {
-                            if (mapping.Value.Any(v => wsName.IndexOf(v, StringComparison.OrdinalIgnoreCase) >= 0))
-                            {
-                                matched = true;
-                                break;
-                            }
-                        }
+                        var linkMatches = mapping.Key.Any(
+                            key => linkName.IndexOf(
+                                key,
+                                StringComparison.OrdinalIgnoreCase) >= 0);
+
+                        var worksetMatches = mapping.Value.Any(
+                            value => wsName.IndexOf(
+                                value,
+                                StringComparison.OrdinalIgnoreCase) >= 0);
 #endif
+
+                        if (!linkMatches || !worksetMatches)
+                            continue;
+
+                        matched = true;
+                        break;
                     }
 
                     if (!matched)
                     {
-                        errors.Add($"[WS: {wsName}] Файл связи '{linkName}' не соответствует разделу рабочего набора");
+                        errors.Add(
+                            $"[WS: {wsName}] Файл связи '{linkName}' не соответствует разделу рабочего набора");
                     }
                 }
             }
-            // Если это рабочий набор для осей и уровней
-            else if (string.Equals(wsName, gridsAndLevelsWorksetName, StringComparison.OrdinalIgnoreCase))
+            // Рабочий набор для осей и уровней
+            else if (string.Equals(
+                         wsName,
+                         gridsAndLevelsWorksetName,
+                         StringComparison.OrdinalIgnoreCase))
             {
-                foreach (var el in elementsInWs)
+                foreach (var element in elementsInWs)
                 {
-                    if (el.Category?.Id.IntegerValue != (int)BuiltInCategory.OST_Grids &&
-                        el.Category?.Id.IntegerValue != (int)BuiltInCategory.OST_Levels)
+                    if (!IsCategory(element, BuiltInCategory.OST_Grids) &&
+                        !IsCategory(element, BuiltInCategory.OST_Levels))
                     {
                         errors.Add(
-                            $"[WS: {wsName}] Недопустимый элемент (Id {el.Id}) — должны быть только оси или уровни");
+                            $"[WS: {wsName}] Недопустимый элемент (Id {element.Id}) — должны быть только оси или уровни");
                     }
                 }
             }
-            // Если это рабочий набор для отверстий
-            else if (string.Equals(wsName, openingsWorksetName, StringComparison.OrdinalIgnoreCase))
+            // Рабочий набор для отверстий
+            else if (string.Equals(
+                         wsName,
+                         openingsWorksetName,
+                         StringComparison.OrdinalIgnoreCase))
             {
-                foreach (var el in elementsInWs)
+                foreach (var element in elementsInWs)
                 {
-                    if (el.Category?.Id.IntegerValue != (int)BuiltInCategory.OST_GenericModel)
+                    if (!IsCategory(element, BuiltInCategory.OST_GenericModel))
                     {
                         errors.Add(
-                            $"[WS: {wsName}] Недопустимый элемент (Id {el.Id}) — должны быть только Обобщенные модели (отверстия)");
+                            $"[WS: {wsName}] Недопустимый элемент (Id {element.Id}) — должны быть только Обобщенные модели (отверстия)");
                     }
                 }
             }
-            // Все остальные рабочие наборы
+            // Остальные рабочие наборы
             else
             {
-                foreach (var el in elementsInWs)
+                foreach (var element in elementsInWs)
                 {
-                    if (el.Category?.Id.IntegerValue == (int)BuiltInCategory.OST_RvtLinks ||
-                        el.Category?.Id.IntegerValue == (int)BuiltInCategory.OST_Grids ||
-                        el.Category?.Id.IntegerValue == (int)BuiltInCategory.OST_Levels)
+                    if (IsCategory(element, BuiltInCategory.OST_RvtLinks) ||
+                        IsCategory(element, BuiltInCategory.OST_Grids) ||
+                        IsCategory(element, BuiltInCategory.OST_Levels))
                     {
                         errors.Add(
-                            $"[WS: {wsName}] Недопустимый элемент (Id {el.Id}) — связи/оси/уровни тут быть не должны");
+                            $"[WS: {wsName}] Недопустимый элемент (Id {element.Id}) — связи/оси/уровни тут быть не должны");
                     }
                 }
             }
         }
 
         return errors;
+    }
+
+    private static bool IsCategory(
+        Element element,
+        BuiltInCategory builtInCategory)
+    {
+        var categoryId = element.Category?.Id;
+
+        return categoryId != null &&
+               GetElementIdValue(categoryId) == (long)builtInCategory;
+    }
+
+    private static long GetElementIdValue(ElementId elementId)
+    {
+#if REVIT2024_OR_GREATER
+        return elementId.Value;
+#else
+        return elementId.IntegerValue;
+#endif
     }
 }

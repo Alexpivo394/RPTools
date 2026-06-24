@@ -7,11 +7,12 @@ internal static class NestedFamilyTempName
 {
     public static string CreateUnique(Document document, string oldFamilyName)
     {
-        var existingNames = new FilteredElementCollector(document)
-            .OfClass(typeof(Family))
-            .Cast<Family>()
-            .Select(x => x.Name)
-            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var existingNames = new HashSet<string>(
+            new FilteredElementCollector(document)
+                .OfClass(typeof(Family))
+                .Cast<Family>()
+                .Select(x => x.Name),
+            StringComparer.OrdinalIgnoreCase);
 
         var safeBaseName = MakeSafeFileName(oldFamilyName);
         var baseTempName = safeBaseName + "__NON_SHARED_TMP";

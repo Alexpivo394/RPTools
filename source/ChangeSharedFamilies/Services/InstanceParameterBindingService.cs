@@ -151,16 +151,22 @@ internal class InstanceParameterBindingService
         ParameterBindingSnapshot snapshot)
     {
         if (snapshot.ElementParameterId != null &&
-            snapshot.ElementParameterId != ElementId.InvalidElementId &&
-            snapshot.ElementParameterId.IntegerValue < 0)
+            snapshot.ElementParameterId != ElementId.InvalidElementId)
         {
-            var builtInParameter =
-                (BuiltInParameter)snapshot.ElementParameterId.IntegerValue;
+#if REVIT2024_OR_GREATER
+            var parameterId = snapshot.ElementParameterId.Value;
+#else
+    var parameterId = snapshot.ElementParameterId.IntegerValue;
+#endif
 
-            var parameter = element.get_Parameter(builtInParameter);
+            if (parameterId < 0)
+            {
+                var builtInParameter = (BuiltInParameter)(int)parameterId;
+                var parameter = element.get_Parameter(builtInParameter);
 
-            if (parameter != null)
-                return parameter;
+                if (parameter != null)
+                    return parameter;
+            }
         }
 
         foreach (Parameter? parameter in element.Parameters)

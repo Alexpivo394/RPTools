@@ -1,5 +1,15 @@
 ﻿<Project Sdk="Nice3point.Revit.Sdk/6.2.2">
 
+  <PropertyGroup>
+    <PublishAddin>true</PublishAddin>
+    <EnableDynamicLoading>true</EnableDynamicLoading>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(RevitVersion)' &lt; '2027'">
+    <IsRepackable>true</IsRepackable>
+    <RepackBinariesExcludes>ToadTools*.dll</RepackBinariesExcludes>
+  </PropertyGroup>
+  
     <ItemGroup>
       <None Remove="Resources\Icons\1Tray16.png" />
       <None Remove="Resources\Icons\1Tray32.png" />

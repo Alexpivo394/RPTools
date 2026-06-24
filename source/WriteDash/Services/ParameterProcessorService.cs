@@ -27,10 +27,11 @@ public class ParameterProcessorService
             return;
         }
 
-        var parameterNames = selectedParameters
-            .Select(x => x.Name)
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .ToHashSet();
+        var parameterNames = new HashSet<string>(
+            selectedParameters
+                .Select(x => x.Name)
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Select(x => x!));
 
         var elements = new FilteredElementCollector(_document)
             .WhereElementIsNotElementType()
