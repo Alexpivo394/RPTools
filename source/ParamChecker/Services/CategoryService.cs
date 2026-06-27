@@ -1,4 +1,6 @@
-﻿namespace ParamChecker.Services;
+﻿using Autodesk.Revit.DB;
+
+namespace ParamChecker.Services;
 
 public class CategoryService
 {

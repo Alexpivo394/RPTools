@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using Nice3point.Revit.Extensions.Runtime;
+using Nice3point.Revit.Toolkit;
 using ParamToFinish.Models;
 using ParamToFinish.Services;
 using ToadTools.UI.Models;
@@ -24,10 +25,11 @@ public sealed partial class ParamToFinishViewModel : ObservableObject
     private bool _isRestoringSettings;
 
     public ParamToFinishViewModel(
-        List<ParameterDescriptor> wallParameters,
+        GetParameterService parameterService,
         IFinishParameterTransferService transferService,
         ParamToFinishSettingsService settingsService)
     {
+        var wallParameters = parameterService.GetWallParameters(RevitContext.ActiveDocument!);
         WallParameters = new ObservableCollection<ParameterDescriptor>(wallParameters);
         _transferService = transferService;
         _settingsService = settingsService;

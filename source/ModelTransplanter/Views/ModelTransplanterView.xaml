@@ -5,7 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
-    xmlns:converters="clr-namespace:ModelTransplanter.Views.Converters"
+    xmlns:converters="clr-namespace:ToadTools.UI.Converters;assembly=ToadTools.UI"
     mc:Ignorable="d"
     Title="ModelTransplanter"
     WindowStartupLocation="CenterScreen"

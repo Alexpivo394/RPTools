@@ -1,17 +1,15 @@
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 
 namespace WarmSync;
 
-[Transaction(TransactionMode.Manual)]
-public class WriteSpaceIdToParam : IExternalCommand
+public class WriteSpaceIdToParam
 {
-    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    public void Run()
     {
-        UIDocument uiDoc = commandData.Application.ActiveUIDocument;
-        Document doc = uiDoc.Document;
+        var uiDoc = RevitContext.ActiveUiDocument!;
+        var doc = uiDoc.Document;
 
         // Имя параметра, куда пишем ID
         const string targetParamName = "ID элемента";
@@ -34,7 +32,7 @@ public class WriteSpaceIdToParam : IExternalCommand
                     DialogButtons.OK,
                     DialogIcon.Info
                 );
-                return Result.Succeeded;
+                return;
             }
 
             using (Transaction t = new Transaction(doc, "Запись ID в пространства"))
@@ -65,10 +63,8 @@ public class WriteSpaceIdToParam : IExternalCommand
                     DialogIcon.Info
                 );
             }
-
-            return Result.Succeeded;
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             var dial = ToadDialogService.Show(
                 "Ошибка",
@@ -76,8 +72,7 @@ public class WriteSpaceIdToParam : IExternalCommand
                 DialogButtons.OK,
                 DialogIcon.Error
             );
-            message = ex.Message;
-            return Result.Failed;
+            throw;
         }
     }
 }

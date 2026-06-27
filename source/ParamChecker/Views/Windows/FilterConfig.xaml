@@ -7,7 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:vm="clr-namespace:ParamChecker.ViewModels.Conditions"
     xmlns:conditions="clr-namespace:ParamChecker.ViewModels.Conditions"
-    xmlns:converters="clr-namespace:ParamChecker.Views.Converters"
+    xmlns:converters="clr-namespace:ToadTools.UI.Converters;assembly=ToadTools.UI"
     mc:Ignorable="d"
     Title="ParamChecker"
     WindowStartupLocation="CenterScreen"

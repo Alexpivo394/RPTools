@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using Autodesk.Revit.DB;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Services;
 using Wpf.Ui.Appearance;
 using WriteDash.Models;
@@ -24,13 +24,12 @@ public sealed partial class WriteDashViewModel : ObservableObject
     public ObservableCollection<ParameterDescriptor> FilteredParameters { get; } = new();
 
     public WriteDashViewModel(
-        Document doc,
         RevitParameterService parameterService,
         ParameterProcessorService processorService)
     {
         _processorService = processorService;
 
-        var parameters = parameterService.GetProjectParameters(doc);
+        var parameters = parameterService.GetProjectParameters(RevitContext.ActiveDocument!);
 
         foreach (var parameter in parameters)
         {

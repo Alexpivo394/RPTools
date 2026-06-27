@@ -39,6 +39,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting"/>
         <PackageReference Include="ILRepack" PrivateAssets="all"/>
     </ItemGroup>
 

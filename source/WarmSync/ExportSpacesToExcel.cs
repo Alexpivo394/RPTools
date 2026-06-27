@@ -1,24 +1,21 @@
 #nullable enable
 using System.Diagnostics;
 using System.IO;
-using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Mechanical;
-using Autodesk.Revit.UI;
 using Microsoft.Win32;
+using Nice3point.Revit.Toolkit;
 using OfficeOpenXml;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 
 namespace WarmSync;
 
-[Transaction(TransactionMode.Manual)]
-public class ExportSpacesToExcel : IExternalCommand
+public class ExportSpacesToExcel
 {
-    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    public void Run()
     {
-        UIApplication uiapp = commandData.Application;
-        UIDocument uidoc = uiapp.ActiveUIDocument;
-        Document doc = uidoc.Document;
+        var uidoc = RevitContext.ActiveUiDocument!;
+        var doc = uidoc.Document;
 
         var dialog = new SaveFileDialog
         {
@@ -94,19 +91,16 @@ public class ExportSpacesToExcel : IExternalCommand
                 DialogButtons.OK,
                 DialogIcon.Info
             );
-
-            return Result.Succeeded;
         }
         catch (Exception ex)
         {
-            message = ex.Message;
             var dial = ToadDialogService.Show(
                 "Ошибка",
                 ex.ToString(),
                 DialogButtons.OK,
                 DialogIcon.Error
             );
-            return Result.Failed;
+            throw;
         }
     }
 

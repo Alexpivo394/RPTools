@@ -1,4 +1,7 @@
 ﻿#nullable enable
+using Autodesk.Revit.DB;
+using CommunityToolkit.Mvvm.ComponentModel;
+
 namespace ParamChecker.Models.Filters;
 
 public sealed partial class CategoryFilterItem : ObservableObject

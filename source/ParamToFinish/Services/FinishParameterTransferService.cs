@@ -1,19 +1,19 @@
+using Autodesk.Revit.DB;
+using Nice3point.Revit.Toolkit;
 using ParamToFinish.Models;
 
 namespace ParamToFinish.Services;
 
 public class FinishParameterTransferService : IFinishParameterTransferService
 {
-    private readonly Document _document;
     private readonly RevitParameterService _parameterService;
     private readonly WallGeometryService _geometryService;
     private readonly WallTouchService _touchService;
     private const double SpatialSearchMargin = 1.0;
     private const double SpatialCellSize = 30.0;
 
-    public FinishParameterTransferService(Document document)
+    public FinishParameterTransferService()
     {
-        _document = document;
         _parameterService = new RevitParameterService();
         _geometryService = new WallGeometryService();
         _touchService = new WallTouchService(_geometryService);
@@ -22,6 +22,8 @@ public class FinishParameterTransferService : IFinishParameterTransferService
     public void Transfer(ParameterDescriptor? selectedWallParameter, ParameterDescriptor? selectedFinishParameter,
         bool allModel, string filter)
     {
+        var document = RevitContext.ActiveDocument!;
+
         if (string.IsNullOrWhiteSpace(selectedWallParameter?.Name))
             throw new ArgumentException(nameof(selectedWallParameter));
 
@@ -34,7 +36,7 @@ public class FinishParameterTransferService : IFinishParameterTransferService
 
         if (allModel)
         {
-            walls = new FilteredElementCollector(_document)
+            walls = new FilteredElementCollector(document)
                 .OfClass(typeof(Wall))
                 .WhereElementIsNotElementType()
                 .Cast<Wall>()
@@ -42,12 +44,12 @@ public class FinishParameterTransferService : IFinishParameterTransferService
         }
         else
         {
-            var activeView = _document.ActiveView;
+            var activeView = document.ActiveView;
 
             if (activeView == null || activeView.IsTemplate)
                 return;
 
-            walls = new FilteredElementCollector(_document, activeView.Id)
+            walls = new FilteredElementCollector(document, activeView.Id)
                 .OfClass(typeof(Wall))
                 .WhereElementIsNotElementType()
                 .Cast<Wall>()
@@ -95,7 +97,7 @@ public class FinishParameterTransferService : IFinishParameterTransferService
 
         if (updates.Count == 0) return;
 
-        using var transaction = new Transaction(_document, "Transfer finish parameters");
+        using var transaction = new Transaction(document, "Transfer finish parameters");
 
         transaction.Start();
 

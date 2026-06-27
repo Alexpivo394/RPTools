@@ -1,5 +1,7 @@
 ﻿#nullable enable
 using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using ParamChecker.Models.Parameters;
 
 namespace ParamChecker.ViewModels.Windows;

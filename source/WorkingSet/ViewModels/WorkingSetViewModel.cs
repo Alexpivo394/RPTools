@@ -13,7 +13,6 @@ namespace WorkingSet.ViewModels;
 public partial class WorkingSetViewModel : ObservableObject
 {
     private WorkingSetModel? _model;
-    private readonly ExternalCommandData _commandData;
     CreateWorksetsHandler? _createWorksetsHandler;
     private ExternalEvent? _externalEvent;
 
@@ -37,9 +36,8 @@ public partial class WorkingSetViewModel : ObservableObject
         LoadSections();
     }
 
-    public WorkingSetViewModel(ExternalCommandData commandData)
+    public WorkingSetViewModel()
     {
-        _commandData = commandData;
     }
     private void LoadSections()
     {
@@ -65,7 +63,6 @@ public partial class WorkingSetViewModel : ObservableObject
         if (_createWorksetsHandler != null)
         {
             _createWorksetsHandler.Worksets = worksets;
-            _createWorksetsHandler.CommandData = _commandData;
         }
 
         _externalEvent?.Raise();

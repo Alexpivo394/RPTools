@@ -1,17 +1,14 @@
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 
 namespace ReinforcementByColor;
 
-[Transaction(TransactionMode.Manual)]
-[Regeneration(RegenerationOption.Manual)]
-public class RSUMLeftRightCommand : IExternalCommand
+public class RSUMLeftRight
 {
-    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    public void Run()
     {
-        var uiDoc = commandData.Application.ActiveUIDocument;
+        var uiDoc = RevitContext.ActiveUiDocument!;
         var doc = uiDoc.Document;
         var view = doc.ActiveView;
 
@@ -33,7 +30,7 @@ public class RSUMLeftRightCommand : IExternalCommand
                 DialogIcon.Error
             );
             
-            return Result.Cancelled;
+            return;
         }
         
         var regions = selection
@@ -194,7 +191,7 @@ public class RSUMLeftRightCommand : IExternalCommand
             DialogIcon.Info
         );
 
-        return Result.Succeeded;
+        return;
     }
     
 }

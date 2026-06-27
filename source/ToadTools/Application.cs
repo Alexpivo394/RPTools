@@ -9,12 +9,17 @@ namespace ToadTools
     ///     Application entry point
     /// </summary>
     [UsedImplicitly]
-    public class Application : ExternalApplication
+    public class Application : AsyncExternalApplication
     {
-        public override void OnStartup()
+        public override async Task OnStartupAsync()
         {
-            Host.Start();
+            await Host.StartAsync();
             CreateRibbon();
+        }
+
+        public override async Task OnShutdownAsync()
+        {
+            await Host.StopAsync();
         }
 
         private void CreateRibbon()
@@ -55,32 +60,32 @@ namespace ToadTools
 
             //Добавляем кнопки на панели
             //BIM
-            panelBim.AddPushButton<ParamChecker.Commands.StartupCommand>("ParamChecker")
+            panelBim.AddPushButton<Commands.ParamCheckerCommand>("ParamChecker")
                 .SetImage("/ToadTools;component/Resources/Icons/Export16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/Export32.png")
                 .SetToolTip("Выгружает из моделей на сервере\nотчет по заполнению параметров.")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/paramchecker-movFIkYSwy"));
 
-            panelBim.AddPushButton<WorkingSet.Commands.StartupCommand>("Создание Рабочих\nнаборов")
+            panelBim.AddPushButton<Commands.WorkingSetCommand>("Создание Рабочих\nнаборов")
                 .SetImage("/ToadTools;component/Resources/Icons/Create16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/Create32.png")
                 .SetToolTip("Создает в модели рабочие наборы\nдля выбранного раздела.")  
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/sozdanie-rabochih-naborov-plaginom-rptools-j3Ycy39HVW"));
             
 
-            panelBim.AddPushButton<ModelTransplanter.Commands.StartupCommand>("Копирование элементов")
+            panelBim.AddPushButton<Commands.ModelTransplanterCommand>("Копирование элементов")
                 .SetImage("/ToadTools;component/Resources/Icons/Transplanter16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/Transplanter32.png")
                 .SetToolTip("Позволяет копировать элементы\nиз модели в модель.")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/kopirovanie-soderzhimogo-modeli-7q8Wf296FB"));
             
-            panelBim.AddPushButton<WorksetCheck.Commands.StartupCommand>("Проверка рабочих\nнаборов")
+            panelBim.AddPushButton<Commands.WorksetCheckCommand>("Проверка рабочих\nнаборов")
                 .SetImage("/ToadTools;component/Resources/Icons/WorksetsCheck16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/WorksetsCheck32.png")
                 .SetToolTip("Позволяет проверить заданные\nмодели на соответствие элементов\nрабочим наборам.")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/worksetcheck-rfycq6j0Bd"));
 
-            panelBim.AddPushButton<ChangeSharedFamilies.Commands.StartupCommand>("Заменить общие\nсемейства необщими")
+            panelBim.AddPushButton<Commands.ChangeSharedFamiliesCommand>("Заменить общие\nсемейства необщими")
                 .SetImage("/ToadTools;component/Resources/Icons/ChangeSharedFamilies16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/ChangeSharedFamilies32.png")
                 .SetToolTip("Заменяет общие вложенные семейства\nна необщие. Работает только с\nредактором семейства.")
@@ -94,43 +99,43 @@ namespace ToadTools
             pullButtonTray.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url,
                 "https://bim-baza.yonote.ru/doc/kabelnye-lotki-hSP8BFIW8g"));
 
-            pullButtonTray.AddPushButton<ArticulLotok.StartupCommand>("Артикулы и наименования");
-            pullButtonTray.AddPushButton<LotkiColor.StartupCommand>("Покрасить по перфорации");
-            pullButtonTray.AddPushButton<LotkiColorIsp.StartupCommand>("Покрасить по исполнению");
-            pullButtonTray.AddPushButton<LotkiColorKrshka.StartupCommand>("Покрасить крышки");
+            pullButtonTray.AddPushButton<Commands.CableTrayArticulCommand>("Артикулы и наименования");
+            pullButtonTray.AddPushButton<Commands.CableTrayColorPerforationCommand>("Покрасить по перфорации");
+            pullButtonTray.AddPushButton<Commands.CableTrayColorVariantCommand>("Покрасить по исполнению");
+            pullButtonTray.AddPushButton<Commands.CableTrayColorCoverCommand>("Покрасить крышки");
             
-            panelTray.AddPushButton<CreateCover.Commands.StartupCommand>("Разместить\nкрышки")
+            panelTray.AddPushButton<Commands.CreateCoverCommand>("Разместить\nкрышки")
                 .SetImage("/ToadTools;component/Resources/Icons/CreateCover16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/CreateCover32.png")
                 .SetToolTip("Разместить в модели крышки на кабельные лотки")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/razmestit-kryshki-pJSWjFkyzL"));
             
             //Общие
-            panelGeneral.AddPushButton<Leght.StartupCommand>("Длина элементов\nмодели")
+            panelGeneral.AddPushButton<Commands.LengthCommand>("Длина элементов\nмодели")
                 .SetImage("/ToadTools;component/Resources/Icons/Ruler16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/Ruler32.png")
                 .SetToolTip("Посчитать суммарную длину выбранных элементов.");
             
-            panelGeneral.AddPushButton<CreateSpaces.Commands.StartupCommand>("Создание\nпространств")
+            panelGeneral.AddPushButton<Commands.CreateSpacesCommand>("Создание\nпространств")
                 .SetImage("/ToadTools;component/Resources/Icons/Spaces16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/Spaces32.png")
                 .SetToolTip("Создает в проекте пространства на основе помещений из раздела АР.")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/sozdanie-prostranstv-Bia5rDOjqY"));
             
-            panelGeneral.AddPushButton<QuantityCheck.Commands.StartupCommand>("Записать количество")
+            panelGeneral.AddPushButton<Commands.QuantityCheckCommand>("Записать количество")
                 .SetImage("/ToadTools;component/Resources/Icons/QuantityCheck16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/QuantityCheck32.png")
                 .SetToolTip("Заполняет параметр количества\nв элементах модели.")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/zapolnenie-parametra-kolichestvo-beinN88LwP"));
             
-            panelGeneral.AddPushButton<WriteDash.Commands.StartupCommand>("Записать прочерк")
+            panelGeneral.AddPushButton<Commands.WriteDashCommand>("Записать прочерк")
                 .SetImage("/ToadTools;component/Resources/Icons/WriteDash16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/WriteDash32.png")
                 .SetToolTip("Заполняет прочерк в указанные параметры\nесли в них нет значения.")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/zapisat-procherk-kfwUDj6TeL"));
 
             //Сети связи
-            panelSs.AddPushButton<SSPlan.Commands.StartupCommand>("Структурная\nсхема")
+            panelSs.AddPushButton<Commands.SSPlanCommand>("Структурная\nсхема")
                 .SetImage("/ToadTools;component/Resources/Icons/SSPlan16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/SSPlan32.png")
                 .SetToolTip("Создать структурную схему.")
@@ -144,20 +149,20 @@ namespace ToadTools
             pullButtonWarm.SetContextualHelp(new ContextualHelp(ContextualHelpType.Url,
                 "https://bim-baza.yonote.ru/doc/sinhronizaciya-teplopoter-RWMUuxZBdq"));
             
-            pullButtonWarm.AddPushButton<WarmSync.RenameSpaces>("Заполнение имен пространств");
-            pullButtonWarm.AddPushButton<WarmSync.WriteSpaceIdToParam>("Запись ID пространств");
-            pullButtonWarm.AddPushButton<WarmSync.ExportSpacesToExcel>("Экспорт пространств в Excel");
-            pullButtonWarm.AddPushButton<WarmSync.WriteFromExcel>("Импорт значений из Excel");
+            pullButtonWarm.AddPushButton<Commands.RenameSpacesCommand>("Заполнение имен пространств");
+            pullButtonWarm.AddPushButton<Commands.WriteSpaceIdToParamCommand>("Запись ID пространств");
+            pullButtonWarm.AddPushButton<Commands.ExportSpacesToExcelCommand>("Экспорт пространств в Excel");
+            pullButtonWarm.AddPushButton<Commands.WriteFromExcelCommand>("Импорт значений из Excel");
             
             //Панель АР
             
-            panelAr.AddPushButton<DoorSide.DoorSideCommand>("Открывание\nдверей")
+            panelAr.AddPushButton<Commands.DoorSideCommand>("Открывание\nдверей")
                 .SetImage("/ToadTools;component/Resources/Icons/DoorSide16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/DoorSide32.png")
                 .SetToolTip("Записать сторону открывания двери в параметр Открывание")
                 .SetContextualHelp(new ContextualHelp(ContextualHelpType.Url, "https://bim-baza.yonote.ru/doc/otkryvanie-dveri-JJyZ1390oD"));
             
-            panelAr.AddPushButton<ParamToFinish.Commands.StartupCommand>("Основание\nотделки")
+            panelAr.AddPushButton<Commands.ParamToFinishCommand>("Основание\nотделки")
                 .SetImage("/ToadTools;component/Resources/Icons/ParamToFinish16.png")
                 .SetLargeImage("/ToadTools;component/Resources/Icons/ParamToFinish32.png")
                 .SetToolTip("Позволяет записать основание отделки в выбранный параметр")
@@ -171,10 +176,10 @@ namespace ToadTools
             pullButtonRei.SetLargeImage("/ToadTools;component/Resources/Icons/Rei32.png");
             pullButtonRei.SetToolTip("Размещает семейства армирования взамен цветовых областей");
 
-            pullButtonRei.AddPushButton<ReinforcementByColor.RSHPLeftRightCommand>("R-SHP-Армирование по Y");
-            pullButtonRei.AddPushButton<ReinforcementByColor.RSHPUpDownCommand>("R-SHP-Армирование по X");
-            pullButtonRei.AddPushButton<ReinforcementByColor.RSUMLeftRightCommand>("R-SUM-Армирование по Y");
-            pullButtonRei.AddPushButton<ReinforcementByColor.RSUMUpDownCommand>("R-SUM-Армирование по X");
+            pullButtonRei.AddPushButton<Commands.RSHPLeftRightCommand>("R-SHP-Армирование по Y");
+            pullButtonRei.AddPushButton<Commands.RSHPUpDownCommand>("R-SHP-Армирование по X");
+            pullButtonRei.AddPushButton<Commands.RSUMLeftRightCommand>("R-SUM-Армирование по Y");
+            pullButtonRei.AddPushButton<Commands.RSUMUpDownCommand>("R-SUM-Армирование по X");
 
 
         }        

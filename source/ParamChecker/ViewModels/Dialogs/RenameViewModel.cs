@@ -1,4 +1,7 @@
-﻿namespace ParamChecker.ViewModels.Dialogs;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+
+namespace ParamChecker.ViewModels.Dialogs;
 
 public partial class RenameViewModel : ObservableObject
 {

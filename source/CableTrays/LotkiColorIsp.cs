@@ -1,26 +1,19 @@
 ﻿//Command running revit application
 
-using System.Linq;
-using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 
 namespace LotkiColorIsp;
 
-[Regeneration(RegenerationOption.Manual)]
-[Transaction(TransactionMode.Manual)]
-public class StartupCommand : IExternalCommand
+public class LotkiColorIspService
 {
-    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    public void Run()
     {
         try
         {
-//Set application =>
-            var uiapp = commandData.Application;
-            var uidoc = uiapp.ActiveUIDocument;
-            var app = uiapp.Application;
+            var uidoc = RevitContext.ActiveUiDocument!;
             var doc = uidoc.Document;
             var allsoed = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CableTrayFitting)
                 .WhereElementIsNotElementType()
@@ -88,7 +81,6 @@ public class StartupCommand : IExternalCommand
                 DialogButtons.OK,
                 DialogIcon.Info
             );
-            return Result.Succeeded;
         }
         catch (Exception e)
         {
@@ -98,8 +90,6 @@ public class StartupCommand : IExternalCommand
                 DialogButtons.OK,
                 DialogIcon.Error
             );
-            return Result.Cancelled;
         }
-        
     }
 }

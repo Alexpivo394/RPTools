@@ -1,17 +1,14 @@
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using CreateSpaces.Models;
+using Nice3point.Revit.Toolkit;
 
 namespace CreateSpaces.Services;
 
 public class RevitRoomProvider
 {
-    private readonly Document _doc;
+    private readonly Document _doc = RevitContext.ActiveDocument!;
     private IReadOnlyList<Room?>?  _rooms;
-
-    public RevitRoomProvider(Document document)
-    {
-        _doc = document ?? throw new ArgumentNullException(nameof(document));
-    }
 
     public void Initialize(LinkDescriptor link)
     {

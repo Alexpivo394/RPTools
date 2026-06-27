@@ -1,24 +1,20 @@
 #nullable enable
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using Autodesk.Revit.Attributes;
-using Autodesk.Revit.UI;
 using Microsoft.Win32;
+using Nice3point.Revit.Toolkit;
 using OfficeOpenXml;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 
 namespace WarmSync;
 
-[Transaction(TransactionMode.Manual)]
-public class WriteFromExcel : IExternalCommand
+public class WriteFromExcel
 {
-    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    public void Run()
     {
-        UIApplication uiapp = commandData.Application;
-        UIDocument uidoc = uiapp.ActiveUIDocument;
-        Document doc = uidoc.Document;
+        var uidoc = RevitContext.ActiveUiDocument!;
+        var doc = uidoc.Document;
 
         string excelPath = "";
 
@@ -105,8 +101,6 @@ public class WriteFromExcel : IExternalCommand
 
         var dial = ToadDialogService.Show("Результат", $"Обновлено: {updated}\nОшибок: {errors}\n\nЛог:\n{logPath}",
             DialogButtons.OK, DialogIcon.Info);
-
-        return Result.Succeeded;
     }
 
     private bool SetParam(Element el, string paramName, object? value, int row, Logger logger)

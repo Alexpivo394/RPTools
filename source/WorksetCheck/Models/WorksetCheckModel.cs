@@ -1,4 +1,4 @@
-using Autodesk.Revit.UI;
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 using WorksetCheck.Services;
@@ -7,13 +7,6 @@ namespace WorksetCheck.Models;
 
 public class WorksetCheckModel
 {
-    private ExternalCommandData _commandData { get; }
-
-    public WorksetCheckModel(ExternalCommandData commandData)
-    {
-        _commandData = commandData;
-    }
-
     public void CheckWorksets(string filePath, string worksetLinksName, string worksetAxesAndLevelsName,
         string worksetHolesName)
     {
@@ -21,7 +14,7 @@ public class WorksetCheckModel
         CheckService checkService = new();
         OpenModelService openModelService = new();
 
-        var doc = openModelService.OpenDocumentAsDetach(_commandData, filePath);
+        var doc = openModelService.OpenDocumentAsDetach(RevitContext.UiApplication!, filePath);
 
         log.StartLog(doc?.Title);
 

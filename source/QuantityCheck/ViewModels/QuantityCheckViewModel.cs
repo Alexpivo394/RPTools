@@ -1,4 +1,5 @@
-﻿using QuantityCheck.Configuration;
+﻿using Nice3point.Revit.Toolkit;
+using QuantityCheck.Configuration;
 using QuantityCheck.Models;
 using QuantityCheck.Services;
 using ToadTools.UI.Models;
@@ -8,14 +9,12 @@ using Settings = QuantityCheck.Configuration.Settings;
 
 namespace QuantityCheck.ViewModels;
 
-public partial class QuantityCheckViewModel(Logger? logger, Document doc) : ObservableObject
+public partial class QuantityCheckViewModel(Logger? logger) : ObservableObject
 {
     [ObservableProperty] private bool _darkTheme = true;
     [ObservableProperty] private string? _parameterName = "";
     [ObservableProperty] private double _reverse = 0;
-    // private readonly Logger _logger = logger;
-    // private readonly Document _doc = doc;
-    private readonly QuantityProcessor _processor = new QuantityProcessor(doc, logger);
+    private readonly QuantityProcessor _processor = new QuantityProcessor(RevitContext.ActiveDocument!, logger);
 
     partial void OnDarkThemeChanged(bool value)
     {

@@ -1,4 +1,6 @@
-﻿namespace ParamChecker.Models.ExportProfiles;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace ParamChecker.Models.ExportProfiles;
 
 public partial class ExportRule : ObservableObject
 {

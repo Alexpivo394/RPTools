@@ -1,24 +1,18 @@
 ﻿//Command running revit application
 
-using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Electrical;
-using Autodesk.Revit.UI;
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 
 namespace ArticulLotok;
 
-[Regeneration(RegenerationOption.Manual)]
-[Transaction(TransactionMode.Manual)]
-public class StartupCommand : IExternalCommand
+public class ArticulService
 {
-    public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+    public void Run()
     {
-        //Set application =>
-        var uiapp = commandData.Application;
-        var uidoc = uiapp.ActiveUIDocument;
-        var app = uiapp.Application;
+        var uidoc = RevitContext.ActiveUiDocument!;
         var doc = uidoc.Document;
         
         List<Element> alllotkirealall = new List<Element>();
@@ -429,6 +423,5 @@ public class StartupCommand : IExternalCommand
             DialogButtons.OK,
             DialogIcon.Info
         );
-        return Result.Succeeded;
     }
 }

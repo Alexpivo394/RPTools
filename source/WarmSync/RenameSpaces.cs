@@ -1,19 +1,17 @@
 using System.Text;
-using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Mechanical;
-using Autodesk.Revit.UI;
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 
 namespace WarmSync;
 
-[Transaction(TransactionMode.Manual)]
-    public class RenameSpaces : IExternalCommand
+    public class RenameSpaces
     {
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        public void Run()
         {
-            var uiDoc = commandData.Application.ActiveUIDocument;
+            var uiDoc = RevitContext.ActiveUiDocument!;
             var doc = uiDoc.Document;
 
             int updatedCount = 0;
@@ -105,15 +103,13 @@ namespace WarmSync;
 
                     t.Commit();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
-                    message = ex.Message;
-                    return Result.Failed;
-                } 
+                    throw;
+                }
             }
 
             ShowResult(updatedCount, errorCount, log);
-            return Result.Succeeded;
         }
 
         private string GetParam(Element e, string name)

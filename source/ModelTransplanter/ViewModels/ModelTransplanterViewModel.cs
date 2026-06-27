@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using ModelTransplanter.Models;
 using ModelTransplanter.Services;
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Models;
 using Wpf.Ui.Appearance;
 using ToadTools.UI.Services;
@@ -27,10 +28,10 @@ public partial class ModelTransplanterViewModel : ObservableObject
     }
 
     public List<Document> OpenDocuments { get; }
-    public ModelTransplanterViewModel(UIApplication uiApp)
+    public ModelTransplanterViewModel()
     {
-        _uiApp = uiApp;
-        OpenDocuments = uiApp.Application.Documents.Cast<Document>().ToList();
+        _uiApp = RevitContext.UiApplication!;
+        OpenDocuments = _uiApp.Application.Documents.Cast<Document>().ToList();
 
         _logger = new Logger(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TransferElementsLog.txt");
         LogFilePath = _logger.ToString();

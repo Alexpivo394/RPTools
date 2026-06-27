@@ -3,6 +3,7 @@ using Autodesk.Revit.DB.Architecture;
 using Autodesk.Revit.DB.Mechanical;
 using CreateSpaces.Models;
 using CreateSpaces.ViewModels;
+using Nice3point.Revit.Toolkit;
 
 namespace CreateSpaces.Services;
 
@@ -10,16 +11,14 @@ public sealed class SpaceCreationService : ISpaceCreationService
 {
     private readonly RevitLinkProvider _linkProvider;
     private readonly RevitRoomProvider _roomProvider;
-    private Document _doc;
+    private Document _doc = RevitContext.ActiveDocument!;
 
     public SpaceCreationService(
         RevitLinkProvider linkProvider,
-        RevitRoomProvider roomProvider,
-        Document doc)
+        RevitRoomProvider roomProvider)
     {
         _linkProvider = linkProvider;
         _roomProvider = roomProvider;
-        _doc = doc;
     }
 
     public SpaceCreationResult CreateSpaces(

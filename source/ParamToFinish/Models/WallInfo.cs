@@ -1,3 +1,5 @@
+using Autodesk.Revit.DB;
+
 namespace ParamToFinish.Models;
 
 public sealed class WallInfo

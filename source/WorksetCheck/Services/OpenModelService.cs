@@ -5,9 +5,8 @@ namespace WorksetCheck.Services;
 
 public class OpenModelService
 {
-    public Document? OpenDocumentAsDetach(ExternalCommandData commandData, string filePath)
+    public Document? OpenDocumentAsDetach(UIApplication app, string filePath)
     {
-        var app = commandData.Application;
         var modelPathServ = ModelPathUtils.ConvertUserVisiblePathToModelPath(filePath);
         var controlledApp = app.Application;
 

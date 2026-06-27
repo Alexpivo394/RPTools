@@ -1,16 +1,13 @@
+using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using CreateSpaces.Models;
+using Nice3point.Revit.Toolkit;
 
 namespace CreateSpaces.Services;
 
 public class GetParameterService
 {
-    private readonly Document _doc;
-
-    public GetParameterService(Document doc)
-    {
-        _doc = doc;
-    }
+    private readonly Document _doc = RevitContext.ActiveDocument!;
 
     public IReadOnlyList<ParameterDescriptor> GetFromRoom(Room? room)
     {

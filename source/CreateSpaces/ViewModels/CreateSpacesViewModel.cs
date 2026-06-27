@@ -1,7 +1,10 @@
 using System.Collections.ObjectModel;
 using System.IO;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using CreateSpaces.Models;
 using CreateSpaces.Services;
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 using Microsoft.Win32;
@@ -21,9 +24,9 @@ public partial class CreateSpacesViewModel : ObservableObject
     private LoadParametersService? _loadParameterService;
     private RevitRoomProvider _roomProvider;
     private readonly ISpaceCreationService _spaceCreationService;
-    public CreateSpacesViewModel(IReadOnlyList<LinkDescriptor> linkedModels, LoadParametersService? loadParameterService, RevitRoomProvider roomProvider, ISpaceCreationService spaceCreationService)
+    public CreateSpacesViewModel(RevitLinkProvider linkProvider, LoadParametersService? loadParameterService, RevitRoomProvider roomProvider, ISpaceCreationService spaceCreationService)
     {
-        LinkedModels = new ObservableCollection<LinkDescriptor>(linkedModels);
+        LinkedModels = new ObservableCollection<LinkDescriptor>(linkProvider.GetLinks(RevitContext.ActiveDocument!));
         Models = new ObservableCollection<ParameterMappingModel>();
         _loadParameterService = loadParameterService;
         _roomProvider = roomProvider;

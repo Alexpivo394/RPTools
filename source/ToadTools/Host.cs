@@ -1,32 +1,85 @@
+using System.Windows;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
-namespace ToadTools
+namespace ToadTools;
+
+/// <summary>
+///     Provides a host for the application's services and manages their lifetimes
+/// </summary>
+public static class Host
 {
+    private static IHost? _host;
+
     /// <summary>
-    ///     Provides a host for the application's services and manages their lifetimes
+    ///     Starts the host and configures the application's services
     /// </summary>
-    public static class Host
+    public static async Task StartAsync()
     {
-        private static IServiceProvider? _serviceProvider;
-
-        /// <summary>
-        ///     Starts the host and configures the application's services
-        /// </summary>
-        public static void Start()
+        var builder = new HostApplicationBuilder(new HostApplicationBuilderSettings
         {
-            var services = new ServiceCollection();
+            DisableDefaults = true
+        });
 
-            _serviceProvider = services.BuildServiceProvider();
+        //Logging
+        builder.Logging.ClearProviders();
+
+        //Application services (views, view models, services)
+        builder.Services.RegisterServices();
+
+        _host = builder.Build();
+        await _host.StartAsync();
+    }
+
+    /// <summary>
+    ///     Stops the host and handles <see cref="IHostedService"/> services
+    /// </summary>
+    public static async Task StopAsync()
+    {
+        if (_host is null) return;
+
+        await _host.StopAsync();
+        _host.Dispose();
+        _host = null;
+    }
+
+    /// <summary>
+    ///     Get service of type <typeparamref name="T"/>
+    /// </summary>
+    /// <typeparam name="T">The type of service object to get</typeparam>
+    /// <exception cref="System.InvalidOperationException">There is no service of type <typeparamref name="T"/></exception>
+    public static T GetService<T>() where T : class
+    {
+        return _host!.Services.GetRequiredService<T>();
+    }
+
+    /// <summary>
+    ///     Creates a <see cref="FrameworkElement"/> with the scope lifetime and manages the scope lifecycle.
+    /// </summary>
+    /// <typeparam name="T">The type of FrameworkElement to get.</typeparam>
+    /// <returns>A FrameworkElement of type T with managed scope lifecycle.</returns>
+    /// <remarks>
+    ///     The scope is automatically disposed when the element is unloaded or,
+    ///     in the case of a Window, when it is closed.
+    /// </remarks>
+    /// <exception cref="System.InvalidOperationException">There is no service of type <typeparamref name="T"/></exception>
+    public static T CreateScope<T>() where T : FrameworkElement
+    {
+        var scopeFactory = _host!.Services.GetRequiredService<IServiceScopeFactory>();
+        var scope = scopeFactory.CreateScope();
+
+        var element = scope.ServiceProvider.GetRequiredService<T>();
+
+        if (element is Window window)
+        {
+            window.Closed += (_, _) => scope.Dispose();
+        }
+        else
+        {
+            element.Unloaded += (_, _) => scope.Dispose();
         }
 
-        /// <summary>
-        ///     Get service of type <typeparamref name="T"/>
-        /// </summary>
-        /// <typeparam name="T">The type of service object to get</typeparam>
-        /// <exception cref="System.InvalidOperationException">There is no service of type <typeparamref name="T"/></exception>
-        public static T GetService<T>() where T : class
-        {
-            return _serviceProvider.GetRequiredService<T>();
-        }
+        return element;
     }
 }

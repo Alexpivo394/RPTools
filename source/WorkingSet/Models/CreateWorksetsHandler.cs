@@ -11,11 +11,10 @@ namespace WorkingSet.Models
     {
         
         public List<string> Worksets { get; set; }
-        public ExternalCommandData CommandData { get; set; }
 
         public void Execute(UIApplication app)
         {
-            var doc = CommandData.Application.ActiveUIDocument.Document;
+            var doc = app.ActiveUIDocument.Document;
 
             using (var transaction = new Transaction(doc, "Create Worksets"))
             {

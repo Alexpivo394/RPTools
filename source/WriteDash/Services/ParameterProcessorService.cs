@@ -1,3 +1,4 @@
+using Nice3point.Revit.Toolkit;
 using ToadTools.UI.Models;
 using ToadTools.UI.Services;
 using WriteDash.Models;
@@ -6,13 +7,6 @@ namespace WriteDash.Services;
 
 public class ParameterProcessorService
 {
-    private readonly Document _document;
-
-    public ParameterProcessorService(Document document)
-    {
-        _document = document;
-    }
-
     public void Process(List<ParameterDescriptor> selectedParameters)
     {
         if (selectedParameters == null || selectedParameters.Count == 0)
@@ -27,13 +21,15 @@ public class ParameterProcessorService
             return;
         }
 
+        var document = RevitContext.ActiveDocument!;
+
         var parameterNames = new HashSet<string>(
             selectedParameters
                 .Select(x => x.Name)
                 .Where(x => !string.IsNullOrWhiteSpace(x))
                 .Select(x => x!));
 
-        var elements = new FilteredElementCollector(_document)
+        var elements = new FilteredElementCollector(document)
             .WhereElementIsNotElementType()
             .Where(x =>
                 x.Category != null &&
@@ -41,7 +37,7 @@ public class ParameterProcessorService
 
         var processedTypeIds = new HashSet<ElementId>();
 
-        using var transaction = new Transaction(_document, "Fill empty parameters");
+        using var transaction = new Transaction(document, "Fill empty parameters");
 
         transaction.Start();
 
@@ -57,7 +53,7 @@ public class ParameterProcessorService
             if (!processedTypeIds.Add(typeId))
                 continue;
 
-            if (_document.GetElement(typeId) is ElementType elementType)
+            if (document.GetElement(typeId) is ElementType elementType)
             {
                 ProcessParameters(elementType.Parameters, parameterNames);
             }
