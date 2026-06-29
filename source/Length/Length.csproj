@@ -1,7 +1,0 @@
-<Project Sdk="Nice3point.Revit.Sdk/6.2.2">
-
-    <ItemGroup>
-        <ProjectReference Include="..\ToadTools.UI\ToadTools.UI.csproj"/>
-    </ItemGroup>
-
-</Project>
